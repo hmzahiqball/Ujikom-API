@@ -2,27 +2,76 @@ const db = require("../config/db");
 
 class Kategori {
   static async getAllKategori() {
-    const [rows] = await db.query("SELECT id_suppliers, nama_suppliers, contact_person, contact_suppliers, email_suppliers, alamat_suppliers, created_at, updated_at FROM tb_suppliers");
+    const [categories] = await db.query(`
+      SELECT 
+        k.id_kategori AS p_id_kategori, 
+        k.nama_kategori AS p_nama_kategori, 
+        k.created_at, 
+        k.updated_at
+      FROM tb_kategori k
+    `);
+
+    const rows = [];
+
+    for (const category of categories) {
+      const [subcategories] = await db.query(`
+        SELECT 
+          s.id_subkategori AS p_id_subkategori, 
+          s.nama_subkategori AS p_nama_subkategori,
+          s.created_at,
+          s.updated_at
+        FROM tb_subkategori s
+        WHERE s.id_kategori = ?
+      `, [category.p_id_kategori]);
+
+      rows.push({
+        p_id_kategori: category.p_id_kategori,
+        p_nama_kategori: category.p_nama_kategori,
+        p_subkategori: subcategories,
+        created_at: category.created_at,
+        updated_at: category.updated_at
+      });
+    }
+
     return rows;
   }
 
-  static async createKategori(p_namaSuppliers, p_contactPerson, p_contactSuppliers, p_emailSuppliers, p_alamatSuppliers) {
+  static async createKategori(p_namaKategori) {
     const [result] = await db.query(
-      "INSERT INTO tb_suppliers (nama_suppliers, contact_person, contact_suppliers, email_suppliers, alamat_suppliers) VALUES (?, ?, ?, ?, ?)",
-      [p_namaSuppliers, p_contactPerson, p_contactSuppliers, p_emailSuppliers, p_alamatSuppliers]
+      "INSERT INTO tb_kategori (nama_kategori) VALUES (?)",
+      [p_namaKategori]
     );
     return result.insertId;
   }
 
-  static async updateKategori(p_idSuppliers, p_namaSuppliers, p_contactPerson, p_contactSuppliers, p_emailSuppliers, p_alamatSuppliers) {
+  static async createSubKategori(p_idKategori, p_namaSubKategori) {
+    const [result] = await db.query(
+      "INSERT INTO tb_subkategori (id_kategori, nama_subkategori) VALUES (?, ?)",
+      [p_idKategori, p_namaSubKategori]
+    );
+    return result.insertId;
+  }
+
+  static async updateKategori(p_idKategori, p_namaKategori) {
     await db.query(
-      "UPDATE tb_suppliers SET nama_suppliers = ?, contact_person = ?, contact_suppliers = ?, email_suppliers = ?, alamat_suppliers = ? WHERE id_suppliers = ?",
-      [p_namaSuppliers, p_contactPerson, p_contactSuppliers, p_emailSuppliers, p_alamatSuppliers, p_idSuppliers]
+      "UPDATE tb_kategori SET nama_kategori = ? WHERE id_kategori = ?",
+      [p_namaKategori, p_idKategori]
     );
   }
 
-  static async deleteKategori(p_idSuppliers) {
-    await db.query("DELETE FROM tb_suppliers WHERE id_suppliers = ?", [p_idSuppliers]);
+  static async updateSubKategori(p_idSubKategori, p_namaSubKategori) {
+    await db.query(
+      "UPDATE tb_subkategori SET nama_subkategori = ? WHERE id_subkategori = ?",
+      [p_namaSubKategori, p_idSubKategori]
+    );
+  }
+
+  static async deleteKategori(p_idKategori) {
+    await db.query("DELETE FROM tb_kategori WHERE id_kategori = ?", [p_idKategori]);
+  }
+
+  static async deleteSubKategori(p_idSubKategori) {
+    await db.query("DELETE FROM tb_subkategori WHERE id_subkategori = ?", [p_idSubKategori]);
   }
 }
 
