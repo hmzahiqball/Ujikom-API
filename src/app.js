@@ -8,6 +8,7 @@ const shiftRoutes = require("./routes/shiftRoutes");
 const produkRoutes = require("./routes/produkRoutes");
 const karyawanRoutes = require("./routes/karyawanRoutes");
 const customerRoutes = require("./routes/customerRoutes");
+const stokRoutes = require("./routes/stokRoutes");
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use("/api/shifts", shiftRoutes);
 app.use("/api/produk", produkRoutes);
 app.use("/api/karyawan", karyawanRoutes);
 app.use("/api/customer", customerRoutes);
+app.use("/api/laporanstok", stokRoutes);
 
 module.exports = app; // Ekspor aplikasi Express
