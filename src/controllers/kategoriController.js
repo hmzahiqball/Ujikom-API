@@ -43,7 +43,7 @@ exports.updateKategori = async (req, res) => {
     await Kategori.updateKategori(id, p_namaKategori);
     return res.json({
       status: 200,
-      message: "Berhasil Update Data Supplier",
+      message: "Berhasil Update Data Kategori",
     });
   } catch (error) {
     return res.status(500).json({ status: "error", message: error.message });

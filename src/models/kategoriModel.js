@@ -16,8 +16,8 @@ class Kategori {
     for (const category of categories) {
       const [subcategories] = await db.query(`
         SELECT 
-          s.id_subkategori AS p_id_subkategori, 
-          s.nama_subkategori AS p_nama_subkategori,
+          s.id_subkategori AS id_subkategori, 
+          s.nama_subkategori AS nama_subkategori,
           s.created_at,
           s.updated_at
         FROM tb_subkategori s
@@ -25,9 +25,9 @@ class Kategori {
       `, [category.p_id_kategori]);
 
       rows.push({
-        p_id_kategori: category.p_id_kategori,
-        p_nama_kategori: category.p_nama_kategori,
-        p_subkategori: subcategories,
+        id_kategori: category.p_id_kategori,
+        nama_kategori: category.p_nama_kategori,
+        data_subkategori: subcategories,
         created_at: category.created_at,
         updated_at: category.updated_at
       });

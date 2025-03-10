@@ -26,20 +26,20 @@ class Karyawan {
     `);
 
     const formattedRows = rows.map(row => ({
-        id: row.id,
-        position: row.position,
-        salary: row.salary,
+        id_karyawan: row.id,
+        posisi_karyawan: row.position,
+        gaji_karyawan: row.salary,
         created_at: row.created_at,
         updated_at: row.updated_at,
-        user: {
-            id: row.user_id,
-            name: row.user_name,
-            email: row.user_email,
-            role: row.user_role,
+        data_user: {
+            id_user: row.user_id,
+            nama_user: row.user_name,
+            email_user: row.user_email,
+            role_user: row.user_role,
         },
-        shift: {
-            id: row.shift_id,
-            name: row.shift_name,
+        data_shift: {
+            id_shift: row.shift_id,
+            nama_shift: row.shift_name,
             start_time: row.shift_start_time,
             end_time: row.shift_end_time,
         },

@@ -30,22 +30,22 @@ class Karyawan {
     `);
 
     return rows.map(row => ({
-        p_idKehadiran: row.id_kehadiran,
-        p_tanggalKehadiran: row.tanggal_kehadiran,
-        p_clockIn: row.clock_in,
-        p_clockOut: row.clock_out,
-        p_totalJamKerja: row.total_jam_kerja,
-        p_totalOvertime: row.total_overtime,
-        p_karyawan: {
-            p_idKaryawan: row.id_karyawan,
-            p_namaKaryawan: row.nama_user,
-            p_posisiKaryawan: row.posisi_karyawan
+        id_kehadiran: row.id_kehadiran,
+        tanggal_kehadiran: row.tanggal_kehadiran,
+        waktu_clockIn: row.clock_in,
+        waktu_clockOut: row.clock_out,
+        total_jam_kerja: row.total_jam_kerja,
+        total_overtime: row.total_overtime,
+        data_karyawan: {
+            id_karyawan: row.id_karyawan,
+            nama_Karyawan: row.nama_user,
+            posisi_karyawan: row.posisi_karyawan
         },
-        p_shift: {
-            p_idShifts: row.id_shifts,
-            p_namaShifts: row.nama_shifts,
-            p_startTime: row.start_time,
-            p_endTime: row.end_time
+        data_shift: {
+            id_shift: row.id_shifts,
+            nama_shift: row.nama_shifts,
+            startTime: row.start_time,
+            endTime: row.end_time
         },
         created_at: row.created_at,
         updated_at: row.updated_at,
