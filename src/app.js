@@ -11,6 +11,7 @@ const customerRoutes = require("./routes/customerRoutes");
 const stokRoutes = require("./routes/stokRoutes");
 const absensiRoutes = require("./routes/absensiRoutes");
 const kategoriIzinRoutes = require("./routes/kategoriIzinRoutes");
+const kategoriPengeluaranRoutes = require("./routes/kategoriPengeluaranRoutes");
 
 const app = express();
 
@@ -26,5 +27,6 @@ app.use("/api/customer", customerRoutes);
 app.use("/api/laporanstok", stokRoutes);
 app.use("/api/laporanabsen", absensiRoutes);
 app.use("/api/kategoriIzin", kategoriIzinRoutes);
+app.use("/api/kategoriPengeluaran", kategoriPengeluaranRoutes);
 
 module.exports = app; // Ekspor aplikasi Express
