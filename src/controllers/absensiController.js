@@ -51,7 +51,7 @@ exports.clockOut = async (req, res) => {
       await Kehadiran.clockOut(id);
     return res.json({
       status: 200,
-      message: "Berhasil Clock IN",
+      message: "Berhasil Clock Out",
       data: {
         p_idKehadiran,
         p_namaKaryawan,

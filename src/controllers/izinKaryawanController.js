@@ -21,10 +21,6 @@ exports.createIzinKaryawan = async (req, res) => {
         .json({ status: "error", message: "Data Tidak Lengkap" });
     }
 
-    // Contoh format start_date dan end_date
-    // start_date: 2022-01-01
-    // end_date: 2022-01-05
-
     const izinId = await IzinKaryawan.createIzinKaryawan(p_idKaryawan, p_idJenisIzin, p_startDate, p_endDate);
     return res.json({
       status: 200,

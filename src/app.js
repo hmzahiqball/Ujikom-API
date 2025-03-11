@@ -13,6 +13,7 @@ const absensiRoutes = require("./routes/absensiRoutes");
 const kategoriIzinRoutes = require("./routes/kategoriIzinRoutes");
 const kategoriPengeluaranRoutes = require("./routes/kategoriPengeluaranRoutes");
 const izinKaryawanRoutes = require("./routes/izinKaryawanRoutes");
+const pengeluaranRoutes = require("./routes/pengeluaranRoutes");
 
 const app = express();
 
@@ -30,5 +31,6 @@ app.use("/api/laporanAbsen", absensiRoutes);
 app.use("/api/kategoriIzin", kategoriIzinRoutes);
 app.use("/api/kategoriPengeluaran", kategoriPengeluaranRoutes);
 app.use("/api/laporanIzinKaryawan", izinKaryawanRoutes);
+app.use("/api/laporanPengeluaran", pengeluaranRoutes);
 
 module.exports = app; // Ekspor aplikasi Express
