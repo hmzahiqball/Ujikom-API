@@ -11,7 +11,7 @@ class Karyawan {
             k.updated_at,
             u.id_user AS user_id,
             u.nama_user AS user_name,
-            u.email_user AS user_email,
+            u.contact_user AS user_contact,
             u.role_user AS user_role,
             s.id_shifts AS shift_id,
             s.nama_shifts AS shift_name,
@@ -34,7 +34,7 @@ class Karyawan {
         data_user: {
             id_user: row.user_id,
             nama_user: row.user_name,
-            email_user: row.user_email,
+            contact_user: row.user_contact,
             role_user: row.user_role,
         },
         data_shift: {
@@ -58,7 +58,7 @@ class Karyawan {
             k.updated_at,
             u.id_user AS user_id,
             u.nama_user AS user_name,
-            u.email_user AS user_email,
+            u.contact_user AS user_contact,
             u.role_user AS user_role,
             s.id_shifts AS shift_id,
             s.nama_shifts AS shift_name,
@@ -89,7 +89,7 @@ class Karyawan {
         user: {
             id: row.user_id,
             name: row.user_name,
-            email: row.user_email,
+            contact: row.user_contact,
             role: row.user_role,
         },
         shift: {
@@ -107,8 +107,8 @@ class Karyawan {
     try {
         // 1. Tambahkan data pengguna ke tb_users
         const [userResult] = await db.query(
-            "INSERT INTO tb_users (nama_user, password_user, email_user, role_user) VALUES (?, ?, ?, ?)",
-            [userData.p_namaUsers, userData.p_passwordUsers, userData.p_emailUsers, userData.p_roleUsers]
+            "INSERT INTO tb_users (nama_user, password_user, contact_user, role_user) VALUES (?, ?, ?, ?)",
+            [userData.p_namaUsers, userData.p_passwordUsers, userData.p_contactUsers, userData.p_roleUsers]
         );
         const userId = userResult.insertId;
 

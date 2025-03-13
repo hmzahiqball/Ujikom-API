@@ -7,6 +7,7 @@ class Pembelian {
           p.id_pembelian,
           p.total_harga,
           p.status_pembelian,
+          p.tanggal_pembelian,
           p.created_at AS pembelian_created_at,
           p.updated_at AS pembelian_updated_at,
           
@@ -53,6 +54,7 @@ class Pembelian {
           id_pembelian: row.id_pembelian,
           total_harga: row.total_harga,
           status_pembelian: row.status_pembelian,
+          tanggal_pembelian: row.tanggal_pembelian,
           created_at: row.pembelian_created_at,
           updated_at: row.pembelian_updated_at,
           supplier: {
@@ -103,6 +105,7 @@ class Pembelian {
           p.id_pembelian,
           p.total_harga,
           p.status_pembelian,
+          p.tanggal_pembelian,
           p.created_at AS pembelian_created_at,
           p.updated_at AS pembelian_updated_at,
           
@@ -153,6 +156,7 @@ class Pembelian {
           id_pembelian: row.id_pembelian,
           total_harga: row.total_harga,
           status_pembelian: row.status_pembelian,
+          tanggal_pembelian: row.tanggal_pembelian,
           created_at: row.pembelian_created_at,
           updated_at: row.pembelian_updated_at,
           supplier: {

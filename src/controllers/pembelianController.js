@@ -17,21 +17,21 @@ exports.getAllPembelian = async (req, res) => {
 };
 
 exports.getPembelianByID = async (req, res) => {
-    const { id } = req.params;
-    try {
-      const purchases = await Purchase.getPembelianByID(id);
-      if (!purchases) {
-        return res.status(400).json({ status: "error", message: "ID Pembelian Tidak Dikenali" });
-      }
-      return res.json({
-        status: 200,
-        message: "Berhasil Mendapatkan Data Pembelian",
-        data: purchases,
-      });
-    } catch (error) {
-      return res.status(500).json({ status: "error", message: error.message });
+  const { id } = req.params;
+  try {
+    const purchases = await Purchase.getPembelianByID(id);
+    if (!purchases) {
+      return res.status(400).json({ status: "error", message: "ID Pembelian Tidak Dikenali" });
     }
-  };
+    return res.json({
+      status: 200,
+      message: "Berhasil Mendapatkan Data Pembelian",
+      data: purchases,
+    });
+  } catch (error) {
+    return res.status(500).json({ status: "error", message: error.message });
+  }
+};
 
 exports.createPembelian = async (req, res) => {
   const { p_idSuppliers, p_totalHarga, p_detailPembelian, p_tanggal } = req.body;
@@ -43,7 +43,7 @@ exports.createPembelian = async (req, res) => {
     return res.json({
       status: 200,
       message: "Berhasil Menambahkan Data Pembelian",
-      data: { id_pembelian: purchaseId, p_idSuppliers, p_tanggal, p_totalHarga, p_statusPembelian: 'Pending', p_detailPembelian },
+      data: { p_idPembelian: purchaseId, p_idSuppliers, p_tanggal, p_totalHarga, p_statusPembelian: 'Pending', p_detailPembelian },
     });
   } catch (error) {
     return res.status(500).json({ status: "error", message: error.message });
