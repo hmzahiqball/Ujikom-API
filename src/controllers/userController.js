@@ -14,20 +14,52 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+// POST: Melakukan login
+exports.login = async (req, res) => {
+  const { p_contactUsers, p_passwordUsers } = req.body;
+  console.log("Request Body:", req.body); // Log request body
+  try {
+    const user = await User.findActiveUserByContact(p_contactUsers);
+    if (!user) {
+      return res.status(401).json({ message: "Akun tidak ditemukan atau tidak aktif, coba lagi" });
+    }
+
+    const isMatch = await User.comparePassword(p_passwordUsers, user.password_user);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Password Salah, Coba Lagi" });
+    }
+
+    return res.json({
+      message: "Login berhasil",
+      data: {
+        id_user: user.id_user,
+        nama_user: user.nama_user,
+        contact_user: user.contact_user,
+        role_user: user.role_user,
+        status_user: user.status_user,
+        created_at: user.created_at,
+        updated_at: user.updated_at,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Terjadi kesalahan pada server" });
+  }
+};
+
 // POST: Membuat user baru
 exports.createUser = async (req, res) => {
-  const { p_namaUsers, p_emailUsers, p_password_users, p_role_users } = req.body;
+  const { p_namaUsers, p_emailUsers, p_passwordUsers, p_roleUsers } = req.body;
   try {
-    if (!p_namaUsers || !p_emailUsers || !p_password_users || !p_role_users) {
+    if (!p_namaUsers || !p_emailUsers || !p_passwordUsers || !p_roleUsers) {
       return res
         .status(400)
         .json({ status: "error", message: "Data Tidak Lengkap" });
     }
-    const userId = await User.createUser(p_namaUsers, p_emailUsers, p_password_users, p_role_users);
+    const userId = await User.createUser(p_namaUsers, p_emailUsers, p_passwordUsers, p_roleUsers);
     return res.json({
       status: 200,
       message: "Berhasil Menambahkan Data Users",
-      data: { p_idUser: userId, p_namaUsers, p_emailUsers, p_role_users },
+      data: { p_idUser: userId, p_namaUsers, p_emailUsers, p_roleUsers },
     });
   } catch (error) {
     return res.status(500).json({ status: "error", message: error.message });
@@ -36,15 +68,15 @@ exports.createUser = async (req, res) => {
 
 // PUT: Memperbarui user berdasarkan ID
 exports.updateUser = async (req, res) => {
-  const { p_namaUsers, p_emailUsers, p_password_users, p_role_users } = req.body;
+  const { p_namaUsers, p_emailUsers, p_passwordUsers, p_roleUsers } = req.body;
   const { id } = req.params;
   try {
-    if (!id || !p_namaUsers || !p_emailUsers || !p_password_users || !p_role_users) {
+    if (!id || !p_namaUsers || !p_emailUsers || !p_passwordUsers || !p_roleUsers) {
       return res
         .status(400)
         .json({ status: "error", message: "Data Tidak Lengkap" });
     }
-    await User.updateUser(id, p_namaUsers, p_emailUsers, p_password_users, p_role_users);
+    await User.updateUser(id, p_namaUsers, p_emailUsers, p_passwordUsers, p_roleUsers);
     return res.json({
       status: 200,
       message: "Berhasil Update Data Users",

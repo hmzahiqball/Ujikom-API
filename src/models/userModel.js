@@ -1,15 +1,31 @@
 const db = require("../config/db");
+const bcrypt = require("bcrypt");
 
 class User {
   static async getAllUsers() {
-    const [rows] = await db.query("SELECT id_user, nama_user, contact_user, role_user, created_at, updated_at FROM tb_users");
+    const [rows] = await db.query(
+      "SELECT id_user, nama_user, contact_user, role_user, status_user, created_at, updated_at FROM tb_users"
+    );
     return rows;
   }
 
-  static async createUser(p_namaUsers, p_contactUsers, p_password_users, p_role_users) {
+  static async findActiveUserByContact(contact_user) {
+    const [rows] = await db.query(
+      "SELECT * FROM tb_users WHERE contact_user = ? AND status_user = 'aktif'",
+      [contact_user]
+    );
+    return rows.length > 0 ? rows[0] : null;
+  }
+
+  static async comparePassword(inputPassword, storedPassword) {
+    return bcrypt.compare(inputPassword, storedPassword);
+  }
+
+  static async createUser(nama_user, contact_user, password_user, role_user, status_user = "aktif") {
+    const hashedPassword = await bcrypt.hash(password_user, 10); // Enkripsi password
     const [result] = await db.query(
-      "INSERT INTO tb_users (nama_user, password_user, contact_user, role_user) VALUES (?, ?, ?, ?)",
-      [p_namaUsers, p_contactUsers, p_password_users, p_role_users]
+      "INSERT INTO tb_users (nama_user, password_user, contact_user, role_user, status_user) VALUES (?, ?, ?, ?, ?)",
+      [nama_user, hashedPassword, contact_user, role_user, status_user]
     );
     return result.insertId;
   }
