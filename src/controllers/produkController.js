@@ -45,7 +45,7 @@ exports.getProdukByID = async (req, res) => {
         p.gambar_produk = `${baseUrl}/api/images/${p.gambar_produk}`;
       }
     });
-    
+
     return res.json({
       status: 200,
       message: "Berhasil Mendapatkan Data Produk",
@@ -89,20 +89,40 @@ exports.updateProduk = async (req, res) => {
       return res.status(400).json({ status: "error", message: err.message });
     }
 
-    const { p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_stokProduk, p_stokMinimumProduk } = req.body;
     const { id } = req.params;
-    const p_gambarProduk = req.file ? req.file.filename : null; // Simpan nama file
+    const { 
+      p_namaProduk, 
+      p_skuProduk, 
+      p_barcodeProduk, 
+      p_deskripsiProduk, 
+      p_hargaProduk, 
+      p_modalProduk, 
+      p_stokProduk, 
+      p_stokMinimumProduk 
+    } = req.body;
+    
+    const p_gambarProduk = req.file ? req.file.filename : null; 
 
     try {
       if (!id || !p_namaProduk || !p_skuProduk || !p_barcodeProduk || !p_deskripsiProduk || !p_hargaProduk || !p_modalProduk || !p_stokProduk || !p_stokMinimumProduk) {
         return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
       }
 
-      await Produk.updateProduk(id, p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_stokProduk, p_stokMinimumProduk, p_gambarProduk);
+      // Ambil data produk lama untuk mendapatkan gambar sebelumnya
+      const existingProduk = await Produk.getProdukByID(id);
+      let gambarProdukFinal = existingProduk.gambar_produk;
+
+      // Jika ada file gambar baru diupload, gunakan file baru
+      if (p_gambarProduk) {
+        gambarProdukFinal = p_gambarProduk;
+      }
+
+      // Update produk dengan gambar yang sudah diperiksa
+      await Produk.updateProduk(id, p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_stokProduk, p_stokMinimumProduk, gambarProdukFinal);
 
       return res.json({
         status: 200,
-        message: "Berhasil Update Data Produk",
+        message: "Berhasil Update Data Produk"
       });
     } catch (error) {
       return res.status(500).json({ status: "error", message: error.message });
