@@ -27,36 +27,39 @@ exports.getAllUsers = async (req, res) => {
 // POST: Melakukan login
 exports.login = async (req, res) => {
   const { p_contactUsers, p_passwordUsers } = req.body;
-  console.log("Request Body:", req.body); // Log request body
+  console.log("Request Body:", req.body);
+
   try {
-    const user = await User.findActiveUserByContact(p_contactUsers);
-    if (!user) {
+    const users = await User.findActiveUserByContact(p_contactUsers);
+
+    if (!users || users.length === 0) {
       return res.status(401).json({ message: "Akun tidak ditemukan atau tidak aktif, coba lagi" });
     }
 
-    const isMatch = await User.comparePassword(p_passwordUsers, user.password_user);
+    const user = users[0];
+
+    // Ambil password asli dari database
+    const rawUserData = await User.getUserById(user.id_user);
+    if (!rawUserData) {
+      return res.status(401).json({ message: "Akun tidak ditemukan untuk validasi password" });
+    }
+
+    const isMatch = await User.comparePassword(p_passwordUsers, rawUserData.password_user);
     if (!isMatch) {
       return res.status(401).json({ message: "Password Salah, Coba Lagi" });
     }
 
-    // Buat URL gambar jika ada
+    // Tambahkan URL gambar di sini
     const baseUrl = `${req.protocol}://${req.get("host")}`;
-    const gambarUserUrl = user.gambar_user ? `${baseUrl}/api/images/${user.gambar_user}` : null;
+    const gambarUrl = user.gambar_user ? `${baseUrl}/api/images/${user.gambar_user}` : null;
+    user.gambar_user = gambarUrl;
 
     return res.json({
       message: "Login berhasil",
-      data: {
-        id_user: user.id_user,
-        nama_user: user.nama_user,
-        contact_user: user.contact_user,
-        role_user: user.role_user,
-        status_user: user.status_user,
-        gambar_user: gambarUserUrl, // Tambahkan URL gambar user
-        created_at: user.created_at,
-        updated_at: user.updated_at,
-      },
+      data: user,
     });
   } catch (error) {
+    console.error("Login Error:", error);
     return res.status(500).json({ message: "Terjadi kesalahan pada server" });
   }
 };

@@ -11,10 +11,60 @@ class User {
 
   static async findActiveUserByContact(contact_user) {
     const [rows] = await db.query(
-      "SELECT * FROM tb_users WHERE contact_user = ? AND status_user = 'aktif'",
+      `SELECT 
+        u.id_user AS user_id, 
+        u.kode_user AS kode_user,
+        u.nama_user AS user_name, 
+        u.contact_user AS user_contact, 
+        u.role_user AS user_role, 
+        u.status_user AS user_status, 
+        u.gambar_user AS user_image, 
+        u.created_at, 
+        u.updated_at, 
+        k.id_karyawan AS employee_id, 
+        k.posisi_karyawan AS position, 
+        k.gaji_karyawan AS salary, 
+        k.alamat_karyawan AS alamat, 
+        s.id_shifts AS shift_id, 
+        s.nama_shifts AS shift_name, 
+        s.start_time AS shift_start_time, 
+        s.end_time AS shift_end_time 
+      FROM 
+        tb_users u 
+      LEFT JOIN 
+        tb_karyawan k ON u.id_user = k.id_user 
+      LEFT JOIN 
+        tb_shifts s ON k.id_shifts = s.id_shifts 
+      WHERE 
+        u.contact_user = ? AND u.status_user = 'aktif'`,
       [contact_user]
     );
-    return rows.length > 0 ? rows[0] : null;
+    
+    const formattedRows = rows.map(row => ({
+        id_user: row.user_id,
+        kode_user: row.kode_user,
+        nama_user: row.user_name,
+        contact_user: row.user_contact,
+        role_user: row.user_role,
+        status_user: row.user_status,
+        created_at: row.created_at,
+        updated_at: row.updated_at,
+        gambar_user: row.user_image,
+        data_user: {
+            id_karyawan: row.employee_id,
+            posisi_karyawan: row.position,
+            gaji_karyawan: row.salary,
+            alamat_karyawan: row.alamat,
+        },
+        data_shift: {
+            id_shift: row.shift_id,
+            nama_shift: row.shift_name,
+            start_time: row.shift_start_time,
+            end_time: row.shift_end_time,
+        },
+    }));
+
+    return formattedRows;
   }
 
   static async getUserById(id_user) {
