@@ -10,7 +10,6 @@ deletePenjualan
 const router = express.Router();
 
 router.get("/", getAllPenjualan);
-router.get("/:id", getPenjualanByID);
 router.post("/", createPenjualan);
 router.put("/:id", updatePenjualan);
 router.delete("/:id", deletePenjualan); 

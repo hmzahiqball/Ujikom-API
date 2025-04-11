@@ -2,27 +2,13 @@ const Penjualan = require("../models/penjualanModel");
 
 exports.getAllPenjualan = async (req, res) => {
   try {
-    const penjualan = await Penjualan.getAllPenjualan();
+    const { idpetugas, tanggal } = req.query;
+    const penjualan = await Penjualan.getAllPenjualan(idpetugas, tanggal);
+    
     if (!penjualan) {
-      return res.status(400).json({ status: 200, message: "Data Tidak Lengkap" });
+      return res.status(400).json({ status: 400, message: "Data tidak ditemukan" });
     }
-    return res.json({
-      status: 200,
-      message: "Berhasil Mendapatkan Data Penjualan",
-      data: penjualan,
-    });
-  } catch (error) {
-    return res.status(500).json({ status: "error", message: error.message });
-  }
-};
 
-exports.getPenjualanByID = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const penjualan = await Penjualan.getPenjualanByID(id);
-    if (!penjualan) {
-      return res.status(400).json({ status: "error", message: "ID Penjualan Tidak Dikenali" });
-    }
     return res.json({
       status: 200,
       message: "Berhasil Mendapatkan Data Penjualan",
