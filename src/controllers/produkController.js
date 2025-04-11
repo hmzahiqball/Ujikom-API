@@ -37,19 +37,19 @@ exports.getProdukByID = async (req, res) => {
         .status(200)
         .json({ status: "200", message: "Data Produk Tidak Tersedia" });
     }
-    
-    // Tambahkan URL gambar dalam response
+
     const baseUrl = `${req.protocol}://${req.get("host")}`;
-    produk.forEach(p => {
-      if (p.gambar_produk) {
-        p.gambar_produk = `${baseUrl}/api/images/${p.gambar_produk}`;
-      }
-    });
+    const formatted = produk.map(p => ({
+      ...p,
+      gambar_produk: p.gambar_produk
+        ? `${baseUrl}/api/images/${p.gambar_produk}`
+        : null,
+    }));
 
     return res.json({
       status: 200,
       message: "Berhasil Mendapatkan Data Produk",
-      data: produk,
+      data: formatted,
     });
   } catch (error) {
     return res.status(500).json({ status: "error", message: error.message });
@@ -62,20 +62,20 @@ exports.createProduk = async (req, res) => {
       return res.status(400).json({ status: "error", message: err.message });
     }
 
-    const { p_idKategori, p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_stokProduk, p_stokMinimumProduk } = req.body;
+    const { p_idKategori, p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_diskonProduk, p_stokProduk, p_stokMinimumProduk, p_statusProduk } = req.body;
     const p_gambarProduk = req.file ? req.file.filename : null; // Simpan nama file
 
     try {
-      if (!p_idKategori || !p_namaProduk || !p_skuProduk || !p_barcodeProduk || !p_deskripsiProduk || !p_hargaProduk || !p_modalProduk || !p_stokProduk || !p_stokMinimumProduk) {
+      if (!p_idKategori || !p_namaProduk || !p_skuProduk || !p_barcodeProduk || !p_deskripsiProduk || !p_hargaProduk || !p_modalProduk || !p_diskonProduk || !p_stokProduk || !p_stokMinimumProduk || !p_gambarProduk || !p_statusProduk) {
         return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
       }
 
-      const produkId = await Produk.createProduk(p_idKategori, p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_stokProduk, p_stokMinimumProduk, p_gambarProduk);
+      const produkId = await Produk.createProduk(p_idKategori, p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_diskonProduk, p_stokProduk, p_stokMinimumProduk, p_statusProduk, p_gambarProduk);
       
       return res.json({
         status: 200,
         message: "Berhasil Menambahkan Data Produk",
-        data: { p_idProduk: produkId, p_idKategori, p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_stokProduk, p_stokMinimumProduk, p_gambarProduk },
+        data: { p_idProduk: produkId, p_idKategori, p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_diskonProduk, p_stokProduk, p_stokMinimumProduk, p_statusProduk, p_gambarProduk },
       });
     } catch (error) {
       return res.status(500).json({ status: "error", message: error.message });
