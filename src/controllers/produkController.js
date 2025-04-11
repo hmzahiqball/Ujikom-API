@@ -4,19 +4,19 @@ const upload = require("../middleware/upload");
 exports.getAllProduk = async (req, res) => {
   try {
     const produk = await Produk.getAllProduk();
-    
-    // Tambahkan URL gambar dalam response
     const baseUrl = `${req.protocol}://${req.get("host")}`;
-    produk.forEach(p => {
-      if (p.gambar_produk) {
-        p.gambar_produk = `${baseUrl}/api/images/${p.gambar_produk}`;
-      }
-    });
+
+    const formatted = produk.map(p => ({
+      ...p,
+      gambar_produk: p.gambar_produk
+        ? `${baseUrl}/api/images/${p.gambar_produk}`
+        : null,
+    }));
 
     return res.json({
       status: 200,
       message: "Berhasil Mendapatkan Data Produk",
-      data: produk,
+      data: formatted,
     });
   } catch (error) {
     return res.status(500).json({ status: "error", message: error.message });

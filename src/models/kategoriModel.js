@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const formatWIB = require("../utils/time");
 
 class Kategori {
   static async getAllKategori() {
@@ -24,12 +25,18 @@ class Kategori {
         WHERE s.id_kategori = ?
       `, [category.p_id_kategori]);
 
+      const subcategoriesFormated = subcategories.map(subcategory => ({
+        ...subcategory,
+        created_at: formatWIB(subcategory.created_at),
+        updated_at: formatWIB(subcategory.updated_at)
+      }));
+
       rows.push({
         id_kategori: category.p_id_kategori,
         nama_kategori: category.p_nama_kategori,
-        data_subkategori: subcategories,
-        created_at: category.created_at,
-        updated_at: category.updated_at
+        data_subkategori: subcategoriesFormated,
+        created_at: formatWIB(category.created_at),
+        updated_at: formatWIB(category.updated_at)
       });
     }
 
