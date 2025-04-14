@@ -113,10 +113,39 @@ class Produk {
     return result.insertId;
   }
 
-  static async updateProduk(p_idProduk, p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_stokProduk, p_stokMinimumProduk, p_gambarProduk) {
+  static async updateProduk(
+    p_idProduk,
+    p_modalProduk,
+    p_hargaProduk,
+    p_diskonProduk,
+    p_stokProduk,
+    p_stokMinimumProduk,
+    p_statusProduk,
+    p_deskripsiProduk,
+    p_gambarProduk
+  ) {
     await db.query(
-      "UPDATE tb_produk SET nama_produk = ?, sku_produk = ?, barcode_produk = ?, deskripsi_produk = ?, harga_produk = ?, modal_produk = ?, stok_produk = ?, stok_minimum_produk = ?, gambar_produk = ? WHERE id_produk = ?",
-      [p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_stokProduk, p_stokMinimumProduk, p_gambarProduk, p_idProduk]
+      `UPDATE tb_produk 
+       SET modal_produk = ?, 
+           harga_produk = ?, 
+           diskon_produk = ?, 
+           stok_produk = ?, 
+           stok_minimum_produk = ?, 
+           status_produk = ?, 
+           deskripsi_produk = ?, 
+           gambar_produk = ?
+       WHERE id_produk = ?`,
+      [
+        p_modalProduk,
+        p_hargaProduk,
+        p_diskonProduk,
+        p_stokProduk,
+        p_stokMinimumProduk,
+        p_statusProduk,
+        p_deskripsiProduk,
+        p_gambarProduk,
+        p_idProduk
+      ]
     );
   }
 

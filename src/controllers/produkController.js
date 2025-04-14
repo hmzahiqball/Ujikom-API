@@ -90,45 +90,61 @@ exports.updateProduk = async (req, res) => {
     }
 
     const { id } = req.params;
-    const { 
-      p_namaProduk, 
-      p_skuProduk, 
-      p_barcodeProduk, 
-      p_deskripsiProduk, 
-      p_hargaProduk, 
-      p_modalProduk, 
-      p_stokProduk, 
-      p_stokMinimumProduk 
+    const {
+      p_modalProduk,
+      p_hargaProduk,
+      p_diskonProduk,
+      p_stokProduk,
+      p_stokMinimumProduk,
+      p_statusProduk,
+      p_deskripsiProduk,
     } = req.body;
-    
-    const p_gambarProduk = req.file ? req.file.filename : null; 
+
+    const p_gambarProduk = req.file ? req.file.filename : null;
 
     try {
-      if (!id || !p_namaProduk || !p_skuProduk || !p_barcodeProduk || !p_deskripsiProduk || !p_hargaProduk || !p_modalProduk || !p_stokProduk || !p_stokMinimumProduk) {
+      // Validasi data minimal
+      if (
+        !id ||
+        !p_modalProduk ||
+        !p_hargaProduk ||
+        p_diskonProduk === undefined ||
+        !p_stokProduk ||
+        !p_stokMinimumProduk ||
+        !p_statusProduk ||
+        !p_deskripsiProduk
+      ) {
         return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
       }
 
-      // Ambil data produk lama untuk mendapatkan gambar sebelumnya
+      // Ambil data produk lama
       const existingProduk = await Produk.getProdukByID(id);
-      let gambarProdukFinal = existingProduk.gambar_produk;
-
-      // Jika ada file gambar baru diupload, gunakan file baru
-      if (p_gambarProduk) {
-        gambarProdukFinal = p_gambarProduk;
+      if (!existingProduk) {
+        return res.status(404).json({ status: "error", message: "Produk tidak ditemukan" });
       }
 
-      // Update produk dengan gambar yang sudah diperiksa
-      await Produk.updateProduk(id, p_namaProduk, p_skuProduk, p_barcodeProduk, p_deskripsiProduk, p_hargaProduk, p_modalProduk, p_stokProduk, p_stokMinimumProduk, gambarProdukFinal);
+      // Gunakan gambar baru jika tersedia, kalau tidak pakai yang lama
+      const gambarProdukFinal = p_gambarProduk ? p_gambarProduk : existingProduk.gambar_produk;
 
-      return res.json({
-        status: 200,
-        message: "Berhasil Update Data Produk"
-      });
+      await Produk.updateProduk(
+        id,
+        p_modalProduk,
+        p_hargaProduk,
+        p_diskonProduk,
+        p_stokProduk,
+        p_stokMinimumProduk,
+        p_statusProduk,
+        p_deskripsiProduk,
+        gambarProdukFinal
+      );
+
+      return res.json({ status: 200, message: "Produk berhasil diupdate" });
     } catch (error) {
       return res.status(500).json({ status: "error", message: error.message });
     }
   });
 };
+
 
 exports.deleteProduk = async (req, res) => {
   const { id } = req.params;
