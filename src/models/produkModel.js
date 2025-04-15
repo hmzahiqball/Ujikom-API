@@ -26,6 +26,7 @@ class Produk {
       FROM tb_produk p
       JOIN tb_subkategori sk ON p.id_kategori = sk.id_subkategori
       JOIN tb_kategori k ON sk.id_kategori = k.id_kategori
+      WHERE p.is_deleted = 0
     `);
   
     // Mapping agar kategori jadi array sesuai permintaan
@@ -77,7 +78,7 @@ class Produk {
       FROM tb_produk p
       JOIN tb_subkategori sk ON p.id_kategori = sk.id_subkategori
       JOIN tb_kategori k ON sk.id_kategori = k.id_kategori
-      WHERE p.id_produk = ? LIMIT 1;
+      WHERE p.is_deleted = 0 AND p.id_produk = ? LIMIT 1;
     `,[p_idProduk]);
   
     // Mapping agar kategori jadi array sesuai permintaan
@@ -122,8 +123,9 @@ class Produk {
     p_stokMinimumProduk,
     p_statusProduk,
     p_deskripsiProduk,
-    p_gambarProduk
+    p_gambarProduk = null // optional
   ) {
+    // Update field lain dulu
     await db.query(
       `UPDATE tb_produk 
        SET modal_produk = ?, 
@@ -132,8 +134,7 @@ class Produk {
            stok_produk = ?, 
            stok_minimum_produk = ?, 
            status_produk = ?, 
-           deskripsi_produk = ?, 
-           gambar_produk = ?
+           deskripsi_produk = ?
        WHERE id_produk = ?`,
       [
         p_modalProduk,
@@ -143,14 +144,23 @@ class Produk {
         p_stokMinimumProduk,
         p_statusProduk,
         p_deskripsiProduk,
-        p_gambarProduk,
         p_idProduk
       ]
     );
+  
+    // Jika ada gambar baru, update gambar_produk
+    if (p_gambarProduk) {
+      await db.query(
+        `UPDATE tb_produk 
+         SET gambar_produk = ? 
+         WHERE id_produk = ?`,
+        [p_gambarProduk, p_idProduk]
+      );
+    }
   }
 
   static async deleteProduk(p_idProduk) {
-    await db.query("DELETE FROM tb_produk WHERE id_produk = ?", [p_idProduk]);
+    await db.query("UPDATE tb_produk SET is_deleted = 1 WHERE id_produk = ?", [p_idProduk]);
   }
 }
 

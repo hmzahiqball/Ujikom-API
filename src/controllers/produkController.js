@@ -101,6 +101,18 @@ exports.updateProduk = async (req, res) => {
     } = req.body;
 
     const p_gambarProduk = req.file ? req.file.filename : null;
+    
+    console.log("data yang diterima:", {
+      id,
+      p_modalProduk,
+      p_hargaProduk,
+      p_diskonProduk,
+      p_stokProduk,
+      p_stokMinimumProduk,
+      p_statusProduk,
+      p_deskripsiProduk,
+      p_gambarProduk,
+    });
 
     try {
       // Validasi data minimal
@@ -117,14 +129,11 @@ exports.updateProduk = async (req, res) => {
         return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
       }
 
-      // Ambil data produk lama
+      // Cek data lama
       const existingProduk = await Produk.getProdukByID(id);
       if (!existingProduk) {
         return res.status(404).json({ status: "error", message: "Produk tidak ditemukan" });
       }
-
-      // Gunakan gambar baru jika tersedia, kalau tidak pakai yang lama
-      const gambarProdukFinal = p_gambarProduk ? p_gambarProduk : existingProduk.gambar_produk;
 
       await Produk.updateProduk(
         id,
@@ -135,7 +144,7 @@ exports.updateProduk = async (req, res) => {
         p_stokMinimumProduk,
         p_statusProduk,
         p_deskripsiProduk,
-        gambarProdukFinal
+        p_gambarProduk // hanya diupdate di model jika tidak null
       );
 
       return res.json({ status: 200, message: "Produk berhasil diupdate" });
