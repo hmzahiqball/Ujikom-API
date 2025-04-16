@@ -1,9 +1,14 @@
 const db = require("../config/db");
+const formatWIB = require("../utils/time");
 
 class Shifts {
   static async getAllShifts() {
     const [rows] = await db.query("SELECT id_shifts, nama_shifts, start_time, end_time, created_at, updated_at FROM tb_shifts");
-    return rows;
+    return rows.map(row => ({
+      ...row,
+      created_at: formatWIB(row.created_at),
+      updated_at: formatWIB(row.updated_at)
+    }));
   }
 
   static async getShiftsByID(p_idShifts) {

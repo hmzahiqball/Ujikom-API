@@ -101,18 +101,6 @@ exports.updateProduk = async (req, res) => {
     } = req.body;
 
     const p_gambarProduk = req.file ? req.file.filename : null;
-    
-    console.log("data yang diterima:", {
-      id,
-      p_modalProduk,
-      p_hargaProduk,
-      p_diskonProduk,
-      p_stokProduk,
-      p_stokMinimumProduk,
-      p_statusProduk,
-      p_deskripsiProduk,
-      p_gambarProduk,
-    });
 
     try {
       // Validasi data minimal

@@ -3,10 +3,22 @@ const Karyawan = require("../models/karyawanModel");
 exports.getAllKaryawan = async (req, res) => {
   try {
     const karyawan = await Karyawan.getAllKaryawan();
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+
+    const formatted = karyawan.map(p => ({
+      ...p,
+      data_user: {
+        ...p.data_user,
+        gambar_user: p.data_user.gambar_user
+          ? `${baseUrl}/api/images/${p.data_user.gambar_user}`
+          : null,
+      },
+    }));
+
     return res.json({
       status: 200,
       message: "Berhasil Mendapatkan Data Karyawan",
-      data: karyawan,
+      data: formatted,
     });
   } catch (error) {
     return res.status(500).json({ status: "error", message: error.message });

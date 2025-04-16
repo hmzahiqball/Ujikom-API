@@ -95,6 +95,13 @@ class User {
     );
   }
 
+  static async updateUserWithoutPassword(p_idUsers, p_namaUsers, p_contactUsers, p_role_users, p_gambar_users) {
+    await db.query(
+      "UPDATE tb_users SET nama_user = ?, contact_user = ?, role_user = ?, gambar_user = ? WHERE id_user = ?",
+      [p_namaUsers, p_contactUsers, p_role_users, p_gambar_users, p_idUsers]
+    );
+  }
+
   static async deleteUser(p_idUsers) {
     await db.query("DELETE FROM tb_users WHERE id_user = ?", [p_idUsers]);
   }

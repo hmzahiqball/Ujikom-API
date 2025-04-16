@@ -103,7 +103,7 @@ exports.updateUser = async (req, res) => {
     const p_gambarUser = req.file ? req.file.filename : null; // Simpan nama file baru jika diupload
 
     try {
-      if (!id || !p_namaUsers || !p_emailUsers || !p_passwordUsers || !p_roleUsers) {
+      if (!id || !p_namaUsers || !p_emailUsers || !p_roleUsers) {
         return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
       }
 
@@ -116,7 +116,12 @@ exports.updateUser = async (req, res) => {
         gambarUserFinal = p_gambarUser;
       }
 
-      await User.updateUser(id, p_namaUsers, p_emailUsers, p_passwordUsers, p_roleUsers, gambarUserFinal);
+      // Jika password tidak dikirim (kosong), update tanpa password
+      if (!p_passwordUsers || p_passwordUsers.trim() === "") {
+        await User.updateUserWithoutPassword(id, p_namaUsers, p_emailUsers, p_roleUsers, gambarUserFinal);
+      } else {
+        await User.updateUser(id, p_namaUsers, p_emailUsers, p_passwordUsers, p_roleUsers, gambarUserFinal);
+      }
 
       return res.json({
         status: 200,
