@@ -122,23 +122,29 @@ class Karyawan {
 
   static async createKaryawan(userData, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts) {
     try {
-        // 1. Tambahkan data pengguna ke tb_users
-        const [userResult] = await db.query(
-            "INSERT INTO tb_users (nama_user, password_user, contact_user, role_user) VALUES (?, ?, ?, ?)",
-            [userData.p_namaUsers, userData.p_passwordUsers, userData.p_contactUsers, userData.p_roleUsers]
-        );
-        const userId = userResult.insertId;
-
-        // 2. Tambahkan data karyawan ke tb_karyawan
-        const [karyawanResult] = await db.query(
-            "INSERT INTO tb_karyawan (id_user, posisi_karyawan, gaji_karyawan, alamat_karyawan, id_shifts) VALUES (?, ?, ?, ?)",
-            [userId, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts]
-        );
-        const karyawanId = karyawanResult.insertId;
-
-        return { userId, karyawanId };
+      const [userResult] = await db.query(
+        "INSERT INTO tb_users (kode_user, nama_user, password_user, contact_user, role_user, gambar_user, status_user) VALUES (?, ?, ?, ?, ?, ?, 'aktif')",
+        [
+          userData.p_kodeUser,
+          userData.p_namaUsers,
+          userData.p_passwordUsers,
+          userData.p_contactUsers,
+          userData.p_roleUsers,
+          userData.p_gambarUser
+        ]
+      );
+      const userId = userResult.insertId;
+  
+      const [karyawanResult] = await db.query(
+        "INSERT INTO tb_karyawan (id_user, posisi_karyawan, gaji_karyawan, alamat_karyawan, id_shifts) VALUES (?, ?, ?, ?, ?)",
+        [userId, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts]
+      );
+      const karyawanId = karyawanResult.insertId;
+  
+      return { userId, karyawanId };
     } catch (error) {
-        return "Gagal menambahkan karyawan";
+      console.error("DB Error:", error);
+      return { status: 500, message: "Gagal menambahkan data", error };
     }
   }
 

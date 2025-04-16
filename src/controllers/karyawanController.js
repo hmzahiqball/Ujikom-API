@@ -1,4 +1,5 @@
 const Karyawan = require("../models/karyawanModel");
+const upload = require("../middleware/upload");
 
 exports.getAllKaryawan = async (req, res) => {
   try {
@@ -50,28 +51,88 @@ exports.getKaryawanByID = async (req, res) => {
 };
 
 exports.createKaryawan = async (req, res) => {
-    const { p_userKaryawan, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts } = req.body;
-    try {
-        if (!p_userKaryawan || !p_posisiKaryawan || !p_gajiKaryawan || !p_alamatKaryawan || !p_idShifts) {
-            return res
-                .status(400)
-                .json({ status: "error", message: "Data Tidak Lengkap" });
-        }
+  upload.single("p_gambarUser")(req, res, async function (err) {
+    const {
+      p_namaUsers,
+      p_passwordUsers,
+      p_contactUsers,
+      p_roleUsers,
+      p_posisiKaryawan,
+      p_gajiKaryawan,
+      p_alamatKaryawan,
+      p_idShifts
+    } = req.body;
 
-        const result = await Karyawan.createKaryawan(p_userKaryawan, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts);
+    const p_gambarUser = req.file ? req.file.filename : null;
 
-        if (result.status === 500) {
-            return res.status(500).json({ status: "error", message: result.message, error: result.error });
-        }
-
-        return res.status(201).json({
-            status: 201,
-            message: "Berhasil Menambahkan Data Karyawan",
-            data: { p_idKaryawan: result.karyawan_id, p_idUsers: result.user_id, p_userKaryawan, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts },
-        });
-    } catch (error) {
-        return res.status(500).json({ status: "error", message: error.message });
+    if (
+      !p_namaUsers ||
+      !p_passwordUsers ||
+      !p_contactUsers ||
+      !p_roleUsers ||
+      !p_posisiKaryawan ||
+      !p_gajiKaryawan ||
+      !p_alamatKaryawan ||
+      !p_idShifts
+    ) {
+      return res.status(400).json({ status: "error", message: "Data tidak lengkap" });
     }
+
+    // Generate kode_user dari nama
+    const generateKodeUser = (nama) => {
+      const vokal = ['A', 'I', 'U', 'E', 'O'];
+      return nama
+        .split(" ")
+        .map(kata => kata
+          .toUpperCase()
+          .split("")
+          .filter(huruf => !vokal.includes(huruf))
+          .join("")
+        )
+        .join("");
+    };
+
+    const p_kodeUser = generateKodeUser(p_namaUsers);
+
+    const userData = {
+      p_kodeUser,
+      p_namaUsers,
+      p_passwordUsers,
+      p_contactUsers,
+      p_roleUsers,
+      p_gambarUser
+    };
+
+    try {
+      const result = await Karyawan.createKaryawan(
+        userData,
+        p_posisiKaryawan,
+        p_gajiKaryawan,
+        p_alamatKaryawan,
+        p_idShifts
+      );
+
+      if (result.status === 500) {
+        return res.status(500).json({ status: "error", message: result.message });
+      }
+
+      return res.status(201).json({
+        status: 201,
+        message: "Berhasil menambahkan data karyawan dan user",
+        data: {
+          p_idKaryawan: result.karyawanId,
+          p_idUsers: result.userId,
+          ...userData,
+          p_posisiKaryawan,
+          p_gajiKaryawan,
+          p_alamatKaryawan,
+          p_idShifts
+        }
+      });
+    } catch (error) {
+      return res.status(500).json({ status: "error", message: error.message });
+    }
+  });
 };
 
 exports.updateKaryawan = async (req, res) => {
