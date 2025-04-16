@@ -120,7 +120,7 @@ class Karyawan {
     return formattedRows;
   }
 
-  static async createKaryawan(userData, p_posisiKaryawan, p_gajiKaryawan, p_idShifts) {
+  static async createKaryawan(userData, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts) {
     try {
         // 1. Tambahkan data pengguna ke tb_users
         const [userResult] = await db.query(
@@ -131,8 +131,8 @@ class Karyawan {
 
         // 2. Tambahkan data karyawan ke tb_karyawan
         const [karyawanResult] = await db.query(
-            "INSERT INTO tb_karyawan (id_user, posisi_karyawan, gaji_karyawan, id_shifts) VALUES (?, ?, ?, ?)",
-            [userId, p_posisiKaryawan, p_gajiKaryawan, p_idShifts]
+            "INSERT INTO tb_karyawan (id_user, posisi_karyawan, gaji_karyawan, alamat_karyawan, id_shifts) VALUES (?, ?, ?, ?)",
+            [userId, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts]
         );
         const karyawanId = karyawanResult.insertId;
 
@@ -142,10 +142,10 @@ class Karyawan {
     }
   }
 
-  static async updateKaryawan(p_idKaryawan, p_posisiKaryawan, p_gajiKaryawan, p_idShifts) {
+  static async updateKaryawan(p_idKaryawan, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts) {
     await db.query(
-      "UPDATE tb_karyawan SET posisi_karyawan = ?, gaji_karyawan = ?, id_shifts = ? WHERE id_karyawan = ?",
-      [p_posisiKaryawan, p_gajiKaryawan, p_idShifts, p_idKaryawan]
+      "UPDATE tb_karyawan SET posisi_karyawan = ?, gaji_karyawan = ?, alamat_karyawan = ?, id_shifts = ? WHERE id_karyawan = ?",
+      [p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts, p_idKaryawan]
     );
   }
 

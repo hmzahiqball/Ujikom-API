@@ -50,15 +50,15 @@ exports.getKaryawanByID = async (req, res) => {
 };
 
 exports.createKaryawan = async (req, res) => {
-    const { p_userKaryawan, p_posisiKaryawan, p_gajiKaryawan, p_idShifts } = req.body;
+    const { p_userKaryawan, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts } = req.body;
     try {
-        if (!p_userKaryawan || !p_posisiKaryawan || !p_gajiKaryawan || !p_idShifts) {
+        if (!p_userKaryawan || !p_posisiKaryawan || !p_gajiKaryawan || !p_alamatKaryawan || !p_idShifts) {
             return res
                 .status(400)
                 .json({ status: "error", message: "Data Tidak Lengkap" });
         }
 
-        const result = await Karyawan.createKaryawan(p_userKaryawan, p_posisiKaryawan, p_gajiKaryawan, p_idShifts);
+        const result = await Karyawan.createKaryawan(p_userKaryawan, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts);
 
         if (result.status === 500) {
             return res.status(500).json({ status: "error", message: result.message, error: result.error });
@@ -67,7 +67,7 @@ exports.createKaryawan = async (req, res) => {
         return res.status(201).json({
             status: 201,
             message: "Berhasil Menambahkan Data Karyawan",
-            data: { p_idKaryawan: result.karyawan_id, p_idUsers: result.user_id, p_userKaryawan, p_posisiKaryawan, p_gajiKaryawan, p_idShifts },
+            data: { p_idKaryawan: result.karyawan_id, p_idUsers: result.user_id, p_userKaryawan, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts },
         });
     } catch (error) {
         return res.status(500).json({ status: "error", message: error.message });
@@ -75,15 +75,15 @@ exports.createKaryawan = async (req, res) => {
 };
 
 exports.updateKaryawan = async (req, res) => {
-  const { p_posisiKaryawan, p_gajiKaryawan, p_idShifts } = req.body;
+  const { p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts } = req.body;
   const { id } = req.params;
   try {
-    if (!id || !p_posisiKaryawan || !p_gajiKaryawan || !p_idShifts) {
+    if (!id || !p_posisiKaryawan || !p_gajiKaryawan || !p_alamatKaryawan || !p_idShifts) {
       return res
         .status(400)
         .json({ status: "error", message: "Data Tidak Lengkap" });
     }
-    await Karyawan.updateKaryawan(id, p_posisiKaryawan, p_gajiKaryawan, p_idShifts);
+    await Karyawan.updateKaryawan(id, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts);
     return res.json({
       status: 200,
       message: "Berhasil Update Data Karyawan",
