@@ -27,7 +27,9 @@ class Karyawan {
         JOIN
             tb_users u ON k.id_user = u.id_user
         JOIN
-            tb_shifts s ON k.id_shifts = s.id_shifts;
+            tb_shifts s ON k.id_shifts = s.id_shifts
+        WHERE
+            u.status_user = 'aktif';
     `);
 
     const formattedRows = rows.map(row => ({
@@ -121,13 +123,14 @@ class Karyawan {
   }
 
   static async createKaryawan(userData, p_posisiKaryawan, p_gajiKaryawan, p_alamatKaryawan, p_idShifts) {
+    const hashedPassword = await bcrypt.hash(userData.p_passwordUsers, 10); // Enkripsi password
     try {
       const [userResult] = await db.query(
         "INSERT INTO tb_users (kode_user, nama_user, password_user, contact_user, role_user, gambar_user, status_user) VALUES (?, ?, ?, ?, ?, ?, 'aktif')",
         [
           userData.p_kodeUser,
           userData.p_namaUsers,
-          userData.p_passwordUsers,
+          hashedPassword,
           userData.p_contactUsers,
           userData.p_roleUsers,
           userData.p_gambarUser
@@ -162,12 +165,9 @@ class Karyawan {
       throw new Error("Karyawan tidak ditemukan");
     }
     const userId = rows[0].id_user;
-    
-    // Delete from tb_karyawan based on id_karyawan
-    await db.query("DELETE FROM tb_karyawan WHERE id_karyawan = ?", [p_idKaryawan]);
-    
-    // Delete from tb_users based on id_user
-    await db.query("DELETE FROM tb_users WHERE id_user = ?", [userId]);
+
+    // Update status_user to 'non-aktif' in tb_users based on id_user
+    await db.query("UPDATE tb_users SET status_user = 'non-aktif' WHERE id_user = ?", [userId]);
   }
 }
 
