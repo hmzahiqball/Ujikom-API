@@ -88,17 +88,17 @@ class User {
     return result.insertId;
   }
 
-  static async updateUser(p_idUsers, p_namaUsers, p_contactUsers, p_password_users, p_role_users, p_gambar_users) {
+  static async updateUser(p_idUsers, p_contactUsers, p_password_users, p_role_users, p_gambar_users) {
     await db.query(
-      "UPDATE tb_users SET nama_user = ?, contact_user = ?, password_user = ?, role_user = ?, gambar_user = ? WHERE id_user = ?",
-      [p_namaUsers, p_contactUsers, p_password_users, p_role_users, p_gambar_users, p_idUsers]
+      "UPDATE tb_users SET contact_user = ?, password_user = ?, role_user = ?, gambar_user = ? WHERE id_user = ?",
+      [p_contactUsers, p_password_users, p_role_users, p_gambar_users, p_idUsers]
     );
   }
 
-  static async updateUserWithoutPassword(p_idUsers, p_namaUsers, p_contactUsers, p_role_users, p_gambar_users) {
+  static async updateUserWithoutPassword(p_idUsers, p_contactUsers, p_role_users, p_gambar_users) {
     await db.query(
-      "UPDATE tb_users SET nama_user = ?, contact_user = ?, role_user = ?, gambar_user = ? WHERE id_user = ?",
-      [p_namaUsers, p_contactUsers, p_role_users, p_gambar_users, p_idUsers]
+      "UPDATE tb_users SET contact_user = ?, role_user = ?, gambar_user = ? WHERE id_user = ?",
+      [p_contactUsers, p_role_users, p_gambar_users, p_idUsers]
     );
   }
 

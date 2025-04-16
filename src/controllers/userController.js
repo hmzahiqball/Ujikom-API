@@ -71,19 +71,19 @@ exports.createUser = async (req, res) => {
       return res.status(400).json({ status: "error", message: err.message });
     }
 
-    const { p_namaUsers, p_emailUsers, p_passwordUsers, p_roleUsers } = req.body;
+    const { p_namaUsers, p_contactUsers, p_passwordUsers, p_roleUsers } = req.body;
     const p_gambarUser = req.file ? req.file.filename : null; // Simpan nama file gambar
 
     try {
-      if (!p_namaUsers || !p_emailUsers || !p_passwordUsers || !p_roleUsers) {
+      if (!p_namaUsers || !p_contactUsers || !p_passwordUsers || !p_roleUsers) {
         return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
       }
 
-      const userId = await User.createUser(p_namaUsers, p_emailUsers, p_passwordUsers, p_roleUsers, p_gambarUser);
+      const userId = await User.createUser(p_namaUsers, p_contactUsers, p_passwordUsers, p_roleUsers, p_gambarUser);
       return res.json({
         status: 200,
         message: "Berhasil Menambahkan Data Users",
-        data: { p_idUser: userId, p_namaUsers, p_emailUsers, p_roleUsers, p_gambarUser },
+        data: { p_idUser: userId, p_namaUsers, p_contactUsers, p_roleUsers, p_gambarUser },
       });
     } catch (error) {
       return res.status(500).json({ status: "error", message: error.message });
@@ -99,11 +99,11 @@ exports.updateUser = async (req, res) => {
     }
 
     const { id } = req.params;
-    const { p_namaUsers, p_emailUsers, p_passwordUsers, p_roleUsers } = req.body;
+    const { p_contactUsers, p_passwordUsers, p_roleUsers } = req.body;
     const p_gambarUser = req.file ? req.file.filename : null; // Simpan nama file baru jika diupload
 
     try {
-      if (!id || !p_namaUsers || !p_emailUsers || !p_roleUsers) {
+      if (!id || !p_contactUsers || !p_roleUsers) {
         return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
       }
 
@@ -118,9 +118,9 @@ exports.updateUser = async (req, res) => {
 
       // Jika password tidak dikirim (kosong), update tanpa password
       if (!p_passwordUsers || p_passwordUsers.trim() === "") {
-        await User.updateUserWithoutPassword(id, p_namaUsers, p_emailUsers, p_roleUsers, gambarUserFinal);
+        await User.updateUserWithoutPassword(id, p_contactUsers, p_roleUsers, gambarUserFinal);
       } else {
-        await User.updateUser(id, p_namaUsers, p_emailUsers, p_passwordUsers, p_roleUsers, gambarUserFinal);
+        await User.updateUser(id, p_contactUsers, p_passwordUsers, p_roleUsers, gambarUserFinal);
       }
 
       return res.json({
