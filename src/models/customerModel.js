@@ -1,9 +1,14 @@
 const db = require("../config/db");
+const formatWIB = require("../utils/time");
 
 class Customer {
   static async getAllCustomers() {
     const [rows] = await db.query("SELECT id_customers, nama_customers, telp_customers, email_customers, alamat_customers, status_customers, created_at, updated_at FROM tb_customers");
-    return rows;
+    return rows.map(row => ({
+      ...row,
+      created_at: formatWIB(row.created_at),
+      updated_at: formatWIB(row.updated_at),
+    }));
   }
 
   static async createCustomer(p_namaCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers) {
