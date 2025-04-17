@@ -27,7 +27,7 @@ class Customer {
   }
 
   static async deleteCustomer(p_idCustomers) {
-    await db.query("DELETE FROM tb_customers WHERE id_customers = ?", [p_idCustomers]);
+    await db.query("UPDATE tb_customers SET status_customers = 'non-aktif WHERE id_customers = ?", [p_idCustomers]);
   }
 }
 
