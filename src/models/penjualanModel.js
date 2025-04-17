@@ -167,6 +167,12 @@ class Penjualan {
             "INSERT INTO tb_detail_penjualan (id_penjualan, id_produk, kuantitas, harga, subtotal, diskon_produk) VALUES (?, ?, ?, ?, ?, ?)",
             [penjualanId, p_idProduk, p_kuantitas, p_harga, p_subTotal, p_diskonProduk]
           );
+
+          // Kurangi stok produk
+          await connection.query(
+            "UPDATE tb_produk SET stok_produk = stok_produk - ? WHERE id_produk = ?",
+            [p_kuantitas, p_idProduk]
+          );
         }
       
         await connection.commit();
