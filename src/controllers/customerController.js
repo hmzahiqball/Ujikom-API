@@ -14,18 +14,18 @@ exports.getAllCustomers = async (req, res) => {
 };
 
 exports.createCustomer = async (req, res) => {
-  const { p_namaCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers } = req.body;
+  const { p_namaCustomers, p_genderCustomers, p_tglLahirCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers } = req.body;
   try {
-    if (!p_namaCustomers || !p_telpCustomers || !p_emailCustomers || !p_alamatCustomers) {
+    if (!p_namaCustomers || !p_genderCustomers || !p_tglLahirCustomers || !p_telpCustomers || !p_emailCustomers || !p_alamatCustomers) {
       return res
         .status(400)
         .json({ status: "error", message: "Data Tidak Lengkap" });
     }
-    const userId = await Customer.createCustomer(p_namaCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers);
+    const userId = await Customer.createCustomer(p_namaCustomers, p_genderCustomers, p_tglLahirCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers);
     return res.json({
       status: 200,
       message: "Berhasil Menambahkan Data Customers",
-      data: { p_idCustomers: userId, p_namaCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers },
+      data: { p_idCustomers: userId, p_namaCustomers, p_genderCustomers, p_tglLahirCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers },
     });
   } catch (error) {
     return res.status(500).json({ status: "error", message: error.message });

@@ -3,7 +3,7 @@ const formatWIB = require("../utils/time");
 
 class Customer {
   static async getAllCustomers() {
-    const [rows] = await db.query("SELECT id_customers, nama_customers, gender_customers, tglLahir_customers, telp_customers, email_customers, alamat_customers, status_customers, created_at, updated_at FROM tb_customers");
+    const [rows] = await db.query("SELECT id_customers, nama_customers, gender_customers, DATE_FORMAT(tglLahir_customers, '%Y-%m-%d') AS tglLahir_customers, telp_customers, email_customers, alamat_customers, status_customers, created_at, updated_at FROM tb_customers");
     return rows.map(row => ({
       ...row,
       created_at: formatWIB(row.created_at),
@@ -11,10 +11,10 @@ class Customer {
     }));
   }
 
-  static async createCustomer(p_namaCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers) {
+  static async createCustomer(p_namaCustomers, p_genderCustomers, p_tglLahirCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers) {
     const [result] = await db.query(
-      "INSERT INTO tb_customers (nama_customers, telp_customers, email_customers, alamat_customers, status_customers) VALUES (?, ?, ?, ?, 'aktif')",
-      [p_namaCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers]
+      "INSERT INTO tb_customers (nama_customers, gender_customers, tglLahir_customers, telp_customers, email_customers, alamat_customers, status_customers) VALUES (?, ?, ?, ?, 'aktif')",
+      [p_namaCustomers, p_genderCustomers, p_tglLahirCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers]
     );
     return result.insertId;
   }
