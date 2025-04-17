@@ -33,15 +33,15 @@ exports.createCustomer = async (req, res) => {
 };
 
 exports.updateCustomer = async (req, res) => {
-  const { p_namaCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers, p_statusCustomers } = req.body;
+  const { p_telpCustomers, p_emailCustomers, p_alamatCustomers, p_statusCustomers } = req.body;
   const { id } = req.params;
   try {
-    if (!id || !p_namaCustomers || !p_telpCustomers || !p_emailCustomers || !p_alamatCustomers || !p_statusCustomers) {
+    if (!id || !p_telpCustomers || !p_emailCustomers || !p_alamatCustomers || !p_statusCustomers) {
       return res
         .status(400)
         .json({ status: "error", message: "Data Tidak Lengkap" });
     }
-    await Customer.updateCustomer(id, p_namaCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers, p_statusCustomers);
+    await Customer.updateCustomer(id, p_telpCustomers, p_emailCustomers, p_alamatCustomers, p_statusCustomers);
     return res.json({
       status: 200,
       message: "Berhasil Update Data Customers",

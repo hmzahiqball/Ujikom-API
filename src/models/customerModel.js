@@ -13,16 +13,16 @@ class Customer {
 
   static async createCustomer(p_namaCustomers, p_genderCustomers, p_tglLahirCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers) {
     const [result] = await db.query(
-      "INSERT INTO tb_customers (nama_customers, gender_customers, tglLahir_customers, telp_customers, email_customers, alamat_customers, status_customers) VALUES (?, ?, ?, ?, 'aktif')",
+      "INSERT INTO tb_customers (nama_customers, gender_customers, tglLahir_customers, telp_customers, email_customers, alamat_customers, status_customers) VALUES (?, ?, ?, ?, ?, ?, 'aktif')",
       [p_namaCustomers, p_genderCustomers, p_tglLahirCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers]
     );
     return result.insertId;
   }
 
-  static async updateCustomer(p_idCustomers, p_namaCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers, p_statusCustomers) {
+  static async updateCustomer(p_idCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers, p_statusCustomers) {
     await db.query(
-      "UPDATE tb_customers SET nama_customers = ?, telp_customers = ?, email_customers = ?, alamat_customers = ?, status_customers = ? WHERE id_customers = ?",
-      [p_namaCustomers, p_telpCustomers, p_emailCustomers, p_alamatCustomers, p_statusCustomers, p_idCustomers]
+      "UPDATE tb_customers SET telp_customers = ?, email_customers = ?, alamat_customers = ?, status_customers = ? WHERE id_customers = ?",
+      [p_telpCustomers, p_emailCustomers, p_alamatCustomers, p_statusCustomers, p_idCustomers]
     );
   }
 
