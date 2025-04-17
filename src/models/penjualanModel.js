@@ -116,36 +116,69 @@ class Penjualan {
     return Object.values(penjualan);
   }
 
-  static async createPenjualan(p_idCustomers, p_idKaryawan, p_totalHarga, p_details, p_tanggal) {
-        const connection = await db.getConnection();
-        try {
-          await connection.beginTransaction();
-
-          // Insert into tb_penjualan
-          const [penjualanResult] = await connection.query(
-            "INSERT INTO tb_penjualan (id_customers, id_karyawan, total_harga, status_pembayaran, tanggal_penjualan) VALUES (?, ?, ?, 'Success', ?)",
-            [p_idCustomers, p_idKaryawan, p_totalHarga, p_tanggal]
-          );
-          const penjualanId = penjualanResult.insertId;
+  static async createPenjualan({
+      idCustomers,
+      idKaryawan,
+      totalHarga,
+      totalBayar,
+      totalKembalian,
+      diskon,
+      detailPenjualan,
+      tanggal
+    }) {
+      const connection = await db.getConnection();
+      try {
+        await connection.beginTransaction();
+      
+        // Generate kode penjualan (misal: PNJ-20250417-0001)
+        const datePart = new Date().toISOString().slice(0,10).replace(/-/g, '');
+        const [kodeResult] = await connection.query("SELECT COUNT(*) as total FROM tb_penjualan WHERE DATE(tanggal_penjualan) = CURDATE()");
+        const urutan = String(kodeResult[0].total + 1).padStart(4, '0');
         
-          // Insert into tb_detail_pembelian
-          for (const detail of p_details) {
-            const { p_idProduk, p_kuantitas, p_harga, p_subTotal } = detail;
-            await connection.query(
-              "INSERT INTO tb_detail_penjualan (id_penjualan, id_produk, kuantitas, harga, subtotal) VALUES (?, ?, ?, ?, ?)",
-              [penjualanId, p_idProduk, p_kuantitas, p_harga, p_subTotal]
-            );
-          }
+        // Ambil kode_user dari id_karyawan → id_user → kode_user
+        const [userKodeResult] = await connection.query(`
+          SELECT u.kode_user
+          FROM tb_karyawan k
+          JOIN tb_users u ON k.id_user = u.id_user
+          WHERE k.id_karyawan = ?
+        `, [idKaryawan]);
 
-          await connection.commit();
-          return penjualanId;
-        } catch (error) {
-          await connection.rollback();
-          throw error;
-        } finally {
-          connection.release();
+        if (userKodeResult.length === 0) {
+          throw new Error('Kode user tidak ditemukan untuk karyawan ini');
         }
+
+        const kodeUser = userKodeResult[0].kode_user;
+        const kodePenjualan = `${kodeUser}-${datePart}-${urutan}`;
+      
+        // Insert tb_penjualan
+        const [penjualanResult] = await connection.query(
+          `INSERT INTO tb_penjualan 
+            (id_customers, id_karyawan, kode_penjualan, total_harga, total_bayar, total_kembalian, diskon_penjualan, status_pembayaran, tanggal_penjualan)
+           VALUES (?, ?, ?, ?, ?, ?, ?, 'Success', ?)`,
+          [idCustomers, idKaryawan, kodePenjualan, totalHarga, totalBayar, totalKembalian, diskon, tanggal]
+        );
+      
+        const penjualanId = penjualanResult.insertId;
+      
+        // Insert ke detail penjualan
+        for (const detail of detailPenjualan) {
+          const { p_idProduk, p_kuantitas, p_harga, p_subTotal, p_diskonProduk } = detail;
+          await connection.query(
+            "INSERT INTO tb_detail_penjualan (id_penjualan, id_produk, kuantitas, harga, subtotal, diskon_produk) VALUES (?, ?, ?, ?, ?, ?)",
+            [penjualanId, p_idProduk, p_kuantitas, p_harga, p_subTotal, p_diskonProduk]
+          );
+        }
+      
+        await connection.commit();
+        return penjualanId;
+      } catch (error) {
+        await connection.rollback();
+        throw error;
+      } finally {
+        connection.release();
+      }
     }
+  
     
     static async updatePenjualan(p_idPenjualan, p_idCustomers, p_idKaryawan, p_totalHarga, p_statusPenjualan) {
       await db.query(

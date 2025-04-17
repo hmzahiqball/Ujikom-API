@@ -33,7 +33,7 @@ exports.login = async (req, res) => {
     const users = await User.findActiveUserByContact(p_contactUsers);
 
     if (!users || users.length === 0) {
-      return res.status(401).json({ message: "Akun tidak ditemukan atau tidak aktif, coba lagi" });
+      return res.status(200).json({ message: "Akun tidak ditemukan atau tidak aktif, coba lagi" });
     }
 
     const user = users[0];
@@ -41,12 +41,12 @@ exports.login = async (req, res) => {
     // Ambil password asli dari database
     const rawUserData = await User.getUserById(user.id_user);
     if (!rawUserData) {
-      return res.status(401).json({ message: "Akun tidak ditemukan untuk validasi password" });
+      return res.status(200).json({ message: "Akun tidak ditemukan untuk validasi password" });
     }
 
     const isMatch = await User.comparePassword(p_passwordUsers, rawUserData.password_user);
     if (!isMatch) {
-      return res.status(401).json({ message: "Password Salah, Coba Lagi" });
+      return res.status(200).json({ message: "Password Salah, Coba Lagi" });
     }
 
     // Tambahkan URL gambar di sini

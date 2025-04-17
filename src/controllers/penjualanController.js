@@ -20,21 +20,55 @@ exports.getAllPenjualan = async (req, res) => {
 };
 
 exports.createPenjualan = async (req, res) => {
-    const { p_idCustomers, p_idKaryawan, p_totalHarga, p_detailPenjualan, p_tanggal } = req.body;
-    try {
-      if (!p_idCustomers || !p_idKaryawan || !p_totalHarga || !p_detailPenjualan || !p_tanggal) {
-        return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
-      }
-      const penjualanId = await Penjualan.createPenjualan(p_idCustomers, p_idKaryawan, p_totalHarga, p_detailPenjualan, p_tanggal);
-      return res.json({
-        status: 200,
-        message: "Berhasil Menambahkan Data Penjualan",
-        data: { p_idPenjualan: penjualanId, p_idCustomers, p_idKaryawan, p_tanggal, p_totalHarga, p_statusPembelian: 'Success', p_detailPenjualan },
-      });
-    } catch (error) {
-      return res.status(500).json({ status: "error", message: error.message });
+  const {
+    p_idCustomers,
+    p_idKaryawan,
+    p_totalHarga,
+    p_totalBayar,
+    p_totalKembalian,
+    p_diskon,
+    p_detailPenjualan,
+    p_tanggal
+  } = req.body;
+
+  try {
+    // Validasi wajib
+    if (!p_idCustomers || !p_idKaryawan || !p_totalHarga || !p_totalBayar || !p_detailPenjualan || !p_tanggal) {
+      return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
     }
-  };
+
+    const penjualanId = await Penjualan.createPenjualan({
+      idCustomers: p_idCustomers,
+      idKaryawan: p_idKaryawan,
+      totalHarga: p_totalHarga,
+      totalBayar: p_totalBayar,
+      totalKembalian: p_totalKembalian || 0,
+      diskon: p_diskon || 0,
+      detailPenjualan: p_detailPenjualan,
+      tanggal: p_tanggal
+    });
+
+    return res.json({
+      status: 200,
+      message: "Berhasil Menambahkan Data Penjualan",
+      data: {
+        idPenjualan: penjualanId,
+        idCustomers: p_idCustomers,
+        idKaryawan: p_idKaryawan,
+        tanggal: p_tanggal,
+        totalHarga: p_totalHarga,
+        totalBayar: p_totalBayar,
+        totalKembalian: p_totalKembalian || 0,
+        diskon: p_diskon || 0,
+        statusPembayaran: 'Success',
+        detailPenjualan: p_detailPenjualan,
+      },
+    });
+
+  } catch (error) {
+    return res.status(500).json({ status: "error", message: error.message });
+  }
+};
   
 exports.updatePenjualan = async (req, res) => {
   const { p_idCustomers, p_idKaryawan, p_totalHarga, p_statusPenjualan } = req.body;
