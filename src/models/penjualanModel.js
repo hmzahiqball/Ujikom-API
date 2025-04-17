@@ -29,11 +29,11 @@ class Penjualan {
     // Susun query akhir
     const query = `
       SELECT 
-          p.id_penjualan, p.total_harga, p.status_pembayaran, p.tanggal_penjualan,
+          p.id_penjualan, p.total_harga, p.total_bayar, p.total_kembalian, p.diskon_penjualan, p.status_pembayaran, p.kode_penjualan, p.tanggal_penjualan,
           p.created_at AS penjualan_created_at, p.updated_at AS penjualan_updated_at,
           s.id_customers, s.nama_customers, s.telp_customers, s.email_customers,
           kar.id_karyawan, u.nama_user, u.contact_user, kar.posisi_karyawan,
-          dp.id_detail_penjualan, dp.kuantitas, dp.harga, dp.subtotal,
+          dp.id_detail_penjualan, dp.kuantitas, dp.harga, dp.subtotal, dp.diskon_produk,
           pr.id_produk, pr.nama_produk, pr.sku_produk, pr.barcode_produk, pr.deskripsi_produk,
           pr.harga_produk, pr.modal_produk, pr.stok_produk, pr.stok_minimum_produk,
           sk.id_subkategori, sk.nama_subkategori, k.id_kategori, k.nama_kategori
@@ -57,7 +57,11 @@ class Penjualan {
       if (!penjualan[row.id_penjualan]) {
         penjualan[row.id_penjualan] = {
           id_penjualan: row.id_penjualan,
+          kode_penjualan: row.kode_penjualan,
           total_harga: row.total_harga,
+          total_bayar: row.total_bayar,
+          total_kembalian: row.total_kembalian,
+          diskon_penjualan: row.diskon_penjualan,
           status_pembayaran: row.status_pembayaran,
           tanggal_penjualan: formatWIB(row.tanggal_penjualan),
           created_at: formatWIB(row.penjualan_created_at),
@@ -85,6 +89,7 @@ class Penjualan {
           kuantitas: row.kuantitas,
           harga: row.harga,
           subtotal: row.subtotal,
+          diskon_produk: row.diskon_produk,
           produk: {
             id_produk: row.id_produk,
             nama_produk: row.nama_produk,
