@@ -1,5 +1,6 @@
 const db = require("../config/db");
 const formatWIB = require("../utils/time");
+const bcrypt = require("bcrypt");
 
 class Karyawan {
   static async getAllKaryawan() {

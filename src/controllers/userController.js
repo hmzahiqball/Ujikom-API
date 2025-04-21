@@ -79,11 +79,23 @@ exports.createUser = async (req, res) => {
         return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
       }
 
-      const userId = await User.createUser(p_namaUsers, p_contactUsers, p_passwordUsers, p_roleUsers, p_gambarUser);
+      // Buatkan variabel untuk p_kodeUser
+      const vokal = ['A', 'I', 'U', 'E', 'O'];
+      const p_kodeUser = p_namaUsers
+        .split(" ")
+        .map(kata => kata
+          .toUpperCase()
+          .split("")
+          .filter(huruf => !vokal.includes(huruf))
+          .join("")
+        )
+        .join("");
+
+      const userId = await User.createUser(p_namaUsers, p_contactUsers, p_passwordUsers, p_roleUsers, p_gambarUser, p_kodeUser);
       return res.json({
         status: 200,
         message: "Berhasil Menambahkan Data Users",
-        data: { p_idUser: userId, p_namaUsers, p_contactUsers, p_roleUsers, p_gambarUser },
+        data: { p_idUser: userId, p_namaUsers, p_contactUsers, p_roleUsers, p_gambarUser, p_kodeUser },
       });
     } catch (error) {
       return res.status(500).json({ status: "error", message: error.message });

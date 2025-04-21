@@ -79,11 +79,11 @@ class User {
     return bcrypt.compare(inputPassword, storedPassword);
   }
 
-  static async createUser(nama_user, contact_user, password_user, role_user, gambar_user, status_user = "aktif") {
+  static async createUser(nama_user, contact_user, password_user, role_user, gambar_user, p_kodeUser, status_user = "aktif") {
     const hashedPassword = await bcrypt.hash(password_user, 10); // Enkripsi password
     const [result] = await db.query(
       "INSERT INTO tb_users (nama_user, password_user, contact_user, role_user, gambar_user, status_user) VALUES (?, ?, ?, ?, ?, ?)",
-      [nama_user, hashedPassword, contact_user, role_user, gambar_user, status_user]
+      [nama_user, hashedPassword, contact_user, role_user, gambar_user, p_kodeUser, status_user]
     );
     return result.insertId;
   }
