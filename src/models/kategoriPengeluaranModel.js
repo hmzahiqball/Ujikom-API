@@ -2,7 +2,7 @@ const db = require("../config/db");
 
 class kategoriPengeluaran {
   static async getAllkategoriPengeluaran() {
-    const [rows] = await db.query("SELECT id_kategori_pengeluaran, nama_kategori_pengeluaran, created_at, updated_at FROM tb_kategori_pengeluaran");
+    const [rows] = await db.query("SELECT id_kategori_pengeluaran, nama_kategori_pengeluaran, created_at, updated_at FROM tb_kategori_pengeluaran WHERE is_deleted = 0");
     return rows;
   }
 

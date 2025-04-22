@@ -14,7 +14,8 @@ class LaporanStok {
         FROM
             tb_stok_produk A
         JOIN
-            tb_produk B ON A.id_produk = B.id_produk;`);
+            tb_produk B ON A.id_produk = B.id_produk
+        WHERE A.is_deleted = 0;`);
     return rows;
   }
 

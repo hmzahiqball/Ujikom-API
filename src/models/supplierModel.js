@@ -2,7 +2,7 @@ const db = require("../config/db");
 
 class Suppliers {
   static async getAllSuppliers() {
-    const [rows] = await db.query("SELECT id_suppliers, nama_suppliers, contact_person, contact_suppliers, email_suppliers, alamat_suppliers, created_at, updated_at FROM tb_suppliers");
+    const [rows] = await db.query("SELECT id_suppliers, nama_suppliers, contact_person, contact_suppliers, email_suppliers, alamat_suppliers, created_at, updated_at FROM tb_suppliers WHERE is_deleted = 0");
     return rows;
   }
 

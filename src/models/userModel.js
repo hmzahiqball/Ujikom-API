@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 class User {
   static async getAllUsers() {
     const [rows] = await db.query(
-      "SELECT id_user, nama_user, contact_user, role_user, status_user, gambar_user, created_at, updated_at FROM tb_users"
+      "SELECT id_user, nama_user, contact_user, role_user, status_user, gambar_user, created_at, updated_at FROM tb_users WHERE is_deleted = 0"
     );
     return rows;
   }

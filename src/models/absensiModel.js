@@ -26,7 +26,9 @@ class Karyawan {
         JOIN
             tb_users c ON b.id_user = c.id_user
         JOIN
-            tb_shifts d ON b.id_shifts = d.id_shifts;
+            tb_shifts d ON b.id_shifts = d.id_shifts
+        WHERE
+            a.is_deleted = 0;
     `);
 
     return rows.map(row => ({

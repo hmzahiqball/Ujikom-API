@@ -13,7 +13,8 @@ class Pengeluaran {
         a.updated_at
       FROM tb_pengeluaran a
       JOIN
-        tb_kategori_pengeluaran b on a.id_kategori_pengeluaran = b.id_kategori_pengeluaran;
+        tb_kategori_pengeluaran b on a.id_kategori_pengeluaran = b.id_kategori_pengeluaran
+      WHERE a.is_deleted = 0;
     `);
 
     const formattedRows = rows.map(row => ({

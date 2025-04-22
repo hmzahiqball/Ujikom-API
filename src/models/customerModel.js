@@ -3,7 +3,7 @@ const formatWIB = require("../utils/time");
 
 class Customer {
   static async getAllCustomers() {
-    const [rows] = await db.query("SELECT id_customers, nama_customers, gender_customers, DATE_FORMAT(tglLahir_customers, '%Y-%m-%d') AS tglLahir_customers, telp_customers, email_customers, alamat_customers, status_customers, created_at, updated_at FROM tb_customers WHERE status_customers = 'aktif'");
+    const [rows] = await db.query("SELECT id_customers, nama_customers, gender_customers, DATE_FORMAT(tglLahir_customers, '%Y-%m-%d') AS tglLahir_customers, telp_customers, email_customers, alamat_customers, status_customers, created_at, updated_at FROM tb_customers WHERE is_deleted = 0 AND status_customers = 'aktif'");
     return rows.map(row => ({
       ...row,
       created_at: formatWIB(row.created_at),

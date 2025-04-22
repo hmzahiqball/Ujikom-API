@@ -22,7 +22,8 @@ class IzinKaryawan {
       JOIN
         tb_users c on b.id_user = c.id_user
       JOIN
-        tb_kategori_izin d on a.id_jenis_izin = d.id_kategori_izin;
+        tb_kategori_izin d on a.id_jenis_izin = d.id_kategori_izin
+      WHERE a.is_deleted = 0;
     `);
 
     const formattedRows = rows.map(row => ({

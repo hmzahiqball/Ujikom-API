@@ -10,6 +10,7 @@ class Kategori {
         k.created_at, 
         k.updated_at
       FROM tb_kategori k
+      WHERE k.is_deleted = 0
     `);
 
     const rows = [];

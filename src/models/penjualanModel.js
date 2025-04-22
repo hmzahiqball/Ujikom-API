@@ -45,7 +45,7 @@ class Penjualan {
       LEFT JOIN tb_produk pr ON dp.id_produk = pr.id_produk
       LEFT JOIN tb_subkategori sk ON pr.id_kategori = sk.id_subkategori
       LEFT JOIN tb_kategori k ON sk.id_kategori = k.id_kategori
-      ${whereClauses.length ? `WHERE ${whereClauses.join(" AND ")}` : ""}
+      ${whereClauses.length ? `WHERE ${whereClauses.join(" AND ")} AND ` : "WHERE "}p.is_deleted = 0
     `;
   
     const [rows] = await db.query(query, values);

@@ -30,7 +30,9 @@ class Karyawan {
         JOIN
             tb_shifts s ON k.id_shifts = s.id_shifts
         WHERE
-            u.status_user = 'aktif';
+            u.status_user = 'aktif'
+        AND
+            k.is_deleted = 0;
     `);
 
     const formattedRows = rows.map(row => ({
