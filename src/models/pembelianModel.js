@@ -241,7 +241,7 @@ class Pembelian {
   }
 
   static async deletePembelian(p_idPembelian) {
-    await db.query("DELETE FROM tb_pembelian WHERE id_pembelian = ?", [p_idPembelian]);
+    await db.query("UPDATE tb_pembelian SET is_deleted = 1, deleted_at = NOW() WHERE id_pembelian = ? AND is_deleted = 0", [p_idPembelian]);
   }
 }
 

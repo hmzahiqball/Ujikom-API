@@ -103,7 +103,7 @@ class User {
   }
 
   static async deleteUser(p_idUsers) {
-    await db.query("DELETE FROM tb_users WHERE id_user = ?", [p_idUsers]);
+    await db.query("UPDATE tb_users SET is_deleted = 1, deleted_at = NOW() WHERE id_user = ? AND is_deleted = 0", [p_idUsers]);
   }
 }
 

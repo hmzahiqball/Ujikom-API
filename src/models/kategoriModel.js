@@ -24,6 +24,7 @@ class Kategori {
           s.updated_at
         FROM tb_subkategori s
         WHERE s.id_kategori = ?
+        AND s.is_deleted = 0
       `, [category.p_id_kategori]);
 
       const subcategoriesFormated = subcategories.map(subcategory => ({
@@ -75,11 +76,17 @@ class Kategori {
   }
 
   static async deleteKategori(p_idKategori) {
-    await db.query("DELETE FROM tb_kategori WHERE id_kategori = ?", [p_idKategori]);
+    await db.query(
+      "UPDATE tb_kategori SET is_deleted = 1, deleted_at = NOW() WHERE id_kategori = ? AND is_deleted = 0",
+      [p_idKategori]
+    );
   }
 
   static async deleteSubKategori(p_idSubKategori) {
-    await db.query("DELETE FROM tb_subkategori WHERE id_subkategori = ?", [p_idSubKategori]);
+    await db.query(
+      "UPDATE tb_subkategori SET is_deleted = 1, deleted_at = NOW() WHERE id_subkategori = ? AND is_deleted = 0",
+      [p_idSubKategori]
+    );
   }
 }
 

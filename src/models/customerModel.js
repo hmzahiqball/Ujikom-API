@@ -27,7 +27,7 @@ class Customer {
   }
 
   static async deleteCustomer(p_idCustomers) {
-    await db.query("UPDATE tb_customers SET status_customers = 'non-aktif' WHERE id_customers = ? AND status_customers = 'aktif'", [p_idCustomers]);
+    await db.query("UPDATE tb_customers SET status_customers = 'non-aktif', is_deleted = 1, deleted_at = NOW() WHERE id_customers = ? AND is_deleted = 0 AND status_customers = 'aktif'", [p_idCustomers]);
   }
 }
 

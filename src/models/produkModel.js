@@ -160,7 +160,10 @@ class Produk {
   }
 
   static async deleteProduk(p_idProduk) {
-    await db.query("UPDATE tb_produk SET is_deleted = 1 WHERE id_produk = ?", [p_idProduk]);
+    await db.query(
+      "UPDATE tb_produk SET is_deleted = 1, deleted_at = NOW() WHERE id_produk = ? AND is_deleted = 0",
+      [p_idProduk]
+    );
   }
 }
 

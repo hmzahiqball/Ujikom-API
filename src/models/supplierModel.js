@@ -22,7 +22,10 @@ class Suppliers {
   }
 
   static async deleteSuppliers(p_idSuppliers) {
-    await db.query("DELETE FROM tb_suppliers WHERE id_suppliers = ?", [p_idSuppliers]);
+    await db.query(
+      "UPDATE tb_suppliers SET is_deleted = 1, deleted_at = NOW() WHERE id_suppliers = ? AND is_deleted = 0",
+      [p_idSuppliers]
+    );
   }
 }
 

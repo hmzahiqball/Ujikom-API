@@ -194,7 +194,7 @@ class Penjualan {
     }
 
     static async deletePenjualan(p_idPenjualan) {
-      await db.query("DELETE FROM tb_penjualan WHERE id_penjualan = ?", [p_idPenjualan]);
+      await db.query("UPDATE tb_penjualan SET is_deleted = 1, deleted_at = NOW() WHERE id_penjualan = ? AND is_deleted = 0", [p_idPenjualan]);
     }
 }
 

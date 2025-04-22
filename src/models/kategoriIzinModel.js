@@ -29,7 +29,7 @@ class KategoriIzin {
   }
 
   static async deleteKategoriIzin(p_idKategoriIzin) {
-    await db.query("DELETE FROM tb_kategori_izin WHERE id_kategori_izin = ?", [p_idKategoriIzin]);
+    await db.query("UPDATE tb_kategori_izin SET is_deleted = 1, deleted_at = NOW() WHERE id_kategori_izin = ? AND is_deleted = 0", [p_idKategoriIzin]);
   }
 }
 

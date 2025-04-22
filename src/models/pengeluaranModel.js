@@ -46,7 +46,10 @@ class Pengeluaran {
   }
 
   static async deletePengeluaran(p_idPengeluaran) {
-    await db.query("DELETE FROM tb_pengeluaran WHERE id_pengeluaran = ?", [p_idPengeluaran]);
+    await db.query(
+      "UPDATE tb_pengeluaran SET is_deleted = 1, deleted_at = NOW() WHERE id_pengeluaran = ? AND is_deleted = 0",
+      [p_idPengeluaran]
+    );
   }
 }
 

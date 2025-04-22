@@ -64,7 +64,10 @@ class IzinKaryawan {
   }
 
   static async deleteIzinKaryawan(p_idIzinKaryawan) {
-    await db.query("DELETE FROM tb_izin_karyawan WHERE id_izin = ?", [p_idIzinKaryawan]);
+    await db.query(
+      "UPDATE tb_izin_karyawan SET is_deleted = 1, deleted_at = NOW() WHERE id_izin = ? AND is_deleted = 0",
+      [p_idIzinKaryawan]
+    );
   }
 }
 

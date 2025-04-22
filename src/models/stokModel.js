@@ -28,7 +28,7 @@ class LaporanStok {
   }
 
   static async deleteLaporanStok(p_idLaporanStok) {
-    await db.query("DELETE FROM tb_stok_produk WHERE id_laporan_stok = ?", [p_idLaporanStok]);
+    await db.query("UPDATE tb_stok_produk SET is_deleted = 1, deleted_at = NOW() WHERE id_laporan_stok = ? AND is_deleted = 0", [p_idLaporanStok]);
   }
 }
 

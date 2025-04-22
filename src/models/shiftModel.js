@@ -34,7 +34,7 @@ class Shifts {
   }
 
   static async deleteShifts(p_idShifts) {
-    await db.query("DELETE FROM tb_shifts WHERE id_shifts = ?", [p_idShifts]);
+    await db.query("UPDATE tb_shifts SET is_deleted = 1, deleted_at = NOW() WHERE id_shifts = ? AND is_deleted = 0", [p_idShifts]);
   }
 }
 

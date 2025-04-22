@@ -118,10 +118,14 @@ class Karyawan {
 
   static async deleteKehadiran(id_kehadiran) {
     const [result] = await db.query(`
-        DELETE FROM tb_kehadiran WHERE id_kehadiran = ?
+      UPDATE tb_kehadiran 
+      SET is_deleted = 1, deleted_at = NOW()
+      WHERE id_kehadiran = ? AND is_deleted = 0
     `, [id_kehadiran]);
-
-    if (result.affectedRows === 0) throw new Error("Data kehadiran tidak ditemukan atau sudah dihapus");
+  
+    if (result.affectedRows === 0) {
+      throw new Error("Data kehadiran tidak ditemukan atau sudah dihapus");
+    }
   }
 }
 

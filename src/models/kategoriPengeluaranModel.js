@@ -29,7 +29,7 @@ class kategoriPengeluaran {
   }
 
   static async deletekategoriPengeluaran(p_idkategoriPengeluaran) {
-    await db.query("DELETE FROM tb_kategori_pengeluaran WHERE id_kategori_pengeluaran = ?", [p_idkategoriPengeluaran]);
+    await db.query("UPDATE tb_kategori_pengeluaran SET is_deleted = 1, deleted_at = NOW() WHERE id_kategori_pengeluaran = ? AND is_deleted = 0", [p_idkategoriPengeluaran]);
   }
 }
 

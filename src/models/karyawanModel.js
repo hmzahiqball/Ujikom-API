@@ -170,7 +170,7 @@ class Karyawan {
     const userId = rows[0].id_user;
 
     // Update status_user to 'non-aktif' in tb_users based on id_user
-    await db.query("UPDATE tb_users SET status_user = 'non-aktif' WHERE id_user = ?", [userId]);
+    await db.query("UPDATE tb_users SET status_user = 'non-aktif', is_deleted = 1, deleted_at = NOW() WHERE id_user = ?", [userId]);
   }
 }
 
