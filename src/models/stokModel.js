@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const formatWIB = require("../utils/time");
 
 class LaporanStok {
   static async getAllLaporanStok() {
@@ -16,7 +17,12 @@ class LaporanStok {
         JOIN
             tb_produk B ON A.id_produk = B.id_produk
         WHERE A.is_deleted = 0;`);
-    return rows;
+
+    return rows.map(row => ({
+      ...row,
+      created_at: formatWIB(row.created_at),
+      updated_at: formatWIB(row.updated_at),
+    }));
   }
 
   static async createLaporanStok(p_idProduk, p_namaKaryawan, p_perubahanStok, p_alasanPerubahan) {

@@ -13,6 +13,19 @@ exports.getAllShifts = async (req, res) => {
   }
 };
 
+exports.getAllShifts_notFiltered = async (req, res) => {
+  try {
+    const shifts = await Shifts.getAllShifts_notFiltered();
+    return res.json({
+      status: 200,
+      message: "Berhasil Mendapatkan Data Jadwal Shifts",
+      data: shifts,
+    });
+  } catch (error) {
+    return res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
 exports.getShiftsByID = async (req, res) => {
   const { id } = req.params;
   try {

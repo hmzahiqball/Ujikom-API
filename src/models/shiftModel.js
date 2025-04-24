@@ -11,6 +11,15 @@ class Shifts {
     }));
   }
 
+  static async getAllShifts_notFiltered() {
+    const [rows] = await db.query("SELECT id_shifts, nama_shifts, start_time, end_time, created_at, updated_at FROM tb_shifts");
+    return rows.map(row => ({
+      ...row,
+      created_at: formatWIB(row.created_at),
+      updated_at: formatWIB(row.updated_at)
+    }));
+  }
+
   static async getShiftsByID(p_idShifts) {
     const [result] = await db.query(
         "SELECT id_shifts, nama_shifts, start_time, end_time, created_at, updated_at FROM tb_shifts WHERE id_shifts = ? LIMIT 1", 

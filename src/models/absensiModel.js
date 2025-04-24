@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const formatWIB = require("../utils/time");
 
 class Karyawan {
   static async getAllKehadiran() {
@@ -33,7 +34,7 @@ class Karyawan {
 
     return rows.map(row => ({
         id_kehadiran: row.id_kehadiran,
-        tanggal_kehadiran: row.tanggal_kehadiran,
+        tanggal_kehadiran: formatWIB(row.tanggal_kehadiran),
         waktu_clockIn: row.clock_in,
         waktu_clockOut: row.clock_out,
         total_jam_kerja: row.total_jam_kerja,

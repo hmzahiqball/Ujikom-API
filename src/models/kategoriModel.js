@@ -45,6 +45,47 @@ class Kategori {
     return rows;
   }
 
+  static async getAllKategori_notFiltered() {
+    const [categories] = await db.query(`
+      SELECT 
+        k.id_kategori AS p_id_kategori, 
+        k.nama_kategori AS p_nama_kategori, 
+        k.created_at, 
+        k.updated_at
+      FROM tb_kategori k
+    `);
+
+    const rows = [];
+
+    for (const category of categories) {
+      const [subcategories] = await db.query(`
+        SELECT 
+          s.id_subkategori AS id_subkategori, 
+          s.nama_subkategori AS nama_subkategori,
+          s.created_at,
+          s.updated_at
+        FROM tb_subkategori s
+        WHERE s.id_kategori = ?
+      `, [category.p_id_kategori]);
+
+      const subcategoriesFormated = subcategories.map(subcategory => ({
+        ...subcategory,
+        created_at: formatWIB(subcategory.created_at),
+        updated_at: formatWIB(subcategory.updated_at)
+      }));
+
+      rows.push({
+        id_kategori: category.p_id_kategori,
+        nama_kategori: category.p_nama_kategori,
+        data_subkategori: subcategoriesFormated,
+        created_at: formatWIB(category.created_at),
+        updated_at: formatWIB(category.updated_at)
+      });
+    }
+
+    return rows;
+  }
+
   static async createKategori(p_namaKategori) {
     const [result] = await db.query(
       "INSERT INTO tb_kategori (nama_kategori) VALUES (?)",

@@ -52,7 +52,7 @@ class Penjualan {
   
     // Format ulang hasil penjualan
     const penjualan = {};
-  
+
     rows.forEach(row => {
       if (!penjualan[row.id_penjualan]) {
         penjualan[row.id_penjualan] = {
@@ -62,6 +62,8 @@ class Penjualan {
           total_bayar: row.total_bayar,
           total_kembalian: row.total_kembalian,
           diskon_penjualan: row.diskon_penjualan,
+          total_kuantitas: 0,
+          total_pendapatan: 0, // Pendapatan = total harga jual - total modal
           status_pembayaran: row.status_pembayaran,
           tanggal_penjualan: formatWIB(row.tanggal_penjualan),
           created_at: formatWIB(row.penjualan_created_at),
@@ -81,7 +83,7 @@ class Penjualan {
           detail_penjualan: [],
         };
       }
-  
+    
       // Isi detail penjualan jika ada
       if (row.id_detail_penjualan) {
         penjualan[row.id_penjualan].detail_penjualan.push({
@@ -110,9 +112,15 @@ class Penjualan {
             },
           },
         });
+      
+        // Tambahkan ke total kuantitas dan pendapatan
+        penjualan[row.id_penjualan].total_kuantitas += row.kuantitas;
+        const harga_jual_total = row.harga * row.kuantitas;
+        const harga_modal_total = row.modal_produk * row.kuantitas;
+        penjualan[row.id_penjualan].total_pendapatan += harga_jual_total - harga_modal_total;
       }
     });
-  
+
     return Object.values(penjualan);
   }
 

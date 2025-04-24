@@ -12,6 +12,18 @@ exports.getAllKategori = async (req, res) => {
   }
 };
 
+exports.getAllKategori_notFiltered = async (req, res) => {
+  try {
+    const kategori = await Kategori.getAllKategori_notFiltered();
+    res.json({
+      message: "Berhasil Mendapatkan Data Kategori",
+      data: kategori,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 exports.createKategori = async (req, res) => {
   const { p_namaKategori } = req.body;
   try {

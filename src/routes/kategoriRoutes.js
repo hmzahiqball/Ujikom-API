@@ -1,6 +1,7 @@
 const express = require("express");
 const {
     getAllKategori,
+    getAllKategori_notFiltered,
     createKategori,
     updateKategori,
     deleteKategori,
@@ -12,6 +13,7 @@ const {
 const router = express.Router();
 
 router.get("/", getAllKategori);
+router.get("/notfiltered", getAllKategori_notFiltered);
 router.post("/", createKategori);
 router.put("/:id", updateKategori);
 router.delete("/:id", deleteKategori);
