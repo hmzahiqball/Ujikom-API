@@ -134,76 +134,76 @@ class Penjualan {
       detailPenjualan,
       tanggal
     }) {
-      const connection = await db.getConnection();
-      try {
-        await connection.beginTransaction();
+    const connection = await db.getConnection();
+    try {
+      await connection.beginTransaction();
       
-        // Generate kode penjualan (misal: PNJ-20250417-0001)
-        const datePart = new Date().toISOString().slice(0,10).replace(/-/g, '');
-        const [kodeResult] = await connection.query("SELECT COUNT(*) as total FROM tb_penjualan WHERE DATE(tanggal_penjualan) = CURDATE()");
-        const urutan = String(kodeResult[0].total + 1).padStart(4, '0');
+      // Generate kode penjualan (misal: PNJ-20250417-0001)
+      const datePart = new Date().toISOString().slice(0,10).replace(/-/g, '');
+      const [kodeResult] = await connection.query("SELECT COUNT(*) as total FROM tb_penjualan WHERE DATE(tanggal_penjualan) = CURDATE()");
+      const urutan = String(kodeResult[0].total + 1).padStart(4, '0');
         
-        // Ambil kode_user dari id_karyawan → id_user → kode_user
-        const [userKodeResult] = await connection.query(`
-          SELECT u.kode_user
-          FROM tb_karyawan k
-          JOIN tb_users u ON k.id_user = u.id_user
-          WHERE k.id_karyawan = ?
-        `, [idKaryawan]);
+      // Ambil kode_user dari id_karyawan → id_user → kode_user
+      const [userKodeResult] = await connection.query(`
+        SELECT u.kode_user
+        FROM tb_karyawan k
+        JOIN tb_users u ON k.id_user = u.id_user
+        WHERE k.id_karyawan = ?
+      `, [idKaryawan]);
 
-        if (userKodeResult.length === 0) {
-          throw new Error('Kode user tidak ditemukan untuk karyawan ini');
-        }
-
-        const kodeUser = userKodeResult[0].kode_user;
-        const kodePenjualan = `${kodeUser}-${datePart}-${urutan}`;
-      
-        // Insert tb_penjualan
-        const [penjualanResult] = await connection.query(
-          `INSERT INTO tb_penjualan 
-            (id_customers, id_karyawan, kode_penjualan, total_harga, total_bayar, total_kembalian, diskon_penjualan, status_pembayaran, tanggal_penjualan)
-           VALUES (?, ?, ?, ?, ?, ?, ?, 'Success', ?)`,
-          [idCustomers, idKaryawan, kodePenjualan, totalHarga, totalBayar, totalKembalian, diskon, tanggal]
-        );
-      
-        const penjualanId = penjualanResult.insertId;
-      
-        // Insert ke detail penjualan
-        for (const detail of detailPenjualan) {
-          const { p_idProduk, p_kuantitas, p_harga, p_subTotal, p_diskonProduk } = detail;
-          await connection.query(
-            "INSERT INTO tb_detail_penjualan (id_penjualan, id_produk, kuantitas, harga, subtotal, diskon_produk) VALUES (?, ?, ?, ?, ?, ?)",
-            [penjualanId, p_idProduk, p_kuantitas, p_harga, p_subTotal, p_diskonProduk]
-          );
-
-          // Kurangi stok produk
-          await connection.query(
-            "UPDATE tb_produk SET stok_produk = stok_produk - ? WHERE id_produk = ?",
-            [p_kuantitas, p_idProduk]
-          );
-        }
-      
-        await connection.commit();
-        return penjualanId;
-      } catch (error) {
-        await connection.rollback();
-        throw error;
-      } finally {
-        connection.release();
+      if (userKodeResult.length === 0) {
+        throw new Error('Kode user tidak ditemukan untuk karyawan ini');
       }
+
+      const kodeUser = userKodeResult[0].kode_user;
+      const kodePenjualan = `${kodeUser}-${datePart}-${urutan}`;
+      
+      // Insert tb_penjualan
+      const [penjualanResult] = await connection.query(
+        `INSERT INTO tb_penjualan 
+          (id_customers, id_karyawan, kode_penjualan, total_harga, total_bayar, total_kembalian, diskon_penjualan, status_pembayaran, tanggal_penjualan)
+         VALUES (?, ?, ?, ?, ?, ?, ?, 'Success', ?)`,
+        [idCustomers, idKaryawan, kodePenjualan, totalHarga, totalBayar, totalKembalian, diskon, tanggal]
+      );
+      
+      const penjualanId = penjualanResult.insertId;
+      
+      // Insert ke detail penjualan
+      for (const detail of detailPenjualan) {
+        const { p_idProduk, p_kuantitas, p_harga, p_subTotal, p_diskonProduk } = detail;
+        await connection.query(
+          "INSERT INTO tb_detail_penjualan (id_penjualan, id_produk, kuantitas, harga, subtotal, diskon_produk) VALUES (?, ?, ?, ?, ?, ?)",
+          [penjualanId, p_idProduk, p_kuantitas, p_harga, p_subTotal, p_diskonProduk]
+        );
+
+        // Kurangi stok produk
+        await connection.query(
+          "UPDATE tb_produk SET stok_produk = stok_produk - ? WHERE id_produk = ?",
+          [p_kuantitas, p_idProduk]
+        );
+      }
+      
+      await connection.commit();
+      return { penjualanId, kodePenjualan };
+    } catch (error) {
+      await connection.rollback();
+      throw error;
+    } finally {
+      connection.release();
     }
+  }
   
     
-    static async updatePenjualan(p_idPenjualan, p_idCustomers, p_idKaryawan, p_totalHarga, p_statusPenjualan) {
-      await db.query(
-        "UPDATE tb_penjualan SET id_customers = ?, id_karyawan = ?, total_harga = ?, status_pembayaran = ? WHERE id_penjualan = ?",
-        [p_idCustomers, p_idKaryawan, p_totalHarga, p_statusPenjualan, p_idPenjualan]
-      );
-    }
+  static async updatePenjualan(p_idPenjualan, p_idCustomers, p_idKaryawan, p_totalHarga, p_statusPenjualan) {
+    await db.query(
+      "UPDATE tb_penjualan SET id_customers = ?, id_karyawan = ?, total_harga = ?, status_pembayaran = ? WHERE id_penjualan = ?",
+      [p_idCustomers, p_idKaryawan, p_totalHarga, p_statusPenjualan, p_idPenjualan]
+    );
+  }
 
-    static async deletePenjualan(p_idPenjualan) {
-      await db.query("UPDATE tb_penjualan SET is_deleted = 1, deleted_at = NOW() WHERE id_penjualan = ? AND is_deleted = 0", [p_idPenjualan]);
-    }
+  static async deletePenjualan(p_idPenjualan) {
+    await db.query("UPDATE tb_penjualan SET is_deleted = 1, deleted_at = NOW() WHERE id_penjualan = ? AND is_deleted = 0", [p_idPenjualan]);
+  }
 }
 
 module.exports = Penjualan;

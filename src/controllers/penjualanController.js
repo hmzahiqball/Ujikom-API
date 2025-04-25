@@ -37,7 +37,7 @@ exports.createPenjualan = async (req, res) => {
       return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
     }
 
-    const penjualanId = await Penjualan.createPenjualan({
+    const { penjualanId, kodePenjualan } = await Penjualan.createPenjualan({
       idCustomers: p_idCustomers,
       idKaryawan: p_idKaryawan,
       totalHarga: p_totalHarga,
@@ -53,6 +53,7 @@ exports.createPenjualan = async (req, res) => {
       message: "Berhasil Menambahkan Data Penjualan",
       data: {
         idPenjualan: penjualanId,
+        kode_penjualan: kodePenjualan,
         idCustomers: p_idCustomers,
         idKaryawan: p_idKaryawan,
         tanggal: p_tanggal,

@@ -6,6 +6,7 @@ class LaporanStok {
     const [rows] = await db.query(`
         SELECT 
             A.id_laporan_stok,
+            A.kode_laporan,
             B.nama_produk,
             A.perubahan_stok,
             A.alasan_perubahan,
@@ -25,10 +26,10 @@ class LaporanStok {
     }));
   }
 
-  static async createLaporanStok(p_idProduk, p_namaKaryawan, p_perubahanStok, p_alasanPerubahan) {
+  static async createLaporanStok(p_kodeLaporan, p_idProduk, p_namaKaryawan, p_perubahanStok, p_alasanPerubahan) {
     const [result] = await db.query(
-      "INSERT INTO tb_stok_produk (id_produk, perubahan_stok, alasan_perubahan, nama_karyawan) VALUES (?, ?, ?, ?)",
-      [p_idProduk, p_perubahanStok, p_alasanPerubahan, p_namaKaryawan]
+      "INSERT INTO tb_stok_produk (kode_laporan, id_produk, perubahan_stok, alasan_perubahan, nama_karyawan) VALUES (?, ?, ?, ?, ?)",
+      [p_kodeLaporan, p_idProduk, p_perubahanStok, p_alasanPerubahan, p_namaKaryawan]
     );
     return result.insertId;
   }

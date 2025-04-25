@@ -14,18 +14,18 @@ exports.getAllLaporanStok = async (req, res) => {
 };
 
 exports.createLaporanStok = async (req, res) => {
-  const { p_idProduk, p_namaKaryawan, p_perubahanStok, p_alasanPerubahan } = req.body;
+  const { p_kodeLaporan, p_idProduk, p_namaKaryawan, p_perubahanStok, p_alasanPerubahan } = req.body;
   try {
-    if (!p_idProduk || !p_namaKaryawan || !p_perubahanStok || !p_alasanPerubahan) {
+    if (!p_kodeLaporan || !p_idProduk || !p_namaKaryawan || !p_perubahanStok || !p_alasanPerubahan) {
       return res
         .status(400)
         .json({ status: "error", message: "Data Tidak Lengkap" });
     }
-    const laporanStokId = await LaporanStok.createLaporanStok(p_idProduk, p_namaKaryawan, p_perubahanStok, p_alasanPerubahan);
+    const laporanStokId = await LaporanStok.createLaporanStok(p_kodeLaporan, p_idProduk, p_namaKaryawan, p_perubahanStok, p_alasanPerubahan);
     return res.json({
       status: 200,
       message: "Berhasil Menambahkan Laporan Stok",
-      data: { p_idLaporanStok: laporanStokId, p_namaKaryawan, p_perubahanStok, p_alasanPerubahan },
+      data: { p_idLaporanStok: laporanStokId, p_kodeLaporan, p_namaKaryawan, p_perubahanStok, p_alasanPerubahan },
     });
   } catch (error) {
     return res.status(500).json({ status: "error", message: error.message });
