@@ -4,6 +4,31 @@ exports.getAllIzinKaryawan = async (req, res) => {
   try {
     const izinKaryawan = await IzinKaryawan.getAllIzinKaryawan();
     res.json({
+      status: 200,
+      message: "Berhasil Mendapatkan Data Laporan Izin Karyawan",
+      data: izinKaryawan,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getIzinKaryawanById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (!id) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Data Tidak Lengkap" });
+    }
+    const izinKaryawan = await IzinKaryawan.getIzinKaryawanById(id);
+    if (!izinKaryawan) {
+      return res
+        .status(200)
+        .json({ status: "200", message: "Data Laporan Tidak Tersedia" });
+    }
+    res.json({
+      status: 200,
       message: "Berhasil Mendapatkan Data Laporan Izin Karyawan",
       data: izinKaryawan,
     });

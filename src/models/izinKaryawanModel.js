@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const formatWIB = require("../utils/time");
 
 class IzinKaryawan {
   static async getAllIzinKaryawan() {
@@ -38,10 +39,58 @@ class IzinKaryawan {
             id_jenis_izin: row.id_jenis_izin,
             nama_kategori_perizinan: row.nama_kategori_izin,
         },
-        start_date: row.start_date,
-        end_date: row.end_date,
+        start_date: formatWIB(row.start_date),
+        end_date: formatWIB(row.end_date),
         status: row.status,
         created_at: row.created_at,
+        updated_at: row.updated_at,
+    }));
+
+    return formattedRows;
+  }
+
+  static async getIzinKaryawanById(p_idIzin) {
+    const [rows] = await db.query(`
+      SELECT 
+        a.id_izin,
+        a.id_karyawan,
+        c.nama_user,
+        b.posisi_karyawan,
+        c.role_user,
+        a.id_jenis_izin,
+        d.nama_kategori_izin,
+        a.start_date,
+        a.end_date,
+        a.status,
+        a.created_at,
+        a.updated_at
+      FROM tb_izin_karyawan a
+      JOIN
+        tb_karyawan b on a.id_karyawan = b.id_karyawan
+      JOIN
+        tb_users c on b.id_user = c.id_user
+      JOIN
+        tb_kategori_izin d on a.id_jenis_izin = d.id_kategori_izin
+      WHERE a.is_deleted = 0
+      AND a.id_karyawan = ?;
+    `, [p_idIzin]);
+
+    const formattedRows = rows.map(row => ({
+        id_izin_karyawan: row.id_izin,
+        data_karyawan: {
+            id_karyawan: row.id_karyawan,
+            nama_karyawan: row.nama_user,
+            posisi_karyawan: row.posisi_karyawan,
+            role_karyawan: row.role_user,
+        },
+        data_izin: {
+            id_jenis_izin: row.id_jenis_izin,
+            nama_kategori_perizinan: row.nama_kategori_izin,
+        },
+        start_date: formatWIB(row.start_date),
+        end_date: formatWIB(row.end_date),
+        status: row.status,
+        created_at: formatWIB(row.created_at),
         updated_at: row.updated_at,
     }));
 
