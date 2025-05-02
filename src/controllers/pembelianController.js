@@ -2,7 +2,9 @@ const Purchase = require("../models/pembelianModel");
 
 exports.getAllPembelian = async (req, res) => {
   try {
-    const purchases = await Purchase.getAllPembelian();
+    const { tanggal } = req.query;
+    const purchases = await Purchase.getAllPembelian(tanggal);
+    
     if (!purchases) {
       return res.status(400).json({ status: 200, message: "Data Tidak Lengkap" });
     }
