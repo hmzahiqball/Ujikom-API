@@ -8,7 +8,7 @@ class Suppliers {
 
   static async createSuppliers(p_namaSuppliers, p_contactPerson, p_contactSuppliers, p_emailSuppliers, p_alamatSuppliers) {
     const [result] = await db.query(
-      "INSERT INTO tb_suppliers (nama_suppliers, contact_person, contact_suppliers, email_suppliers, alamat_suppliers) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO tb_suppliers (kode_suppliers, nama_suppliers, contact_person, contact_suppliers, email_suppliers, alamat_suppliers) VALUES (CONCAT('SPL', LPAD(LAST_INSERT_ID() + 1, 3, '0')), ?, ?, ?, ?, ?)",
       [p_namaSuppliers, p_contactPerson, p_contactSuppliers, p_emailSuppliers, p_alamatSuppliers]
     );
     return result.insertId;

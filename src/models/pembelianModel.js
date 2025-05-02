@@ -22,6 +22,7 @@ class Pembelian {
     const query = `
       SELECT 
           p.id_pembelian,
+          p.kode_pembelian,
           p.total_harga,
           p.status_pembelian,
           p.tanggal_pembelian,
@@ -72,6 +73,7 @@ class Pembelian {
       if (!pembelian[row.id_pembelian]) {
         pembelian[row.id_pembelian] = {
           id_pembelian: row.id_pembelian,
+          kode_pembelian: row.kode_pembelian,
           total_harga: row.total_harga,
           status_pembelian: row.status_pembelian,
           tanggal_pembelian: formatWIB(row.tanggal_pembelian),
