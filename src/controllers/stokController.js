@@ -2,7 +2,8 @@ const LaporanStok = require("../models/stokModel");
 
 exports.getAllLaporanStok = async (req, res) => {
   try {
-    const laporanStok = await LaporanStok.getAllLaporanStok();
+    const { tanggal } = req.query;
+    const laporanStok = await LaporanStok.getAllLaporanStok(tanggal);
     return res.json({
       status: 200,
       message: "Berhasil Mendapatkan Data Laporan Stok",
