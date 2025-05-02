@@ -53,13 +53,13 @@ exports.createPembelian = async (req, res) => {
 };
 
 exports.updatePembelian = async (req, res) => {
-  const { p_idSuppliers, p_totalHarga, p_statusPembelian } = req.body;
+  const { p_totalHarga, p_statusPembelian } = req.body;
   const { id } = req.params;
   try {
-    if (!id || !p_idSuppliers || !p_totalHarga || !p_statusPembelian) {
+    if (!id || !p_totalHarga || !p_statusPembelian) {
       return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
     }
-    await Purchase.updatePembelian(id, p_idSuppliers, p_totalHarga, p_statusPembelian);
+    await Purchase.updatePembelian(id, p_totalHarga, p_statusPembelian);
     return res.json({
       status: 200,
       message: "Berhasil Update Data Pembelian",
