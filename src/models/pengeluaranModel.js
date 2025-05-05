@@ -1,5 +1,6 @@
 const db = require("../config/db");
 const formatWIB = require("../utils/time");
+const moment = require("moment");
 
 class Pengeluaran {
   static async getAllPengeluaran(tanggal = null) {
@@ -58,7 +59,7 @@ class Pengeluaran {
       const [kategoriResult] = await connection.query("SELECT kode_kategori_pengeluaran FROM tb_kategori_pengeluaran WHERE id_kategori_pengeluaran = ?", [p_idKategoriPengeluaran]);
       const kodePengeluaran = `${kategoriResult[0].kode_kategori_pengeluaran}-${moment(p_tanggal).format('DDMMYY')}`;
       const [pengeluaranResult] = await connection.query(
-        "INSERT INTO tb_pengeluaran (id_kategori_pengeluaran, kode_kategori_pengeluaran, total_pengeluaran, deskripsi_pengeluaran, tanggal) VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO tb_pengeluaran (id_kategori_pengeluaran, kode_pengeluaran, total_pengeluaran, deskripsi_pengeluaran, tanggal) VALUES (?, ?, ?, ?, ?)",
         [p_idKategoriPengeluaran, kodePengeluaran, p_totalPengeluaran, p_deskripsiPengeluaran, p_tanggal]
       );
       const pengeluaranId = pengeluaranResult.insertId;
