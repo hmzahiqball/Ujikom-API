@@ -2,7 +2,12 @@ const Pengeluaran = require("../models/pengeluaranModel");
 
 exports.getAllPengeluaran = async (req, res) => {
   try {
-    const pengeluaran = await Pengeluaran.getAllPengeluaran();
+    const { tanggal } = req.query;
+    const pengeluaran = await Pengeluaran.getAllPengeluaran(tanggal);
+    
+    if (!pengeluaran) {
+      return res.status(400).json({ status: 200, message: "Data Tidak Lengkap" });
+    }
     return res.json({
       status: 200,
       message: "Berhasil Mendapatkan Data Laporan Pengeluaran",

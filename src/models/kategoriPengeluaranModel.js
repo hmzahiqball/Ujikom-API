@@ -15,7 +15,7 @@ class kategoriPengeluaran {
 
   static async createkategoriPengeluaran(p_namakategoriPengeluaran) {
     const [result] = await db.query(
-      "INSERT INTO tb_kategori_pengeluaran (nama_kategori_pengeluaran) VALUES (?)",
+      "INSERT INTO tb_kategori_pengeluaran (kode_kategori_pengeluaran, nama_kategori_pengeluaran) VALUES (CONCAT('SPL', LPAD(LAST_INSERT_ID() + 1, 3, '0')), ?)",
       [p_namakategoriPengeluaran]
     );
     return result.insertId;

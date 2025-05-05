@@ -1,10 +1,26 @@
 const db = require("../config/db");
+const formatWIB = require("../utils/time");
 
 class Pengeluaran {
-  static async getAllPengeluaran() {
+  static async getAllPengeluaran(tanggal = null) {
+    const whereClauses = ["a.is_deleted = 0"];
+    const values = [];
+
+    if (tanggal) {
+      if (tanggal.includes("_")) {
+        const [start, end] = tanggal.split("_");
+        whereClauses.push(`DATE(a.tanggal) BETWEEN ? AND ?`);
+        values.push(start, end);
+      } else {
+        whereClauses.push(`DATE(a.tanggal) = ?`);
+        values.push(tanggal);
+      }
+    }
+
     const [rows] = await db.query(`
       SELECT 
         a.id_pengeluaran,
+        a.kode_pengeluaran,
         b.nama_kategori_pengeluaran,
         a.total_pengeluaran,
         a.deskripsi_pengeluaran,
@@ -14,15 +30,16 @@ class Pengeluaran {
       FROM tb_pengeluaran a
       JOIN
         tb_kategori_pengeluaran b on a.id_kategori_pengeluaran = b.id_kategori_pengeluaran
-      WHERE a.is_deleted = 0;
-    `);
+      WHERE ${whereClauses.join(" AND ")}
+    `, values);
 
     const formattedRows = rows.map(row => ({
         id_pengeluaran: row.id_pengeluaran,
+        kode_pengeluaran: row.kode_pengeluaran,
         nama_kategori_pengeluaran: row.nama_kategori_pengeluaran,
         total_pengeluaran: row.total_pengeluaran,
         deskripsi_pengeluaran: row.deskripsi_pengeluaran,
-        tanggal: row.tanggal,
+        tanggal: formatWIB(row.tanggal),
         created_at: row.created_at,
         updated_at: row.updated_at,
     }));
