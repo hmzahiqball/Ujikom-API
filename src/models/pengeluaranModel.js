@@ -20,6 +20,7 @@ class Pengeluaran {
     const [rows] = await db.query(`
       SELECT 
         a.id_pengeluaran,
+        b.id_kategori_pengeluaran,
         a.kode_pengeluaran,
         b.nama_kategori_pengeluaran,
         a.total_pengeluaran,
@@ -35,6 +36,7 @@ class Pengeluaran {
 
     const formattedRows = rows.map(row => ({
         id_pengeluaran: row.id_pengeluaran,
+        id_kategori_pengeluaran: row.id_kategori_pengeluaran,
         kode_pengeluaran: row.kode_pengeluaran,
         nama_kategori_pengeluaran: row.nama_kategori_pengeluaran,
         total_pengeluaran: row.total_pengeluaran,
@@ -48,11 +50,27 @@ class Pengeluaran {
   }
 
   static async createPengeluaran(p_idKategoriPengeluaran, p_totalPengeluaran, p_deskripsiPengeluaran, p_tanggal) {
-    const [result] = await db.query(
-      "INSERT INTO tb_pengeluaran (id_kategori_pengeluaran, total_pengeluaran, deskripsi_pengeluaran, tanggal) VALUES (?, ?, ?, ?)",
-      [p_idKategoriPengeluaran, p_totalPengeluaran, p_deskripsiPengeluaran, p_tanggal]
-    );
-    return result.insertId;
+    const connection = await db.getConnection();
+    try {
+      await connection.beginTransaction();
+        
+      // Insert into tb_pembelian
+      const [kategoriResult] = await connection.query("SELECT kode_kategori_pengeluaran FROM tb_kategori_pengeluaran WHERE id_kategori_pengeluaran = ?", [p_idKategoriPengeluaran]);
+      const kodePengeluaran = `${kategoriResult[0].kode_kategori_pengeluaran}-${moment(p_tanggal).format('DDMMYY')}`;
+      const [pengeluaranResult] = await connection.query(
+        "INSERT INTO tb_pengeluaran (id_kategori_pengeluaran, kode_kategori_pengeluaran, total_pengeluaran, deskripsi_pengeluaran, tanggal) VALUES (?, ?, ?, ?, ?)",
+        [p_idKategoriPengeluaran, kodePengeluaran, p_totalPengeluaran, p_deskripsiPengeluaran, p_tanggal]
+      );
+      const pengeluaranId = pengeluaranResult.insertId;
+        
+      await connection.commit();
+      return pengeluaranId;
+    } catch (error) {
+      await connection.rollback();
+      throw error;
+    } finally {
+      connection.release();
+    }
   }
 
   static async updatePengeluaran(p_idPengeluaran, p_idKategoriPengeluaran, p_totalPengeluaran, p_deskripsiPengeluaran, p_tanggal) {
