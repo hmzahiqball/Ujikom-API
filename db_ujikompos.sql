@@ -11,7 +11,7 @@
  Target Server Version : 100432 (10.4.32-MariaDB)
  File Encoding         : 65001
 
- Date: 02/05/2025 15:30:18
+ Date: 06/05/2025 13:18:47
 */
 
 SET NAMES utf8mb4;
@@ -36,12 +36,13 @@ CREATE TABLE `tb_customers`  (
   `deleted_at` datetime NULL DEFAULT NULL,
   `deleted_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_customers`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_customers
 -- ----------------------------
 INSERT INTO `tb_customers` VALUES (1, 'Non-Member', '0', '-', '-', '0001-01-01', 'Laki-Laki', 'aktif', '2025-04-21 09:10:33', '2025-04-21 09:10:33', 0, NULL, NULL);
+INSERT INTO `tb_customers` VALUES (2, 'Putra Suyapratama', '081234567890', 'member@gmail.com', 'Jl. Mawar No. 123, Kecamatan Disana, Jakarta, 12345', '2000-05-28', 'Laki-Laki', 'aktif', '2025-05-06 12:06:47', '2025-05-06 12:06:47', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_detail_pembelian
@@ -64,13 +65,11 @@ CREATE TABLE `tb_detail_pembelian`  (
   INDEX `FK-detailToPembelian`(`id_pembelian` ASC) USING BTREE,
   CONSTRAINT `FK-detailPemToProduk` FOREIGN KEY (`id_produk`) REFERENCES `tb_produk` (`id_produk`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK-detailToPembelian` FOREIGN KEY (`id_pembelian`) REFERENCES `tb_pembelian` (`id_pembelian`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_detail_pembelian
 -- ----------------------------
-INSERT INTO `tb_detail_pembelian` VALUES (1, 1, 6, 1, 600000, 600000, '2025-05-02 10:38:35', '2025-05-02 10:38:35', 0, NULL, NULL);
-INSERT INTO `tb_detail_pembelian` VALUES (2, 1, 7, 1, 300000, 300000, '2025-05-02 10:39:03', '2025-05-02 10:39:03', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_detail_penjualan
@@ -94,20 +93,11 @@ CREATE TABLE `tb_detail_penjualan`  (
   INDEX `FK-detailToPenjualan`(`id_penjualan` ASC) USING BTREE,
   CONSTRAINT `FK-detailToPenjualan` FOREIGN KEY (`id_penjualan`) REFERENCES `tb_penjualan` (`id_penjualan`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `FK-detailToProduk` FOREIGN KEY (`id_produk`) REFERENCES `tb_produk` (`id_produk`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_detail_penjualan
 -- ----------------------------
-INSERT INTO `tb_detail_penjualan` VALUES (1, 1, 1, 1, 13000000, 13000000, 0, '2025-04-25 15:31:15', '2025-04-25 15:31:15', 0, NULL, NULL);
-INSERT INTO `tb_detail_penjualan` VALUES (2, 1, 2, 1, 8000000, 8000000, 0, '2025-04-25 15:31:15', '2025-04-25 15:31:15', 0, NULL, NULL);
-INSERT INTO `tb_detail_penjualan` VALUES (3, 1, 3, 1, 10000000, 10000000, 0, '2025-04-25 15:31:15', '2025-04-25 15:31:15', 0, NULL, NULL);
-INSERT INTO `tb_detail_penjualan` VALUES (4, 1, 4, 1, 20000000, 20000000, 0, '2025-04-25 15:31:15', '2025-04-25 15:31:15', 0, NULL, NULL);
-INSERT INTO `tb_detail_penjualan` VALUES (5, 2, 4, 1, 20000000, 20000000, 0, '2025-04-25 15:33:19', '2025-04-25 15:33:19', 0, NULL, NULL);
-INSERT INTO `tb_detail_penjualan` VALUES (6, 2, 3, 1, 10000000, 10000000, 0, '2025-04-25 15:33:19', '2025-04-25 15:33:19', 0, NULL, NULL);
-INSERT INTO `tb_detail_penjualan` VALUES (7, 3, 6, 1, 800000, 800000, 0, '2025-04-25 15:35:07', '2025-04-25 15:35:07', 0, NULL, NULL);
-INSERT INTO `tb_detail_penjualan` VALUES (8, 3, 7, 1, 475000, 475000, 5, '2025-04-25 15:35:07', '2025-04-25 15:35:07', 0, NULL, NULL);
-INSERT INTO `tb_detail_penjualan` VALUES (9, 3, 5, 1, 600000, 600000, 0, '2025-04-25 15:35:07', '2025-04-25 15:35:07', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_izin_karyawan
@@ -130,13 +120,11 @@ CREATE TABLE `tb_izin_karyawan`  (
   INDEX `FK-izinToJenisIzin`(`id_jenis_izin` ASC) USING BTREE,
   CONSTRAINT `FK-izinToJenisIzin` FOREIGN KEY (`id_jenis_izin`) REFERENCES `tb_kategori_izin` (`id_kategori_izin`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK-izinTokaryawan` FOREIGN KEY (`id_karyawan`) REFERENCES `tb_karyawan` (`id_karyawan`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_izin_karyawan
 -- ----------------------------
-INSERT INTO `tb_izin_karyawan` VALUES (1, 2, 1, '2025-04-25', '2025-04-26', 'Approved', '2025-04-25 10:36:41', '2025-04-25 13:44:07', 0, NULL, NULL);
-INSERT INTO `tb_izin_karyawan` VALUES (2, 1, 2, '2025-04-26', '2025-04-28', 'Canceled', '2025-04-25 14:51:08', '2025-04-25 14:58:54', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_karyawan
@@ -164,7 +152,7 @@ CREATE TABLE `tb_karyawan`  (
 -- ----------------------------
 -- Records of tb_karyawan
 -- ----------------------------
-INSERT INTO `tb_karyawan` VALUES (1, 1, 'Teknisi', 5000000, 'Jl. Mawar No. 123', 1, '2025-04-21 08:53:04', '2025-04-21 08:53:04', 0, NULL, NULL);
+INSERT INTO `tb_karyawan` VALUES (1, 1, 'Teknisi', 5000000, 'Jl. Mawar No. 123', 2, '2025-04-21 08:53:04', '2025-05-06 12:02:51', 0, NULL, NULL);
 INSERT INTO `tb_karyawan` VALUES (2, 2, 'Owner', 90000000, 'Jl. Mawar No. 124', 1, '2025-04-21 08:53:59', '2025-04-21 08:53:59', 0, NULL, NULL);
 
 -- ----------------------------
@@ -180,13 +168,19 @@ CREATE TABLE `tb_kategori`  (
   `deleted_at` datetime NULL DEFAULT NULL,
   `deleted_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_kategori`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_kategori
 -- ----------------------------
-INSERT INTO `tb_kategori` VALUES (1, 'Elektronik', '2025-04-24 15:02:12', '2025-04-24 15:02:12', 0, NULL, NULL);
-INSERT INTO `tb_kategori` VALUES (2, 'Furniture', '2025-04-24 15:02:34', '2025-04-24 15:02:34', 0, NULL, NULL);
+INSERT INTO `tb_kategori` VALUES (1, 'Atasan Pria', '2025-05-06 11:35:20', '2025-05-06 11:35:20', 0, NULL, NULL);
+INSERT INTO `tb_kategori` VALUES (2, 'Bawahan Pria', '2025-05-06 11:35:51', '2025-05-06 11:35:51', 0, NULL, NULL);
+INSERT INTO `tb_kategori` VALUES (3, 'Pakaian Dalam Pria', '2025-05-06 11:36:21', '2025-05-06 11:36:21', 0, NULL, NULL);
+INSERT INTO `tb_kategori` VALUES (4, 'Atasan Wanita', '2025-05-06 11:37:08', '2025-05-06 11:37:08', 0, NULL, NULL);
+INSERT INTO `tb_kategori` VALUES (5, 'Bawahan Wanita', '2025-05-06 11:37:39', '2025-05-06 11:37:39', 0, NULL, NULL);
+INSERT INTO `tb_kategori` VALUES (6, 'Dress', '2025-05-06 11:38:11', '2025-05-06 11:38:11', 0, NULL, NULL);
+INSERT INTO `tb_kategori` VALUES (7, 'Pakaian Dalam Wanita', '2025-05-06 11:38:37', '2025-05-06 11:40:53', 1, '2025-05-06 11:40:53', NULL);
+INSERT INTO `tb_kategori` VALUES (8, 'Aksesoris', '2025-05-06 11:39:20', '2025-05-06 11:39:20', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_kategori_izin
@@ -206,9 +200,9 @@ CREATE TABLE `tb_kategori_izin`  (
 -- ----------------------------
 -- Records of tb_kategori_izin
 -- ----------------------------
-INSERT INTO `tb_kategori_izin` VALUES (1, 'Sakit', '2025-04-25 10:35:49', '2025-04-25 13:31:52', 1, '2025-04-25 13:31:52', NULL);
-INSERT INTO `tb_kategori_izin` VALUES (2, 'Izin Urusan Keluarga', '2025-04-25 13:30:58', '2025-04-25 13:30:58', 0, NULL, NULL);
-INSERT INTO `tb_kategori_izin` VALUES (3, 'Izin Sakit', '2025-04-25 13:32:03', '2025-04-25 13:32:03', 0, NULL, NULL);
+INSERT INTO `tb_kategori_izin` VALUES (1, 'Izin Urusan Keluarga', '2025-05-06 12:10:50', '2025-05-06 12:10:50', 0, NULL, NULL);
+INSERT INTO `tb_kategori_izin` VALUES (2, 'Izin Sakit', '2025-05-06 12:12:01', '2025-05-06 12:12:01', 0, NULL, NULL);
+INSERT INTO `tb_kategori_izin` VALUES (3, 'Izin Malas', '2025-05-06 12:12:09', '2025-05-06 12:12:13', 1, '2025-05-06 12:12:13', NULL);
 
 -- ----------------------------
 -- Table structure for tb_kategori_pengeluaran
@@ -216,6 +210,7 @@ INSERT INTO `tb_kategori_izin` VALUES (3, 'Izin Sakit', '2025-04-25 13:32:03', '
 DROP TABLE IF EXISTS `tb_kategori_pengeluaran`;
 CREATE TABLE `tb_kategori_pengeluaran`  (
   `id_kategori_pengeluaran` int NOT NULL AUTO_INCREMENT,
+  `kode_kategori_pengeluaran` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `nama_kategori_pengeluaran` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp,
   `updated_at` timestamp NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
@@ -249,28 +244,12 @@ CREATE TABLE `tb_kehadiran`  (
   PRIMARY KEY (`id_kehadiran`) USING BTREE,
   INDEX `FK-kehadiranTokaryawan`(`id_karyawan` ASC) USING BTREE,
   CONSTRAINT `FK-kehadiranTokaryawan` FOREIGN KEY (`id_karyawan`) REFERENCES `tb_karyawan` (`id_karyawan`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_kehadiran
 -- ----------------------------
-INSERT INTO `tb_kehadiran` VALUES (1, 2, '2025-04-24', '10:09:08', '15:09:06', '5j 00m', '0j 0m', '2025-04-24 10:09:08', '2025-04-24 15:09:51', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (3, 1, '2025-04-24', '15:10:03', '15:17:32', '0j 7m', '0j 0m', '2025-04-24 15:10:03', '2025-04-24 15:17:32', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (6, 2, '2025-04-25', '13:10:58', '14:20:46', '1j 9m', '0j 0m', '2025-04-25 13:10:58', '2025-04-25 14:20:46', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (7, 1, '2025-04-25', '14:20:51', '14:56:13', '0j 35m', '0j 0m', '2025-04-25 14:20:51', '2025-04-25 14:56:13', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (8, 1, '2025-04-25', '14:58:44', '15:02:31', '0j 3m', '0j 0m', '2025-04-25 14:58:44', '2025-04-25 15:02:31', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (9, 2, '2025-04-25', '15:02:36', '15:03:40', '0j 1m', '0j 0m', '2025-04-25 15:02:36', '2025-04-25 15:03:41', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (10, 1, '2025-04-25', '15:06:35', '15:09:12', '0j 2m', '0j 0m', '2025-04-25 15:06:35', '2025-04-25 15:09:12', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (11, 2, '2025-04-25', '15:09:17', '15:30:56', '0j 21m', '0j 0m', '2025-04-25 15:09:17', '2025-04-25 15:30:56', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (12, 1, '2025-04-25', '15:31:01', '15:31:20', '0j 0m', '0j 0m', '2025-04-25 15:31:01', '2025-04-25 15:31:20', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (13, 1, '2025-04-25', '15:31:24', '15:31:40', '0j 0m', '0j 0m', '2025-04-25 15:31:24', '2025-04-25 15:31:40', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (14, 2, '2025-04-25', '15:31:45', '15:33:04', '0j 1m', '0j 0m', '2025-04-25 15:31:45', '2025-04-25 15:33:04', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (15, 1, '2025-04-25', '15:33:09', '15:33:23', '0j 0m', '0j 0m', '2025-04-25 15:33:09', '2025-04-25 15:33:23', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (16, 2, '2025-04-25', '15:33:27', '15:33:37', '0j 0m', '0j 0m', '2025-04-25 15:33:27', '2025-04-25 15:33:37', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (17, 1, '2025-04-25', '15:33:49', '15:35:11', '0j 1m', '0j 0m', '2025-04-25 15:33:49', '2025-04-25 15:35:11', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (18, 2, '2025-04-25', '15:35:16', NULL, NULL, NULL, '2025-04-25 15:35:16', '2025-04-25 15:35:16', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (19, 2, '2025-05-02', '09:01:22', NULL, NULL, NULL, '2025-05-02 09:01:22', '2025-05-02 09:01:22', 0, NULL, NULL);
-INSERT INTO `tb_kehadiran` VALUES (20, 2, '2025-05-02', '13:51:41', NULL, NULL, NULL, '2025-05-02 13:51:41', '2025-05-02 13:51:41', 0, NULL, NULL);
+INSERT INTO `tb_kehadiran` VALUES (1, 2, '2025-05-06', '11:33:53', NULL, NULL, NULL, '2025-05-06 11:33:53', '2025-05-06 11:33:53', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_pembelian
@@ -281,7 +260,6 @@ CREATE TABLE `tb_pembelian`  (
   `id_suppliers` int NULL DEFAULT NULL,
   `kode_pembelian` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `total_harga` decimal(15, 0) NULL DEFAULT NULL,
-  `status_pembelian` enum('Success','Pending','Canceled') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `tanggal_pembelian` datetime NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp,
   `updated_at` timestamp NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
@@ -291,12 +269,11 @@ CREATE TABLE `tb_pembelian`  (
   PRIMARY KEY (`id_pembelian`) USING BTREE,
   INDEX `FK-pembelianToSuppliers`(`id_suppliers` ASC) USING BTREE,
   CONSTRAINT `FK-pembelianToSuppliers` FOREIGN KEY (`id_suppliers`) REFERENCES `tb_suppliers` (`id_suppliers`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_pembelian
 -- ----------------------------
-INSERT INTO `tb_pembelian` VALUES (1, 1, 'SPL001-020525', 900000, 'Success', '2025-05-02 10:26:22', '2025-05-02 10:38:08', '2025-05-02 14:50:24', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_pengeluaran
@@ -305,9 +282,10 @@ DROP TABLE IF EXISTS `tb_pengeluaran`;
 CREATE TABLE `tb_pengeluaran`  (
   `id_pengeluaran` int NOT NULL AUTO_INCREMENT,
   `id_kategori_pengeluaran` int NULL DEFAULT NULL,
+  `kode_pengeluaran` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `total_pengeluaran` decimal(15, 0) NULL DEFAULT NULL,
   `deskripsi_pengeluaran` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  `tanggal` date NULL DEFAULT NULL,
+  `tanggal` datetime NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp,
   `updated_at` timestamp NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
   `is_deleted` tinyint(1) NULL DEFAULT 0,
@@ -347,14 +325,11 @@ CREATE TABLE `tb_penjualan`  (
   INDEX `FK-penjualanToKaryawan`(`id_karyawan` ASC) USING BTREE,
   CONSTRAINT `FK-penjualanToCustomers` FOREIGN KEY (`id_customers`) REFERENCES `tb_customers` (`id_customers`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK-penjualanToKaryawan` FOREIGN KEY (`id_karyawan`) REFERENCES `tb_karyawan` (`id_karyawan`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_penjualan
 -- ----------------------------
-INSERT INTO `tb_penjualan` VALUES (1, 1, 1, 'BDSNTS-20250425-0001', 51000000, 51000000, 0, 0, 'Success', '2025-03-14 08:31:15', '2025-04-25 15:31:15', '2025-05-02 09:50:45', 0, NULL, NULL);
-INSERT INTO `tb_penjualan` VALUES (2, 1, 1, 'BDSNTS-20250425-0002', 30000000, 30000000, 0, 0, 'Success', '2025-04-25 08:33:19', '2025-04-25 15:33:19', '2025-04-25 15:33:19', 0, NULL, NULL);
-INSERT INTO `tb_penjualan` VALUES (3, 1, 1, 'BDSNTS-20250425-0003', 1875000, 1875000, 0, 0, 'Success', '2025-05-02 08:35:07', '2025-04-25 15:35:07', '2025-05-02 09:41:23', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_produk
@@ -382,18 +357,31 @@ CREATE TABLE `tb_produk`  (
   PRIMARY KEY (`id_produk`) USING BTREE,
   INDEX `FK-produkToSubKategori`(`id_kategori` ASC) USING BTREE,
   CONSTRAINT `FK-produkToSubKategori` FOREIGN KEY (`id_kategori`) REFERENCES `tb_subkategori` (`id_subkategori`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_produk
 -- ----------------------------
-INSERT INTO `tb_produk` VALUES (1, 2, 'Laptop A', '001002LPTP', 'KAT001002LPTP877', 'Laptop Keren', 13000000, 10000000, 0, 9, 5, 'Available', '1745481861800.jpg', '2025-04-24 15:04:21', '2025-04-25 15:31:15', 0, NULL, NULL);
-INSERT INTO `tb_produk` VALUES (2, 1, 'Handphone A', '001001HNDPHN', 'KAT001001HNDPHN740', 'Handphone Keren', 8000000, 6000000, 0, 9, 5, 'Available', '1745481904587.png', '2025-04-24 15:05:04', '2025-04-25 15:31:15', 0, NULL, NULL);
-INSERT INTO `tb_produk` VALUES (3, 3, 'PC Gaming A', '001003PCGMNG', 'KAT001003PCGMNG384', 'PC Gaming Keren', 10000000, 8000000, 0, 8, 5, 'Available', '1745481938876.jpg', '2025-04-24 15:05:38', '2025-04-25 15:33:19', 0, NULL, NULL);
-INSERT INTO `tb_produk` VALUES (4, 4, 'Macbook A', '001004MCBK', 'KAT001004MCBK303', 'Macbook Keren', 20000000, 17000000, 0, 8, 5, 'Available', '1745482014573.jpg', '2025-04-24 15:06:54', '2025-04-25 15:33:19', 0, NULL, NULL);
-INSERT INTO `tb_produk` VALUES (5, 6, 'Kursi Gaming A', '002006KRSGMNG', 'KAT002006KRSGMNG730', 'Kursi Gaming Keren', 600000, 400000, 0, 9, 5, 'Available', '1745482061207.png', '2025-04-24 15:07:41', '2025-04-25 15:35:07', 0, NULL, NULL);
-INSERT INTO `tb_produk` VALUES (6, 5, 'Meja Gaming A', '002005MJGMNG', 'KAT002005MJGMNG685', 'Meja Gaming Keren', 800000, 600000, 0, 9, 5, 'Available', '1745482103266.png', '2025-04-24 15:08:23', '2025-04-25 15:35:07', 0, NULL, NULL);
-INSERT INTO `tb_produk` VALUES (7, 7, 'Rak A', '002007RK', 'KAT002007RK601', 'Rak Keren', 500000, 300000, 5, 9, 5, 'Available', '1745482141487.png', '2025-04-24 15:09:01', '2025-04-25 15:35:07', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (1, 1, 'Kemeja Hitam', '001001KMJHTM', 'KAT001001KMJHTM509', 'Kemeja Hitam Bagus', 399000, 149000, 0, 110, 20, 'Available', '1746506530702.png', '2025-05-06 11:42:10', '2025-05-06 12:07:53', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (2, 2, 'Kaos Hitam', '001002KSHTM', 'KAT001002KSHTM384', 'Kaos Hitam Bagus', 120000, 80000, 0, 110, 20, 'Available', '1746506580840.png', '2025-05-06 11:43:00', '2025-05-06 12:07:53', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (3, 3, 'Polo Shirt Hitam', '001003PLSHRTHTM', 'KAT001003PLSHRTHTM880', 'Polo Shirt Hitam Bagus', 499000, 120000, 0, 110, 20, 'Available', '1746506642932.png', '2025-05-06 11:44:02', '2025-05-06 12:07:53', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (4, 4, 'Hoodie Hitam', '001004HDHTM', 'KAT001004HDHTM123', 'Hoodie Hitam Bagus', 359000, 139000, 0, 110, 20, 'Available', '1746506693812.png', '2025-05-06 11:44:53', '2025-05-06 12:07:53', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (5, 5, 'Sweater Hitam', '001005SWTRHTM', 'KAT001005SWTRHTM390', 'Sweater Hitam Bagus', 359000, 139000, 0, 110, 20, 'Available', '1746506744578.png', '2025-05-06 11:45:44', '2025-05-06 12:07:53', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (6, 6, 'Jaket Hitam', '001006JKTHTM', 'KAT001006JKTHTM280', 'Jaket Hitam Bagus', 149000, 79000, 0, 110, 20, 'Available', '1746506788035.png', '2025-05-06 11:46:28', '2025-05-06 12:07:53', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (7, 7, 'Celana Panjang Hitam', '002007CLNPNJNGHTM', 'KAT002007CLNPNJNGHTM227', 'Celana Panjang Hitam Bagus', 349000, 119000, 0, 110, 20, 'Available', '1746506844060.png', '2025-05-06 11:47:24', '2025-05-06 12:08:30', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (8, 8, 'Celana Jeans', '002008CLNJNS', 'KAT002008CLNJNS492', 'Celana Jeans Bagus', 499000, 169000, 0, 110, 20, 'Available', '1746506913041.png', '2025-05-06 11:48:33', '2025-05-06 12:08:30', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (9, 9, 'Celana Pendek', '002009CLNPNDK', 'KAT002009CLNPNDK110', 'Celana Pendek Bagus', 169000, 89000, 0, 110, 20, 'Available', '1746506950313.png', '2025-05-06 11:49:10', '2025-05-06 12:08:30', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (10, 10, 'Jogger Pants', '002010JGGRPNTS', 'KAT002010JGGRPNTS538', 'Jogger Pants Bagus', 339000, 179000, 0, 110, 20, 'Available', '1746506989310.png', '2025-05-06 11:49:49', '2025-05-06 12:08:30', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (11, 11, 'Boxer', '003011BXR', 'KAT003011BXR780', 'Boxer Bagus', 99000, 49000, 0, 110, 20, 'Available', '1746507125958.png', '2025-05-06 11:52:05', '2025-05-06 12:08:49', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (12, 13, 'Kaos Dalam', '003013KSDLM', 'KAT003013KSDLM497', 'Kaos Dalam Bagus', 89000, 39000, 0, 110, 20, 'Available', '1746507171225.png', '2025-05-06 11:52:51', '2025-05-06 12:08:49', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (13, 14, 'Blouse Biru', '004014BLSBR', 'KAT004014BLSBR815', 'Blouse Biru Bagus', 379000, 149000, 0, 110, 20, 'Available', '1746507260761.png', '2025-05-06 11:54:20', '2025-05-06 12:09:08', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (14, 15, 'Kemeja Pink', '004015KMJPNK', 'KAT004015KMJPNK786', 'Kemeja Pink Lucu', 339000, 129000, 0, 110, 20, 'Available', '1746507314605.png', '2025-05-06 11:55:14', '2025-05-06 12:09:08', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (15, 19, 'Rok Hitam', '005019RKHTM', 'KAT005019RKHTM177', 'Rok Hitam Bagus', 249000, 119000, 0, 110, 20, 'Available', '1746507360035.png', '2025-05-06 11:56:00', '2025-05-06 12:09:26', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (16, 20, 'Legging Hitam', '005020LGGNGHTM', 'KAT005020LGGNGHTM289', 'Legging Hitam Bagus', 239000, 110000, 0, 110, 20, 'Available', '1746507402212.png', '2025-05-06 11:56:42', '2025-05-06 12:09:26', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (17, 21, 'Celana Cutbray', '005021CLNCTBRY', 'KAT005021CLNCTBRY760', 'Celana Cutbray Bagus', 239000, 89000, 0, 110, 20, 'Available', '1746507471386.png', '2025-05-06 11:57:51', '2025-05-06 12:09:26', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (18, 29, 'Topi MLB', '008029TPMLB', 'KAT008029TPMLB223', 'Topi MLB Bagus', 199000, 89000, 0, 110, 20, 'Available', '1746507533391.png', '2025-05-06 11:58:53', '2025-05-06 12:09:59', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (19, 30, 'Ikat Pinggang Kulit', '008030KTPNGGNGKLT', 'KAT008030KTPNGGNGKLT969', 'Ikat Pinggang Kulit Keren', 149000, 89000, 20, 110, 20, 'Available', '1746507593959.png', '2025-05-06 11:59:53', '2025-05-06 12:09:59', 0, NULL, NULL);
+INSERT INTO `tb_produk` VALUES (20, 31, 'Dasi', '008031DS', 'KAT008031DS866', 'Dasi Bagus', 59000, 39000, 40, 110, 20, 'Available', '1746507636942.png', '2025-05-06 12:00:36', '2025-05-06 12:09:59', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_shifts
@@ -410,14 +398,13 @@ CREATE TABLE `tb_shifts`  (
   `deleted_at` datetime NULL DEFAULT NULL,
   `deleted_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_shifts`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_shifts
 -- ----------------------------
-INSERT INTO `tb_shifts` VALUES (1, 'Full-Time', '08:00:00', '16:00:00', '2025-04-17 15:57:01', '2025-04-17 15:57:01', 0, NULL, NULL);
-INSERT INTO `tb_shifts` VALUES (2, 'Shift Malam', '18:00:00', '22:00:00', '2025-04-23 10:13:48', '2025-04-23 11:08:16', 1, '2025-04-23 11:08:16', NULL);
-INSERT INTO `tb_shifts` VALUES (3, 'Shift Pagi', '08:00:00', '12:00:00', '2025-04-23 10:17:03', '2025-04-23 11:07:59', 1, '2025-04-23 11:07:59', NULL);
+INSERT INTO `tb_shifts` VALUES (1, 'Full Time', '08:00:00', '16:00:00', '2025-05-06 12:01:44', '2025-05-06 12:01:44', 0, NULL, NULL);
+INSERT INTO `tb_shifts` VALUES (2, 'Shift Pagi', '08:00:00', '12:00:00', '2025-05-06 12:02:35', '2025-05-06 12:02:35', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_stok_produk
@@ -439,14 +426,11 @@ CREATE TABLE `tb_stok_produk`  (
   INDEX `FK-stokToProduk`(`id_produk` ASC) USING BTREE,
   INDEX `FK-stokToUsers`(`nama_karyawan` ASC) USING BTREE,
   CONSTRAINT `FK-stokToProduk` FOREIGN KEY (`id_produk`) REFERENCES `tb_produk` (`id_produk`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_stok_produk
 -- ----------------------------
-INSERT INTO `tb_stok_produk` VALUES (1, 'BDSNTS-20250425-0003', 6, '-1', 'Penjualan Produk', 'Budi Santoso', '2025-04-25 15:35:07', '2025-04-25 15:35:07', 0, NULL, NULL);
-INSERT INTO `tb_stok_produk` VALUES (2, 'BDSNTS-20250425-0003', 7, '-1', 'Penjualan Produk', 'Budi Santoso', '2025-04-25 15:35:07', '2025-04-25 15:35:07', 0, NULL, NULL);
-INSERT INTO `tb_stok_produk` VALUES (3, 'BDSNTS-20250425-0003', 5, '-1', 'Penjualan Produk', 'Budi Santoso', '2025-04-25 15:35:07', '2025-04-25 15:35:07', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_subkategori
@@ -464,18 +448,44 @@ CREATE TABLE `tb_subkategori`  (
   PRIMARY KEY (`id_subkategori`) USING BTREE,
   INDEX `FK-SubtoKategori`(`id_kategori` ASC) USING BTREE,
   CONSTRAINT `FK-SubtoKategori` FOREIGN KEY (`id_kategori`) REFERENCES `tb_kategori` (`id_kategori`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_subkategori
 -- ----------------------------
-INSERT INTO `tb_subkategori` VALUES (1, 1, 'Handphone', '2025-04-24 15:02:12', '2025-04-24 15:02:12', 0, NULL, NULL);
-INSERT INTO `tb_subkategori` VALUES (2, 1, 'Laptop', '2025-04-24 15:02:12', '2025-04-24 15:02:12', 0, NULL, NULL);
-INSERT INTO `tb_subkategori` VALUES (3, 1, 'PC', '2025-04-24 15:02:12', '2025-04-24 15:02:12', 0, NULL, NULL);
-INSERT INTO `tb_subkategori` VALUES (4, 1, 'Macbook', '2025-04-24 15:02:12', '2025-04-24 15:02:12', 0, NULL, NULL);
-INSERT INTO `tb_subkategori` VALUES (5, 2, 'Meja', '2025-04-24 15:02:34', '2025-04-24 15:02:34', 0, NULL, NULL);
-INSERT INTO `tb_subkategori` VALUES (6, 2, 'Kursi', '2025-04-24 15:02:34', '2025-04-24 15:02:34', 0, NULL, NULL);
-INSERT INTO `tb_subkategori` VALUES (7, 2, 'Rak', '2025-04-24 15:02:34', '2025-04-24 15:02:34', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (1, 1, 'Kemeja', '2025-05-06 11:35:20', '2025-05-06 11:35:20', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (2, 1, 'Kaos', '2025-05-06 11:35:20', '2025-05-06 11:35:20', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (3, 1, 'Polo Shirt', '2025-05-06 11:35:20', '2025-05-06 11:35:20', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (4, 1, 'Hoodie', '2025-05-06 11:35:20', '2025-05-06 11:35:20', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (5, 1, 'Sweater', '2025-05-06 11:35:20', '2025-05-06 11:35:20', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (6, 1, 'Jaket', '2025-05-06 11:35:20', '2025-05-06 11:35:20', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (7, 2, 'Celana Panjang', '2025-05-06 11:35:52', '2025-05-06 11:35:52', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (8, 2, 'Jeans', '2025-05-06 11:35:52', '2025-05-06 11:35:52', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (9, 2, 'Celana Pendek', '2025-05-06 11:35:52', '2025-05-06 11:35:52', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (10, 2, 'Jogger Pants', '2025-05-06 11:35:52', '2025-05-06 11:35:52', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (11, 3, 'Boxer', '2025-05-06 11:36:21', '2025-05-06 11:36:21', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (12, 3, 'Brief', '2025-05-06 11:36:21', '2025-05-06 11:36:21', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (13, 3, 'Kaos Dalam', '2025-05-06 11:36:21', '2025-05-06 11:36:21', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (14, 4, 'Blouse', '2025-05-06 11:37:08', '2025-05-06 11:37:08', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (15, 4, 'Kemeja Wanita', '2025-05-06 11:37:08', '2025-05-06 11:37:08', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (16, 4, 'Crop Top', '2025-05-06 11:37:08', '2025-05-06 11:37:08', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (17, 4, 'Tank Top', '2025-05-06 11:37:08', '2025-05-06 11:37:08', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (18, 4, 'Kaos Wanita', '2025-05-06 11:37:08', '2025-05-06 11:37:08', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (19, 5, 'Rok', '2025-05-06 11:37:39', '2025-05-06 11:37:39', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (20, 5, 'Legging', '2025-05-06 11:37:39', '2025-05-06 11:37:39', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (21, 5, 'Celana Panjang Wanita', '2025-05-06 11:37:39', '2025-05-06 11:37:39', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (22, 5, 'Jeans Wanita', '2025-05-06 11:37:39', '2025-05-06 11:37:39', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (23, 6, 'Mini Dress', '2025-05-06 11:38:11', '2025-05-06 11:38:11', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (24, 6, 'Maxy Dress', '2025-05-06 11:38:11', '2025-05-06 11:38:11', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (25, 6, 'Minicon', '2025-05-06 11:38:11', '2025-05-06 11:38:11', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (26, 7, 'Bra', '2025-05-06 11:38:37', '2025-05-06 11:38:37', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (27, 7, 'Celana Dalam Wanita', '2025-05-06 11:38:37', '2025-05-06 11:38:37', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (28, 7, 'Lingerie', '2025-05-06 11:38:37', '2025-05-06 11:38:37', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (29, 8, 'Topi', '2025-05-06 11:39:20', '2025-05-06 11:39:20', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (30, 8, 'Ikat Pinggang', '2025-05-06 11:39:20', '2025-05-06 11:39:20', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (31, 8, 'Dasi', '2025-05-06 11:39:20', '2025-05-06 11:39:20', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (32, 8, 'Hijab', '2025-05-06 11:39:20', '2025-05-06 11:39:20', 0, NULL, NULL);
+INSERT INTO `tb_subkategori` VALUES (33, 8, 'Scarf', '2025-05-06 11:39:20', '2025-05-06 11:39:20', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_suppliers
@@ -495,12 +505,18 @@ CREATE TABLE `tb_suppliers`  (
   `deleted_at` datetime NULL DEFAULT NULL,
   `deleted_by` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_suppliers`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_suppliers
 -- ----------------------------
-INSERT INTO `tb_suppliers` VALUES (1, 'SPL001', 'Supplier A', '1111', '11112', 'supplier.a@gmail.com', 'Kota A', '2025-04-21 11:15:04', '2025-05-02 11:24:42', 0, NULL, NULL);
+INSERT INTO `tb_suppliers` VALUES (1, 'SPL003', 'AP Production', '081234567890', '081234567890', 'supplier@gmail.com', 'Jl. Mawar No. 123, Kecamatan Disana, Jakarta, 12345', '2025-05-06 12:04:13', '2025-05-06 12:04:13', 0, NULL, NULL);
+INSERT INTO `tb_suppliers` VALUES (2, 'SPL002', 'BP Production', '081234567890', '081234567890', 'supplier@gmail.com', 'Jl. Mawar No. 123, Kecamatan Disana, Jakarta, 12345', '2025-05-06 12:04:30', '2025-05-06 12:04:30', 0, NULL, NULL);
+INSERT INTO `tb_suppliers` VALUES (3, 'SPL003', 'PDP Production', '081234567890', '081234567890', 'supplier@gmail.com', 'Jl. Mawar No. 123, Kecamatan Disana, Jakarta, 12345', '2025-05-06 12:04:55', '2025-05-06 12:04:55', 0, NULL, NULL);
+INSERT INTO `tb_suppliers` VALUES (4, 'SPL004', 'AW Production', '081234567890', '081234567890', 'supplier@gmail.com', 'Jl. Mawar No. 123, Kecamatan Disana, Jakarta, 12345', '2025-05-06 12:05:10', '2025-05-06 12:05:10', 0, NULL, NULL);
+INSERT INTO `tb_suppliers` VALUES (5, 'SPL005', 'BW Production', '081234567890', '081234567890', 'supplier@gmail.com', 'Jl. Mawar No. 123, Kecamatan Disana, Jakarta, 12345', '2025-05-06 12:05:24', '2025-05-06 12:05:24', 0, NULL, NULL);
+INSERT INTO `tb_suppliers` VALUES (6, 'SPL006', 'D Production', '081234567890', '081234567890', 'supplier@gmail.com', 'Jl. Mawar No. 123, Kecamatan Disana, Jakarta, 12345', '2025-05-06 12:05:40', '2025-05-06 12:05:40', 0, NULL, NULL);
+INSERT INTO `tb_suppliers` VALUES (7, 'SPL007', 'A Production', '081234567890', '081234567890', 'supplier@gmail.com', 'Jl. Mawar No. 123, Kecamatan Disana, Jakarta, 12345', '2025-05-06 12:06:00', '2025-05-06 12:06:00', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_users
