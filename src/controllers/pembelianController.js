@@ -45,7 +45,7 @@ exports.createPembelian = async (req, res) => {
     return res.json({
       status: 200,
       message: "Berhasil Menambahkan Data Pembelian",
-      data: { p_idPembelian: purchaseId, p_idSuppliers, p_tanggal, p_totalHarga, p_statusPembelian: 'Pending', p_detailPembelian },
+      data: { p_idPembelian: purchaseId, p_idSuppliers, p_tanggal, p_totalHarga, p_detailPembelian },
     });
   } catch (error) {
     return res.status(500).json({ status: "error", message: error.message });
@@ -53,13 +53,13 @@ exports.createPembelian = async (req, res) => {
 };
 
 exports.updatePembelian = async (req, res) => {
-  const { p_totalHarga, p_statusPembelian } = req.body;
+  const { p_totalHarga } = req.body;
   const { id } = req.params;
   try {
-    if (!id || !p_totalHarga || !p_statusPembelian) {
+    if (!id || !p_totalHarga) {
       return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
     }
-    await Purchase.updatePembelian(id, p_totalHarga, p_statusPembelian);
+    await Purchase.updatePembelian(id, p_totalHarga);
     return res.json({
       status: 200,
       message: "Berhasil Update Data Pembelian",

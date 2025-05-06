@@ -25,7 +25,6 @@ class Pembelian {
           p.id_pembelian,
           p.kode_pembelian,
           p.total_harga,
-          p.status_pembelian,
           p.tanggal_pembelian,
           p.created_at AS pembelian_created_at,
           p.updated_at AS pembelian_updated_at,
@@ -76,7 +75,6 @@ class Pembelian {
           id_pembelian: row.id_pembelian,
           kode_pembelian: row.kode_pembelian,
           total_harga: row.total_harga,
-          status_pembelian: row.status_pembelian,
           tanggal_pembelian: formatWIB(row.tanggal_pembelian),
           created_at: formatWIB(row.pembelian_created_at),
           updated_at: formatWIB(row.pembelian_updated_at),
@@ -131,7 +129,7 @@ class Pembelian {
       const [supplierResult] = await connection.query("SELECT kode_suppliers FROM tb_suppliers WHERE id_suppliers = ?", [p_idSuppliers]);
       const kodePembelian = `${supplierResult[0].kode_suppliers}-${moment(p_tanggal).format('DDMMYY')}`;
       const [purchaseResult] = await connection.query(
-        "INSERT INTO tb_pembelian (id_suppliers, total_harga, status_pembelian, tanggal_pembelian, kode_pembelian) VALUES (?, ?, 'Pending', ?, ?)",
+        "INSERT INTO tb_pembelian (id_suppliers, total_harga, tanggal_pembelian, kode_pembelian) VALUES (?, ?, ?, ?)",
         [p_idSuppliers, p_totalHarga, p_tanggal, kodePembelian]
       );
       const purchaseId = purchaseResult.insertId;
@@ -155,10 +153,10 @@ class Pembelian {
     }
   }
 
-  static async updatePembelian(p_idPembelian, p_totalHarga, p_statusPembelian) {
+  static async updatePembelian(p_idPembelian, p_totalHarga) {
     await db.query(
-      "UPDATE tb_pembelian SET total_harga = ?, status_pembelian = ? WHERE id_pembelian = ?",
-      [p_totalHarga, p_statusPembelian, p_idPembelian]
+      "UPDATE tb_pembelian SET total_harga = ? WHERE id_pembelian = ?",
+      [p_totalHarga, p_idPembelian]
     );
   }
 
