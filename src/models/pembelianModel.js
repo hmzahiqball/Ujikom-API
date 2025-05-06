@@ -144,7 +144,7 @@ class Pembelian {
       }
       
       await connection.commit();
-      return purchaseId;
+      return purchaseId, kodePembelian;
     } catch (error) {
       await connection.rollback();
       throw error;

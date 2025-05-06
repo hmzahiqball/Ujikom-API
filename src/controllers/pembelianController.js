@@ -41,11 +41,11 @@ exports.createPembelian = async (req, res) => {
     if (!p_idSuppliers || !p_totalHarga || !p_detailPembelian || !p_tanggal) {
       return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
     }
-    const purchaseId = await Purchase.createPembelian(p_idSuppliers, p_totalHarga, p_detailPembelian, p_tanggal);
+    const { purchaseId, kodePembelian } = await Purchase.createPembelian(p_idSuppliers, p_totalHarga, p_detailPembelian, p_tanggal);
     return res.json({
       status: 200,
       message: "Berhasil Menambahkan Data Pembelian",
-      data: { p_idPembelian: purchaseId, p_idSuppliers, p_tanggal, p_totalHarga, p_detailPembelian },
+      data: { p_idPembelian: purchaseId, kodePembelian, p_idSuppliers, p_tanggal, p_totalHarga, p_detailPembelian },
     });
   } catch (error) {
     return res.status(500).json({ status: "error", message: error.message });
