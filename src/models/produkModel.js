@@ -159,6 +159,15 @@ class Produk {
     }
   }
 
+  static async updateStokProduk(p_idProduk, p_addstokProduk) {
+    await db.query(
+      `UPDATE tb_produk 
+       SET stok_produk = stok_produk + ? 
+       WHERE id_produk = ?`,
+      [p_addstokProduk, p_idProduk]
+    );
+  }
+
   static async deleteProduk(p_idProduk) {
     await db.query(
       "UPDATE tb_produk SET is_deleted = 1, deleted_at = NOW() WHERE id_produk = ? AND is_deleted = 0",

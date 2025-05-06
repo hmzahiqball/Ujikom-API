@@ -142,6 +142,23 @@ exports.updateProduk = async (req, res) => {
   });
 };
 
+exports.updateStokProduk = async (req, res) => {
+  const { id } = req.params;
+  const { p_addstokProduk } = req.body;
+
+  try {
+    if (!id || !p_addstokProduk) {
+      return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
+    }
+
+    await Produk.updateStokProduk(id, p_addstokProduk);
+
+    return res.json({ status: 200, message: "Stok produk berhasil diupdate" });
+  } catch (error) {
+    return res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
 
 exports.deleteProduk = async (req, res) => {
   const { id } = req.params;
