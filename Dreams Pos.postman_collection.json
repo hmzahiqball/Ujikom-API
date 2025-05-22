@@ -1,0 +1,2117 @@
+{
+	"info": {
+		"_postman_id": "ef43bfc4-120b-4a02-9232-660b4e8c1e26",
+		"name": "Dreams Pos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27927134"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwia29kZSI6IlBUUlNZUFJUTSIsImlhdCI6MTc0Nzg4MDY1NCwiZXhwIjoxNzQ3OTY3MDU0fQ.gbJVvnJyEn1YFb8cvttRx8A5hCizbU3LHfAeptCTQeI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Users",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwia29kZSI6IlBUUlNZUFJUTSIsImlhdCI6MTc0Nzg4MDY1NCwiZXhwIjoxNzQ3OTY3MDU0fQ.gbJVvnJyEn1YFb8cvttRx8A5hCizbU3LHfAeptCTQeI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "p_namaUsers",
+									"value": "Putra Suyapratama",
+									"type": "text"
+								},
+								{
+									"key": "p_contactUsers",
+									"value": "089876543211",
+									"type": "text"
+								},
+								{
+									"key": "p_passwordUsers",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "p_roleUsers",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "p_gambarUser",
+									"type": "file",
+									"src": "/C:/Users/RAHARJA/Pictures/how-to-stop-being-a-people-pleaser-1_1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://ujikom-api-production.up.railway.app/api/users/",
+							"protocol": "http",
+							"host": [
+								"ujikom-api-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Users",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "p_contactUsers",
+									"value": "081210295732",
+									"type": "text"
+								},
+								{
+									"key": "p_passwordUsers",
+									"value": "putraadmin",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "p_roleUsers",
+									"value": "kasir",
+									"type": "text"
+								},
+								{
+									"key": "p_gambarUser",
+									"value": "http://localhost:1111/api/images/1743051663879.jpg",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/users/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Users",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/users/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"users",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_contactUsers\": \"081210295730\",\r\n    \"p_passwordUsers\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Suppliers",
+			"item": [
+				{
+					"name": "Get Suppliers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/suppliers/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"suppliers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Suppliers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"p_namaSuppliers\": \"Nama supplier\",\r\n  \"p_contactPerson\": \"1122\",\r\n  \"p_contactSuppliers\": \"2211\",\r\n  \"p_emailSuppliers\": \"pengguna.baru@example.com\",\r\n  \"p_alamatSuppliers\": \"dmn\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/suppliers/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"suppliers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Suppliers",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"p_namaSuppliers\": \"Nama supplier\",\r\n  \"p_contactPerson\": \"1122\",\r\n  \"p_contactSuppliers\": \"2211\",\r\n  \"p_emailSuppliers\": \"pengguna.baru@example.com\",\r\n  \"p_alamatSuppliers\": \"dmn gtw\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/suppliers/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"suppliers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Suppliers",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/suppliers/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"suppliers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Kategori",
+			"item": [
+				{
+					"name": "CRUD Kategori",
+					"item": [
+						{
+							"name": "Add Kategori",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"p_namaKategori\": \"Elektronik\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1111/api/kategori/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1111",
+									"path": [
+										"api",
+										"kategori",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Kategori",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"p_namaKategori\": \"Celanaaa\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1111/api/kategori/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1111",
+									"path": [
+										"api",
+										"kategori",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Kategori",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1111/api/kategori/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1111",
+									"path": [
+										"api",
+										"kategori",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CRUD SubKategori",
+					"item": [
+						{
+							"name": "Add Sub Kategori",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"p_namaSubKategori\": \"Macbook\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1111/api/kategori/1/subkategori/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1111",
+									"path": [
+										"api",
+										"kategori",
+										"1",
+										"subkategori",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Sub Kategori",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"p_namaSubKategori\": \"Baju Polo\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:1111/api/kategori/2/subkategori/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1111",
+									"path": [
+										"api",
+										"kategori",
+										"2",
+										"subkategori",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Sub Kategori",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:1111/api/kategori/3/subkategori/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "1111",
+									"path": [
+										"api",
+										"kategori",
+										"3",
+										"subkategori",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get All Kategori",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/kategori/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategori",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Kategori Not Filtered",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/kategori/notfiltered",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategori",
+								"notfiltered"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jadwal Shifts",
+			"item": [
+				{
+					"name": "Get All Shifts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/shifts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"shifts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Shift By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/shifts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"shifts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Shifts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_namaShifts\": \"Malam\",\r\n    \"p_startTime\": \"18:00:00\",\r\n    \"p_endTime\": \"20:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/shifts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"shifts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Shifts",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_namaShifts\": \"Shift Malam\",\r\n    \"p_startTime\": \"18:00:00\",\r\n    \"p_endTime\": \"23:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/shifts/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"shifts",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Shifts",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/shifts/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"shifts",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produk",
+			"item": [
+				{
+					"name": "Get All Produk",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/produk/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"produk",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Produk",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "p_idKategori",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "p_namaProduk",
+									"value": "Meja Gaming",
+									"type": "text"
+								},
+								{
+									"key": "p_skuProduk",
+									"value": "MJA123",
+									"type": "text"
+								},
+								{
+									"key": "p_barcodeProduk",
+									"value": "123456788",
+									"type": "text"
+								},
+								{
+									"key": "p_deskripsiProduk",
+									"value": "Meja untuk gaming",
+									"type": "text"
+								},
+								{
+									"key": "p_hargaProduk",
+									"value": "1200000",
+									"type": "text"
+								},
+								{
+									"key": "p_modalProduk",
+									"value": "1000000",
+									"type": "text"
+								},
+								{
+									"key": "p_diskonProduk",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "p_stokProduk",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "p_stokMinimumProduk",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "p_gambarProduk",
+									"type": "file",
+									"src": "/C:/Users/RAHARJA/Pictures/20200824120814.jpg"
+								},
+								{
+									"key": "p_statusProduk",
+									"value": "Available",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/produk/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"produk",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Produk",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "p_modalProduk",
+									"value": "14000000",
+									"type": "text"
+								},
+								{
+									"key": "p_hargaProduk",
+									"value": "20000000",
+									"type": "text"
+								},
+								{
+									"key": "p_diskonProduk",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "p_stokProduk",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "p_stokMinimumProduk",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "p_statusProduk",
+									"value": "Available",
+									"type": "text"
+								},
+								{
+									"key": "p_deskripsiProduk",
+									"value": "Macbook Air Pro",
+									"type": "text"
+								},
+								{
+									"key": "p_gambarProduk",
+									"type": "file",
+									"src": "/C:/Users/RAHARJA/Pictures/download.jpg",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/produk/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"produk",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Produk By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/produk/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"produk",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Produk",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/produk/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"produk",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Karyawan",
+			"item": [
+				{
+					"name": "Get All Karyawan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/karyawan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"karyawan",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Karyawan By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/karyawan/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"karyawan",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Karyawan",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "p_namaUsers",
+									"value": "Putra Suyapratama",
+									"type": "text"
+								},
+								{
+									"key": "p_passwordUsers",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "p_contactUsers",
+									"value": "081210295730",
+									"type": "text"
+								},
+								{
+									"key": "p_roleUsers",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "p_posisiKaryawan",
+									"value": "Owner",
+									"type": "text"
+								},
+								{
+									"key": "p_gajiKaryawan",
+									"value": "90000000",
+									"type": "text"
+								},
+								{
+									"key": "p_alamatKaryawan",
+									"value": "Jl. Mawar No. 124",
+									"type": "text"
+								},
+								{
+									"key": "p_idShifts",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "p_gambarUser",
+									"type": "file",
+									"src": "/C:/Users/RAHARJA/Pictures/how-to-stop-being-a-people-pleaser-1_1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/karyawan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"karyawan",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Karyawan",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"p_posisiKaryawan\": \"Kasir\",\r\n  \"p_gajiKaryawan\": 5500000,\r\n  \"p_idShifts\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/karyawan/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"karyawan",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Karyawan",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/karyawan/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"karyawan",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/customer/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"customer",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Customers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"p_namaCustomers\": \"Nama Customer 2\",\r\n  \"p_genderCustomers\": \"Laki-Laki\",\r\n  \"p_tglLahirCustomers\": \"2006-28-05\",\r\n  \"p_telpCustomers\": \"123123123\",\r\n  \"p_emailCustomers\": \"pengguna.baru@example.com\",\r\n  \"p_alamatCustomers\": \"idk jauh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/customer/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"customer",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customers",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"p_telpCustomers\": \"081210295730\",\r\n  \"p_emailCustomers\": \"suyapratama@gmail.com\",\r\n  \"p_alamatCustomers\": \"Bandung Jauh, Jawa Barat\",\r\n  \"p_statusCustomers\": \"aktif\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/customer/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"customer",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customers",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/customer/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"customer",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Laporan Stok",
+			"item": [
+				{
+					"name": "Get All Laporan Stok",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanstok/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanstok",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Laporan Stok",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_idProduk\": 1,\r\n    \"p_namaKaryawan\": \"Michael Johnson\",\r\n    \"p_perubahanStok\": \"+500\",\r\n    \"p_alasanPerubahan\": \"Pembelian Barang Dari Supplierrrr\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanstok/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanstok",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Laporan Stok",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanstok/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanstok",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Laporan Absensi",
+			"item": [
+				{
+					"name": "Get All Laporan Absensi",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanabsen/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanabsen",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clock In Absen",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_idKaryawan\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanabsen/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanabsen",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clock Out Absen",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanabsen/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanabsen",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Absensi",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanabsen/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanabsen",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Kategori Izin",
+			"item": [
+				{
+					"name": "Get All Kategori Izin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/kategoriIzin/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategoriIzin",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Kategori Izin By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/kategoriIzin/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategoriIzin",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Kategori Izin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_namaKategoriIzin\": \"Izin Liburan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/kategoriIzin/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategoriIzin",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_namaKategoriIzin\": \"Izin Acara Keluarga\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/kategoriIzin/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategoriIzin",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Kategori Izin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/kategoriIzin/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategoriIzin",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Kategori Pengeluaran",
+			"item": [
+				{
+					"name": "Get All Kategori Pengeluaran",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/kategoriPengeluaran/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategoriPengeluaran",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Kategori Pengeluaran By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/kategoriPengeluaran/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategoriPengeluaran",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Kategori Pengeluaran",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_namakategoriPengeluaran\": \"Pembayaran Supply Celana\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/kategoriPengeluaran/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategoriPengeluaran",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Kategori Pengeluaran",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_namakategoriPengeluaran\": \"Pembayaran Supply Baju\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/kategoriPengeluaran/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategoriPengeluaran",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Kategori Pengeluaran",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/kategoriPengeluaran/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"kategoriPengeluaran",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Laporan Izin Karyawan",
+			"item": [
+				{
+					"name": "Get All Laporan Izin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanIzinKaryawan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanIzinKaryawan",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Laporan Izin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_idKaryawan\": 2,\r\n    \"p_idJenisIzin\": 1,\r\n    \"p_startDate\": \"2025-03-20\",\r\n    \"p_endDate\": \"2030-03-25\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanIzinKaryawan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanIzinKaryawan",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Laporan Izin",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_startDate\": \"2025-03-20\",\r\n    \"p_endDate\": \"2025-03-25\",\r\n    \"p_status\": \"Approved\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanIzinKaryawan/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanIzinKaryawan",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Laporan Izin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanIzinKaryawan/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanIzinKaryawan",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Laporan Pengeluaran",
+			"item": [
+				{
+					"name": "Get All Laporan Pengeluaran",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPengeluaran/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPengeluaran",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Laporan Pengeluaran",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_idKategoriPengeluaran\": 1,\r\n    \"p_totalPengeluaran\": 10000000,\r\n    \"p_deskripsiPengeluaran\": \"Pembelian Supply T-Shirt Ke Supplier ABC\",\r\n    \"p_tanggal\": \"2025-03-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPengeluaran/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPengeluaran",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Laporan Pengeluaran",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"p_idKategoriPengeluaran\": 1,\r\n    \"p_totalPengeluaran\": 10000000,\r\n    \"p_deskripsiPengeluaran\": \"Pembelian Supply T-Shirt Ke Supplier ABC\",\r\n    \"p_tanggal\": \"2025-03-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPengeluaran/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPengeluaran",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Laporan Pengeluaran",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPengeluaran/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPengeluaran",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Laporan Pembelian",
+			"item": [
+				{
+					"name": "Get All Laporan Pembelian",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPembelian/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPembelian",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Laporan Pembelian By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPembelian/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPembelian",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Laporan Pembelian",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"p_idSuppliers\": 1,\r\n  \"p_totalHarga\": 3000000,\r\n  \"p_detailPembelian\": [\r\n    { \"p_idProduk\": 1, \"p_kuantitas\": 2, \"p_harga\": 1500000, \"p_subTotal\": 3000000 }\r\n  ],\r\n  \"p_tanggal\": \"2025-03-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPembelian/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPembelian",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Laporan Pembelian",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"p_idSuppliers\": 1,\r\n  \"p_totalHarga\": 3000000,\r\n  \"p_statusPembelian\": \"Success\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPembelian/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPembelian",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Laporan Pembelian",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPembelian/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPembelian",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Laporan Penjualan",
+			"item": [
+				{
+					"name": "Get All Laporan Penjualan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPenjualan?tanggal=2025-01-01_2025-12-31",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPenjualan"
+							],
+							"query": [
+								{
+									"key": "tanggal",
+									"value": "2025-01-01_2025-12-31"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Laporan Penjualan By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPenjualan/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPenjualan",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Laporan Penjualan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"p_idCustomers\": 3,\r\n  \"p_idKaryawan\": 2,\r\n  \"p_totalHarga\": 12000000,\r\n  \"p_totalBayar\": 12000000,\r\n  \"p_totalKembalian\": 0,\r\n  \"p_diskon\": 0,\r\n  \"p_tanggal\": \"2025-04-17 14:30:00\",\r\n  \"p_detailPenjualan\": [\r\n    {\r\n      \"p_idProduk\": 6,\r\n      \"p_kuantitas\": 1,\r\n      \"p_harga\": 12000000,\r\n      \"p_subTotal\": 12000000\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPenjualan/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPenjualan",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Laporan Penjualan",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"p_idCustomers\": 1,\r\n  \"p_idKaryawan\": 1,\r\n  \"p_totalHarga\": 3000000,\r\n  \"p_statusPenjualan\": \"Canceled\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPenjualan/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPenjualan",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Laporan Penjualan",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:1111/api/laporanPenjualan/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "1111",
+							"path": [
+								"api",
+								"laporanPenjualan",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
