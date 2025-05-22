@@ -7,12 +7,17 @@ const {
   deleteUser,
 } = require("../controllers/userController");
 
+const authenticateToken = require("../middleware/auth");
+
 const router = express.Router();
 
-router.get("/", getAllUsers); // GET: Mendapatkan semua user
-router.post("/", createUser); // POST: Membuat user baru
-router.post("/login", login); // POST: Proses login user
-router.put("/:id", updateUser); // PUT: Memperbarui user berdasarkan ID
-router.delete("/:id", deleteUser); // DELETE: Menghapus user berdasarkan ID
+// 🔓 Public route
+router.post("/login", login);
+
+// 🔐 Protected routes
+router.get("/", authenticateToken, getAllUsers);
+router.post("/", authenticateToken, createUser);
+router.put("/:id", authenticateToken, updateUser);
+router.delete("/:id", authenticateToken, deleteUser);
 
 module.exports = router;

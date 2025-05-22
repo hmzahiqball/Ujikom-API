@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const upload = require("../middleware/upload");
+const generateToken = require('../utils/jwt');
 
 // GET: Mendapatkan semua user
 exports.getAllUsers = async (req, res) => {
@@ -53,9 +54,12 @@ exports.login = async (req, res) => {
     const baseUrl = `${req.protocol}://${req.get("host")}`;
     const gambarUrl = user.gambar_user ? `${baseUrl}/api/images/${user.gambar_user}` : null;
     user.gambar_user = gambarUrl;
+    
+    const token = generateToken({ id: user.id_user, kode: user.kode_user });
 
     return res.json({
       message: "Login berhasil",
+      token: `Bearer ${token}`,
       data: user,
     });
   } catch (error) {
