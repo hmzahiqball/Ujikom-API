@@ -43,4 +43,14 @@ CREATE DATABASE db_name;
 - Import file db_ujikompos.sql ke database tersebut.
 
 4. Jalankan Server
+```bash
+npm run dev
+```
 Server akan berjalan di http://localhost:1111 atau sesuai port yang ditentukan di .env.
+
+---
+## 📝 Notes
+
+- Import Postman Collection, tambahkan headers Auth pada setiap endpoint
+
+---
