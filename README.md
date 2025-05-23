@@ -1,27 +1,27 @@
 # Ujikom POS — Backend API (Express.js + MySQL)
 
-Ini adalah backend REST API untuk aplikasi Point of Sale (POS), dibangun dengan Node.js dan Express.js. API ini digunakan oleh frontend berbasis Laravel (baik versi web maupun desktop/Electron).
+This is the backend REST API for the Point of Sale (POS) application, built with Node.js and Express.js. It serves the Laravel-based frontend for both web and desktop (Electron) versions.
 
-Repositori frontend:
+Frontend repositories:
 - Web: https://github.com/putra28/ujikom-pos
 - Electron: https://github.com/putra28/ujikom-pos-electron
 
 ---
 
-## 📦 Fitur
+## 📦 Features
 
-- Autentikasi & Manajemen Pengguna
-- CRUD Produk, Kategori, Petugas, Supplier, Member
-- Manajemen Transaksi Penjualan & Pembelian
-- Shift & Kehadiran Karyawan
-- Izin Absensi
-- Laporan Penjualan, Pembelian, Pengeluaran, dan Stok
+- User Authentication & Management
+- Full CRUD for Products, Categories, Staff, Suppliers, and Members
+- Sales & Purchase Transaction Management
+- Employee Shifts & Attendance
+- Leave Requests
+- Reporting for Sales, Purchases, Expenses, and Stock Changes
 
 ---
 
-## ⚙️ Instalasi
+## ⚙️ Installation
 
-1. Clone repositori
+1. Clone the repository
 
 ```bash
 git clone https://github.com/putra28/Ujikom-API.git
@@ -33,24 +33,24 @@ cd Ujikom-API
 npm install
 ```
 
-3. Import database
-Di dalam folder ini terdapat file SQL (misalnya: ujikom_pos.sql) yang berisi struktur dan data awal database. Silakan impor ke MySQL:
-- Buka phpMyAdmin / Adminer / terminal MySQL.
-- Buat database baru dengan nama sesuai di .env, misalnya:
+3. Import the database
+This project includes an SQL file (e.g., ujikom_pos.sql) containing the initial database structure and sample data. To import:
+- Open phpMyAdmin / Adminer / MySQL terminal.
+- Create a new database matching the name in your .env file, for example:
 ```bash
 CREATE DATABASE db_name;
 ```
-- Import file db_ujikompos.sql ke database tersebut.
+- Import the db_ujikompos.sql file into the database.
 
-4. Jalankan Server
+4. Run the server
 ```bash
 npm run dev
 ```
-Server akan berjalan di http://localhost:1111 atau sesuai port yang ditentukan di .env.
+The server will run on http://localhost:1111 or the port defined in your .env file.
 
 ---
 ## 📝 Notes
-
-- Import Postman Collection, tambahkan headers Auth pada setiap endpoint
+- Don't forget to import the Postman collection.
+- Add authentication headers for each endpoint when testing
 
 ---
