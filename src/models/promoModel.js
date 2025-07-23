@@ -1,0 +1,61 @@
+const db = require("../config/db");
+const formatWIB = require("../utils/time");
+
+class Promo {
+  static async getAllPromo() {
+    const [rows] = await db.query("SELECT id_promo, nama_promo, kode_promo, tipe_promo, total_promo, kuota_promo, tanggal_mulai, tanggal_akhir, min_belanja, status_promo, created_at, updated_at FROM tb_promo WHERE status_promo = 'aktif'");
+    return rows.map(row => ({
+      ...row,
+      tanggal_mulai: row.tanggal_mulai.toISOString().split('T')[0],
+      tanggal_akhir: row.tanggal_akhir.toISOString().split('T')[0],
+      created_at: formatWIB(row.created_at),
+      updated_at: formatWIB(row.updated_at)
+    }));
+  }
+
+  static async getAllPromo_notFiltered() {
+    const [rows] = await db.query("SELECT id_promo, nama_promo, kode_promo, tipe_promo, total_promo, kuota_promo, tanggal_mulai, tanggal_akhir, min_belanja, status_promo, created_at, updated_at FROM tb_promo");
+    return rows.map(row => ({
+      ...row,
+      tanggal_mulai: row.tanggal_mulai.toISOString().split('T')[0],
+      tanggal_akhir: row.tanggal_akhir.toISOString().split('T')[0],
+      created_at: formatWIB(row.created_at),
+      updated_at: formatWIB(row.updated_at)
+    }));
+  }
+
+  static async getPromoByID(p_idPromo) {
+    const [result] = await db.query(
+        "SELECT id_promo, nama_promo, kode_promo, tipe_promo, total_promo, kuota_promo, tanggal_mulai, tanggal_akhir, min_belanja, status_promo, created_at, updated_at FROM tb_promo WHERE id_promo = ? LIMIT 1", 
+        [p_idPromo]);
+        return rows.map(row => ({
+      ...row,
+      tanggal_mulai: row.tanggal_mulai.toISOString().split('T')[0],
+      tanggal_akhir: row.tanggal_akhir.toISOString().split('T')[0],
+      created_at: formatWIB(row.created_at),
+      updated_at: formatWIB(row.updated_at)
+    }));
+  }
+
+  static async createPromo(p_namaPromo, p_kodePromo, p_tipePromo, p_totalPromo, p_kuotaPromo, p_tanggalMulai, p_tanggalAkhir, p_minBelanja, p_statusPromo) {
+    const [result] = await db.query(
+      "INSERT INTO tb_promo (nama_promo, kode_promo, tipe_promo, total_promo, kuota_promo, tanggal_mulai, tanggal_akhir, min_belanja, status_promo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [p_namaPromo, p_kodePromo, p_tipePromo, p_totalPromo, p_kuotaPromo, p_tanggalMulai, p_tanggalAkhir, p_minBelanja, p_statusPromo]
+    );
+    return result.insertId;
+  }
+
+  static async updatePromo(p_idPromo, p_namaPromo, p_kodePromo, p_tipePromo, p_totalPromo, p_kuotaPromo, p_tanggalMulai, p_tanggalAkhir, p_minBelanja, p_statusPromo) {
+    await db.query(
+      "UPDATE tb_promo SET nama_promo = ?, kode_promo = ?, tipe_promo = ?, total_promo = ?, kuota_promo = ?, tanggal_mulai = ?, tanggal_akhir = ?, min_belanja = ?, status_promo = ? WHERE id_promo = ?",
+      [p_namaPromo, p_kodePromo, p_tipePromo, p_totalPromo, p_kuotaPromo, p_tanggalMulai, p_tanggalAkhir, p_minBelanja, p_statusPromo, p_idPromo]
+    );
+  }
+
+  static async deletePromo(p_idPromo) {
+    await db.query("UPDATE tb_promo SET status_promo = 'nonaktif' WHERE id_promo = ?", [p_idPromo]);
+  }
+}
+
+module.exports = Promo;
+

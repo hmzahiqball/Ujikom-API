@@ -21,11 +21,7 @@ Frontend repositories:
 
 ## ⚙️ Installation
 
-<<<<<<< HEAD
 ### 1. Clone repositori
-=======
-1. Clone the repository
->>>>>>> f2178b46fd7b1d4aea7f67ec68e4cb30a6525ae7
 
 ```bash
 git clone https://github.com/putra28/Ujikom-API.git
@@ -37,7 +33,6 @@ cd Ujikom-API
 npm install
 ```
 
-<<<<<<< HEAD
 ### 3. Setup database
 Terdapat dua cara untuk setup database:
 
@@ -65,18 +60,6 @@ npx prisma db seed
 
 
 ### 4. Jalankan Server
-=======
-3. Import the database
-This project includes an SQL file (e.g., ujikom_pos.sql) containing the initial database structure and sample data. To import:
-- Open phpMyAdmin / Adminer / MySQL terminal.
-- Create a new database matching the name in your .env file, for example:
-```bash
-CREATE DATABASE db_name;
-```
-- Import the db_ujikompos.sql file into the database.
-
-4. Run the server
->>>>>>> f2178b46fd7b1d4aea7f67ec68e4cb30a6525ae7
 ```bash
 npm run dev
 ```

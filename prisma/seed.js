@@ -3,49 +3,74 @@ const prisma = new PrismaClient()
 
 async function main() {
   // Seed data ke tb_customers
-  await prisma.customer.upsert({
-    where: { id: 1 },
-    update: {},
-    create: {
-      id: 1,
-      name: 'Non-Member',
-      phone: '0',
-      email: '-',
-      address: '-',
-      birthdate: new Date('0001-01-01'),
-      gender: 'Laki_Laki',
-      status: 'aktif',
-      createdAt: new Date('2025-04-21T09:10:33'),
-      updatedAt: new Date('2025-04-21T09:10:33'),
+  await prisma.tb_customers.create({
+    data: {
+      id_customers: 1,
+      nama_customers: 'Non-Member',
+      telp_customers: '0',
+      email_customers: '-',
+      alamat_customers: '-',
+      tglLahir_customers: new Date('0001-01-01'),
+      gender_customers: 'Laki_Laki',
+      status_customers: 'aktif',
+    },
+  })
+
+  // Seed data ke tb_shifts
+  await prisma.tb_shifts.create({
+    data: {
+      id_shifts: 1,
+      nama_shifts: 'Full Time Shift',
+      start_time: new Date('2025-04-21T08:00:00'),
+      end_time: new Date('2025-04-21T16:00:00'),
     },
   })
 
   // Seed data ke tb_users
-  await prisma.user.createMany({
+  await prisma.tb_users.createMany({
     data: [
       {
-        id: 1,
-        kode: 'NMKSR',
-        nama: 'Nama Kasir',
-        password: '$2b$10$caX12QUpKy6KtI2LaAuo2OlPhRs8C8LwgcIBHMnp7gnwtMW65Hl4m',
-        contact: '081234567890',
-        role: 'kasir',
-        status: 'aktif',
-        gambar: '1745200384655.jpg',
-        createdAt: new Date('2025-04-21T08:53:04'),
-        updatedAt: new Date('2025-04-21T08:53:04'),
+        id_user: 1,
+        kode_user: 'NMKSR',
+        nama_user: 'Nama Kasir',
+        password_user: '$2b$10$caX12QUpKy6KtI2LaAuo2OlPhRs8C8LwgcIBHMnp7gnwtMW65Hl4m',
+        contact_user: '081234567890',
+        role_user: 'kasir',
+        status_user: 'aktif',
+        gambar_user: '1745200384655.jpg',
       },
       {
-        id: 2,
-        kode: 'NMDMN',
-        nama: 'Nama Admin',
-        password: '$2b$10$/YIR/z0VcIxqg1WXs6J6zuPWJzCoyALDMwDr27GaNVzoU0ejJR0Gm',
-        contact: '081278901234',
-        role: 'admin',
-        status: 'aktif',
-        gambar: '1745200439821.jpg',
-        createdAt: new Date('2025-04-21T08:53:59'),
-        updatedAt: new Date('2025-04-21T08:53:59'),
+        id_user: 2,
+        kode_user: 'NMDMN',
+        nama_user: 'Nama Admin',
+        password_user: '$2b$10$/YIR/z0VcIxqg1WXs6J6zuPWJzCoyALDMwDr27GaNVzoU0ejJR0Gm',
+        contact_user: '081278901234',
+        role_user: 'admin',
+        status_user: 'aktif',
+        gambar_user: '1745200439821.jpg',
+      },
+    ],
+    skipDuplicates: true,
+  })
+
+  // Seed data ke tb_karyawan
+  await prisma.tb_karyawan.createMany({
+    data: [
+      {
+        id_karyawan: 1,
+        id_user: 1,
+        posisi_karyawan: 'Barista',
+        gaji_karyawan: 5000000,
+        alamat_karyawan: 'Jl. Mawar No. 123',
+        id_shifts: 1,
+      },
+      {
+        id_karyawan: 2,
+        id_user: 2,
+        posisi_karyawan: 'Admin',
+        gaji_karyawan: 8000000,
+        alamat_karyawan: 'Jl. Mawar No. 123',
+        id_shifts: 1,
       },
     ],
     skipDuplicates: true,

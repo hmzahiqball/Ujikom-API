@@ -320,6 +320,21 @@ model tb_users {
   tb_karyawan   tb_karyawan[]
 }
 
+model tb_promo {
+  id_promo      Int                    @id @default(autoincrement())
+  nama_promo    String?                @db.VarChar(255)
+  kode_promo    String?                @db.VarChar(255)
+  tipe_promo    tb_promo_tipe_promo?
+  total_promo   BigInt?
+  kuota_promo   Int?
+  tanggal_mulai DateTime?              @db.Date
+  tanggal_akhir DateTime?              @db.Date
+  min_belanja   BigInt?
+  status_promo  tb_promo_status_promo?
+  created_at    DateTime?              @default(now()) @db.Timestamp(0)
+  updated_at    DateTime?              @default(now()) @db.Timestamp(0)
+}
+
 enum tb_izin_karyawan_status {
   Approved
   Pending
@@ -356,4 +371,14 @@ enum tb_penjualan_status_pembayaran {
 enum tb_produk_status_produk {
   Available
   Kosong
+}
+
+enum tb_promo_tipe_promo {
+  persen
+  nominal
+}
+
+enum tb_promo_status_promo {
+  aktif
+  nonaktif
 }
