@@ -1,0 +1,359 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model tb_customers {
+  id_customers       Int                            @id @default(autoincrement())
+  nama_customers     String?                        @db.VarChar(255)
+  telp_customers     String?                        @db.VarChar(255)
+  email_customers    String?                        @db.VarChar(255)
+  alamat_customers   String?                        @db.Text
+  tglLahir_customers DateTime?                      @db.Date
+  gender_customers   tb_customers_gender_customers?
+  status_customers   tb_customers_status_customers?
+  created_at         DateTime?                      @default(now()) @db.Timestamp(0)
+  updated_at         DateTime?                      @default(now()) @db.Timestamp(0)
+  is_deleted         Boolean?                       @default(false)
+  deleted_at         DateTime?                      @db.DateTime(0)
+  deleted_by         Int?
+  tb_penjualan       tb_penjualan[]
+}
+
+model tb_detail_pembelian {
+  id_detail_pembelian Int           @id @default(autoincrement())
+  id_pembelian        Int?
+  id_produk           Int?
+  kuantitas           Int?
+  harga               Decimal?      @db.Decimal(15, 0)
+  subtotal            Decimal?      @db.Decimal(15, 0)
+  created_at          DateTime?     @default(now()) @db.Timestamp(0)
+  updated_at          DateTime?     @default(now()) @db.Timestamp(0)
+  is_deleted          Boolean?      @default(false)
+  deleted_at          DateTime?     @db.DateTime(0)
+  deleted_by          Int?
+  tb_produk           tb_produk?    @relation(fields: [id_produk], references: [id_produk], onDelete: Restrict, onUpdate: Restrict, map: "FK-detailPemToProduk")
+  tb_pembelian        tb_pembelian? @relation(fields: [id_pembelian], references: [id_pembelian], onDelete: Cascade, onUpdate: Restrict, map: "FK-detailToPembelian")
+
+  @@index([id_produk], map: "FK-detailPemToProduk")
+  @@index([id_pembelian], map: "FK-detailToPembelian")
+}
+
+model tb_detail_penjualan {
+  id_detail_penjualan Int           @id @default(autoincrement())
+  id_penjualan        Int?
+  id_produk           Int?
+  kuantitas           Int?
+  harga               Decimal?      @db.Decimal(15, 0)
+  subtotal            Decimal?      @db.Decimal(15, 0)
+  diskon_produk       Int?
+  created_at          DateTime?     @default(now()) @db.Timestamp(0)
+  updated_at          DateTime?     @default(now()) @db.Timestamp(0)
+  is_deleted          Boolean?      @default(false)
+  deleted_at          DateTime?     @db.DateTime(0)
+  deleted_by          Int?
+  tb_penjualan        tb_penjualan? @relation(fields: [id_penjualan], references: [id_penjualan], onDelete: Cascade, onUpdate: Restrict, map: "FK-detailToPenjualan")
+  tb_produk           tb_produk?    @relation(fields: [id_produk], references: [id_produk], onDelete: Restrict, onUpdate: Restrict, map: "FK-detailToProduk")
+
+  @@index([id_penjualan], map: "FK-detailToPenjualan")
+  @@index([id_produk], map: "FK-detailToProduk")
+}
+
+model tb_izin_karyawan {
+  id_izin          Int                      @id @default(autoincrement())
+  id_karyawan      Int?
+  id_jenis_izin    Int?
+  start_date       DateTime?                @db.Date
+  end_date         DateTime?                @db.Date
+  status           tb_izin_karyawan_status?
+  created_at       DateTime?                @default(now()) @db.Timestamp(0)
+  updated_at       DateTime?                @default(now()) @db.Timestamp(0)
+  is_deleted       Boolean?                 @default(false)
+  deleted_at       DateTime?                @db.DateTime(0)
+  deleted_by       Int?
+  tb_kategori_izin tb_kategori_izin?        @relation(fields: [id_jenis_izin], references: [id_kategori_izin], onDelete: Restrict, onUpdate: Restrict, map: "FK-izinToJenisIzin")
+  tb_karyawan      tb_karyawan?             @relation(fields: [id_karyawan], references: [id_karyawan], onDelete: Restrict, onUpdate: Restrict, map: "FK-izinTokaryawan")
+
+  @@index([id_jenis_izin], map: "FK-izinToJenisIzin")
+  @@index([id_karyawan], map: "FK-izinTokaryawan")
+}
+
+model tb_karyawan {
+  id_karyawan      Int                @id @default(autoincrement())
+  id_user          Int
+  posisi_karyawan  String?            @db.VarChar(255)
+  gaji_karyawan    Int?
+  alamat_karyawan  String?            @db.Text
+  id_shifts        Int?
+  created_at       DateTime?          @default(now()) @db.Timestamp(0)
+  updated_at       DateTime?          @default(now()) @db.Timestamp(0)
+  is_deleted       Boolean?           @default(false)
+  deleted_at       DateTime?          @db.DateTime(0)
+  deleted_by       Int?
+  tb_izin_karyawan tb_izin_karyawan[]
+  tb_shifts        tb_shifts?         @relation(fields: [id_shifts], references: [id_shifts], onDelete: Restrict, onUpdate: Restrict, map: "FK-karyawanToshifts")
+  tb_users         tb_users           @relation(fields: [id_user], references: [id_user], onUpdate: Restrict, map: "FK-karyawanTousers")
+  tb_kehadiran     tb_kehadiran[]
+  tb_penjualan     tb_penjualan[]
+
+  @@index([id_shifts], map: "FK-karyawanToshifts")
+  @@index([id_user], map: "FK-karyawanTousers")
+}
+
+model tb_kategori {
+  id_kategori    Int              @id @default(autoincrement())
+  nama_kategori  String?          @db.VarChar(255)
+  created_at     DateTime?        @default(now()) @db.Timestamp(0)
+  updated_at     DateTime?        @default(now()) @db.Timestamp(0)
+  is_deleted     Boolean?         @default(false)
+  deleted_at     DateTime?        @db.DateTime(0)
+  deleted_by     Int?
+  tb_subkategori tb_subkategori[]
+}
+
+model tb_kategori_izin {
+  id_kategori_izin   Int                @id @default(autoincrement())
+  nama_kategori_izin String?            @db.VarChar(255)
+  created_at         DateTime?          @default(now()) @db.Timestamp(0)
+  updated_at         DateTime?          @default(now()) @db.Timestamp(0)
+  is_deleted         Boolean?           @default(false)
+  deleted_at         DateTime?          @db.DateTime(0)
+  deleted_by         Int?
+  tb_izin_karyawan   tb_izin_karyawan[]
+}
+
+model tb_kategori_pengeluaran {
+  id_kategori_pengeluaran   Int              @id @default(autoincrement())
+  kode_kategori_pengeluaran String?          @db.VarChar(255)
+  nama_kategori_pengeluaran String?          @db.VarChar(255)
+  created_at                DateTime?        @default(now()) @db.Timestamp(0)
+  updated_at                DateTime?        @default(now()) @db.Timestamp(0)
+  is_deleted                Boolean?         @default(false)
+  deleted_at                DateTime?        @db.DateTime(0)
+  deleted_by                Int?
+  tb_pengeluaran            tb_pengeluaran[]
+}
+
+model tb_kehadiran {
+  id_kehadiran      Int          @id @default(autoincrement())
+  id_karyawan       Int?
+  tanggal_kehadiran DateTime?    @db.Date
+  clock_in          DateTime?    @db.Time(0)
+  clock_out         DateTime?    @db.Time(0)
+  total_jam_kerja   String?      @db.VarChar(255)
+  total_overtime    String?      @db.VarChar(255)
+  created_at        DateTime?    @default(now()) @db.Timestamp(0)
+  updated_at        DateTime?    @default(now()) @db.Timestamp(0)
+  is_deleted        Boolean?     @default(false)
+  deleted_at        DateTime?    @db.DateTime(0)
+  deleted_by        Int?
+  tb_karyawan       tb_karyawan? @relation(fields: [id_karyawan], references: [id_karyawan], onDelete: Restrict, onUpdate: Restrict, map: "FK-kehadiranTokaryawan")
+
+  @@index([id_karyawan], map: "FK-kehadiranTokaryawan")
+}
+
+model tb_pembelian {
+  id_pembelian        Int                   @id @default(autoincrement())
+  id_suppliers        Int?
+  kode_pembelian      String?               @db.VarChar(255)
+  total_harga         Decimal?              @db.Decimal(15, 0)
+  tanggal_pembelian   DateTime?             @db.DateTime(0)
+  created_at          DateTime?             @default(now()) @db.Timestamp(0)
+  updated_at          DateTime?             @default(now()) @db.Timestamp(0)
+  is_deleted          Boolean?              @default(false)
+  deleted_at          DateTime?             @db.DateTime(0)
+  deleted_by          Int?
+  tb_detail_pembelian tb_detail_pembelian[]
+  tb_suppliers        tb_suppliers?         @relation(fields: [id_suppliers], references: [id_suppliers], onDelete: Restrict, onUpdate: Restrict, map: "FK-pembelianToSuppliers")
+
+  @@index([id_suppliers], map: "FK-pembelianToSuppliers")
+}
+
+model tb_pengeluaran {
+  id_pengeluaran          Int                      @id @default(autoincrement())
+  id_kategori_pengeluaran Int?
+  kode_pengeluaran        String?                  @db.VarChar(255)
+  total_pengeluaran       Decimal?                 @db.Decimal(15, 0)
+  deskripsi_pengeluaran   String?                  @db.Text
+  tanggal                 DateTime?                @db.DateTime(0)
+  created_at              DateTime?                @default(now()) @db.Timestamp(0)
+  updated_at              DateTime?                @default(now()) @db.Timestamp(0)
+  is_deleted              Boolean?                 @default(false)
+  deleted_at              DateTime?                @db.DateTime(0)
+  deleted_by              Int?
+  tb_kategori_pengeluaran tb_kategori_pengeluaran? @relation(fields: [id_kategori_pengeluaran], references: [id_kategori_pengeluaran], onDelete: Restrict, onUpdate: Restrict, map: "FK-pengeluaranToKategori")
+
+  @@index([id_kategori_pengeluaran], map: "FK-pengeluaranToKategori")
+}
+
+model tb_penjualan {
+  id_penjualan        Int                             @id @default(autoincrement())
+  id_customers        Int?
+  id_karyawan         Int?
+  kode_penjualan      String?                         @db.VarChar(255)
+  total_harga         Decimal?                        @db.Decimal(20, 0)
+  total_bayar         Decimal?                        @db.Decimal(20, 0)
+  total_kembalian     Decimal?                        @db.Decimal(20, 0)
+  diskon_penjualan    Int?
+  status_pembayaran   tb_penjualan_status_pembayaran?
+  tanggal_penjualan   DateTime?                       @db.DateTime(0)
+  created_at          DateTime?                       @default(now()) @db.Timestamp(0)
+  updated_at          DateTime?                       @default(now()) @db.Timestamp(0)
+  is_deleted          Boolean?                        @default(false)
+  deleted_at          DateTime?                       @db.DateTime(0)
+  deleted_by          Int?
+  tb_detail_penjualan tb_detail_penjualan[]
+  tb_customers        tb_customers?                   @relation(fields: [id_customers], references: [id_customers], onDelete: Restrict, onUpdate: Restrict, map: "FK-penjualanToCustomers")
+  tb_karyawan         tb_karyawan?                    @relation(fields: [id_karyawan], references: [id_karyawan], onDelete: Restrict, onUpdate: Restrict, map: "FK-penjualanToKaryawan")
+
+  @@index([id_customers], map: "FK-penjualanToCustomers")
+  @@index([id_karyawan], map: "FK-penjualanToKaryawan")
+}
+
+model tb_produk {
+  id_produk           Int                      @id @default(autoincrement())
+  id_kategori         Int?
+  nama_produk         String?                  @db.VarChar(255)
+  sku_produk          String?                  @db.VarChar(255)
+  barcode_produk      String?                  @db.VarChar(255)
+  deskripsi_produk    String?                  @db.VarChar(255)
+  harga_produk        Decimal?                 @db.Decimal(15, 0)
+  modal_produk        Decimal?                 @db.Decimal(15, 0)
+  diskon_produk       Int?
+  stok_produk         Int?
+  stok_minimum_produk Int?
+  status_produk       tb_produk_status_produk?
+  gambar_produk       String?                  @db.Text
+  created_at          DateTime?                @default(now()) @db.Timestamp(0)
+  updated_at          DateTime?                @default(now()) @db.Timestamp(0)
+  is_deleted          Boolean?                 @default(false)
+  deleted_at          DateTime?                @db.DateTime(0)
+  deleted_by          Int?
+  tb_detail_pembelian tb_detail_pembelian[]
+  tb_detail_penjualan tb_detail_penjualan[]
+  tb_subkategori      tb_subkategori?          @relation(fields: [id_kategori], references: [id_subkategori], onDelete: Cascade, onUpdate: Restrict, map: "FK-produkToSubKategori")
+  tb_stok_produk      tb_stok_produk[]
+
+  @@index([id_kategori], map: "FK-produkToSubKategori")
+}
+
+model tb_shifts {
+  id_shifts   Int           @id @default(autoincrement())
+  nama_shifts String?       @db.VarChar(255)
+  start_time  DateTime?     @db.Time(0)
+  end_time    DateTime?     @db.Time(0)
+  created_at  DateTime?     @default(now()) @db.Timestamp(0)
+  updated_at  DateTime?     @default(now()) @db.Timestamp(0)
+  is_deleted  Boolean?      @default(false)
+  deleted_at  DateTime?     @db.DateTime(0)
+  deleted_by  Int?
+  tb_karyawan tb_karyawan[]
+}
+
+model tb_stok_produk {
+  id_laporan_stok  Int        @id @default(autoincrement())
+  kode_laporan     String?    @db.VarChar(255)
+  id_produk        Int?
+  perubahan_stok   String?    @db.VarChar(255)
+  alasan_perubahan String?    @db.VarChar(255)
+  nama_karyawan    String?    @db.VarChar(255)
+  created_at       DateTime?  @default(now()) @db.Timestamp(0)
+  updated_at       DateTime?  @default(now()) @db.Timestamp(0)
+  is_deleted       Boolean?   @default(false)
+  deleted_at       DateTime?  @db.DateTime(0)
+  deleted_by       Int?
+  tb_produk        tb_produk? @relation(fields: [id_produk], references: [id_produk], onDelete: Restrict, onUpdate: Restrict, map: "FK-stokToProduk")
+
+  @@index([id_produk], map: "FK-stokToProduk")
+  @@index([nama_karyawan], map: "FK-stokToUsers")
+}
+
+model tb_subkategori {
+  id_subkategori   Int          @id @default(autoincrement())
+  id_kategori      Int?
+  nama_subkategori String?      @db.VarChar(255)
+  created_at       DateTime?    @default(now()) @db.Timestamp(0)
+  updated_at       DateTime?    @default(now()) @db.Timestamp(0)
+  is_deleted       Boolean?     @default(false)
+  deleted_at       DateTime?    @db.DateTime(0)
+  deleted_by       Int?
+  tb_produk        tb_produk[]
+  tb_kategori      tb_kategori? @relation(fields: [id_kategori], references: [id_kategori], onDelete: Restrict, onUpdate: Restrict, map: "FK-SubtoKategori")
+
+  @@index([id_kategori], map: "FK-SubtoKategori")
+}
+
+model tb_suppliers {
+  id_suppliers      Int            @id @default(autoincrement())
+  kode_suppliers    String?        @db.VarChar(255)
+  nama_suppliers    String?        @db.VarChar(255)
+  contact_person    String?        @db.VarChar(255)
+  contact_suppliers String?        @db.VarChar(255)
+  email_suppliers   String?        @db.VarChar(255)
+  alamat_suppliers  String?        @db.Text
+  created_at        DateTime?      @default(now()) @db.Timestamp(0)
+  updated_at        DateTime?      @default(now()) @db.Timestamp(0)
+  is_deleted        Boolean?       @default(false)
+  deleted_at        DateTime?      @db.DateTime(0)
+  deleted_by        Int?
+  tb_pembelian      tb_pembelian[]
+}
+
+model tb_users {
+  id_user       Int                   @id @default(autoincrement())
+  kode_user     String?               @db.VarChar(255)
+  nama_user     String?               @db.VarChar(255)
+  password_user String?               @db.VarChar(255)
+  contact_user  String?               @db.VarChar(255)
+  role_user     tb_users_role_user?
+  status_user   tb_users_status_user?
+  gambar_user   String?               @db.Text
+  created_at    DateTime?             @default(now()) @db.Timestamp(0)
+  updated_at    DateTime?             @default(now()) @db.Timestamp(0)
+  is_deleted    Boolean?              @default(false)
+  deleted_at    DateTime?             @db.DateTime(0)
+  deleted_by    Int?
+  tb_karyawan   tb_karyawan[]
+}
+
+enum tb_izin_karyawan_status {
+  Approved
+  Pending
+  Rejected
+  Canceled
+}
+
+enum tb_users_role_user {
+  admin
+  kasir
+}
+
+enum tb_customers_gender_customers {
+  Laki_Laki @map("Laki-Laki")
+  Perempuan
+}
+
+enum tb_users_status_user {
+  aktif
+  non_aktif @map("non-aktif")
+}
+
+enum tb_customers_status_customers {
+  aktif
+  non_aktif @map("non-aktif")
+}
+
+enum tb_penjualan_status_pembayaran {
+  Success
+  Pending
+  Canceled
+}
+
+enum tb_produk_status_produk {
+  Available
+  Kosong
+}
