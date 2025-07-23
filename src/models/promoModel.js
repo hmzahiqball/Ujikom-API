@@ -37,6 +37,14 @@ class Promo {
     }));
   }
 
+  static async getTax() {
+    const [result] = await db.query(
+      "SELECT value FROM tb_settings WHERE `key` = ? LIMIT 1", 
+      ['tax']
+    );
+    return result[0].value;
+  }
+
   static async createPromo(p_namaPromo, p_kodePromo, p_tipePromo, p_totalPromo, p_kuotaPromo, p_tanggalMulai, p_tanggalAkhir, p_minBelanja, p_statusPromo) {
     const [result] = await db.query(
       "INSERT INTO tb_promo (nama_promo, kode_promo, tipe_promo, total_promo, kuota_promo, tanggal_mulai, tanggal_akhir, min_belanja, status_promo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",

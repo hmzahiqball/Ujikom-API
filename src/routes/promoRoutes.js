@@ -1,6 +1,7 @@
 const express = require("express");
 const {
     getAllPromo,
+    getTax,
     getAllPromo_notFiltered,
     getPromoByID,
     createPromo,
@@ -13,6 +14,7 @@ const {
 const router = express.Router();
 
 router.get("/", getAllPromo);
+router.get("/setting", getTax);
 router.get("/notfiltered", getAllPromo_notFiltered);
 router.get("/:id", getPromoByID);
 router.post("/", createPromo);

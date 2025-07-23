@@ -13,6 +13,19 @@ exports.getAllPromo = async (req, res) => {
   }
 };
 
+exports.getTax = async (req, res) => {
+  try {
+    const tax = await Promo.getTax();
+    return res.json({
+      status: 200,
+      message: "Berhasil Mendapatkan Data Pajak",
+      data: tax,
+    });
+  } catch (error) {
+    return res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
 exports.getAllPromo_notFiltered = async (req, res) => {
   try {
     const promos = await Promo.getAllPromo_notFiltered();
