@@ -52,6 +52,21 @@ class Promo {
     );
   }
 
+  static async createSetting(p_key, p_value) {
+    const [result] = await db.query(
+      "INSERT INTO tb_settings (key, value) VALUES (?, ?)",
+      [p_key, p_value]
+    );
+    return result.insertId;
+  }
+
+  static async updateSetting(p_idSettings, p_value) {
+    await db.query(
+      "UPDATE tb_settings SET value = ? WHERE id_settings = ?",
+      [p_value, p_idSettings]
+    );
+  }
+
   static async deletePromo(p_idPromo) {
     await db.query("UPDATE tb_promo SET status_promo = 'nonaktif' WHERE id_promo = ?", [p_idPromo]);
   }

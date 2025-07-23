@@ -6,6 +6,8 @@ const {
     createPromo,
     updatePromo,
     deletePromo,
+    createSetting,
+    updateSetting
 } = require("../controllers/promoController");
 
 const router = express.Router();
@@ -16,5 +18,7 @@ router.get("/:id", getPromoByID);
 router.post("/", createPromo);
 router.put("/:id", updatePromo);
 router.delete("/:id", deletePromo);
+router.post("/setting/", createSetting);
+router.put("/setting/:id", updateSetting);
 
 module.exports = router;

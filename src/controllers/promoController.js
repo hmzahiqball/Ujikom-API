@@ -88,6 +88,40 @@ exports.updatePromo = async (req, res) => {
   }
 };
 
+exports.createSetting = async (req, res) => {
+  const { p_key, p_value } = req.body;
+  try {
+    if (!p_key || !p_value) {
+      return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
+    }
+    const settingId = await Promo.createSetting(p_key, p_value);
+    return res.json({
+      status: 200,
+      message: "Berhasil Menambahkan Data Setting",
+      data: { p_idSettings: settingId, p_key, p_value },
+    });
+  } catch (error) {
+    return res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
+exports.updateSetting = async (req, res) => {
+  const { p_value } = req.body;
+  const { id } = req.params;
+  try {
+    if (!id || !p_value) {
+      return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
+    }
+    await Promo.updateSetting(id, p_value);
+    return res.json({
+      status: 200,
+      message: "Berhasil Update Data Setting",
+    });
+  } catch (error) {
+    return res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
 exports.deletePromo = async (req, res) => {
   const { id } = req.params;
   try {

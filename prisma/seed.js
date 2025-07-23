@@ -2,6 +2,15 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 async function main() {
+  // Seed data ke tb_settings
+  await prisma.tb_settings.create({
+    data: {
+      id_settings: 1,
+      key: 'tax',
+      value: '12',
+    },
+  })
+
   // Seed data ke tb_customers
   await prisma.tb_customers.create({
     data: {
