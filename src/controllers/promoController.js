@@ -26,6 +26,44 @@ exports.getTax = async (req, res) => {
   }
 };
 
+exports.createSetting = async (req, res) => {
+  const { p_key, p_value } = req.body;
+  try {
+    if (!p_key || !p_value) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Data Tidak Lengkap" });
+    }
+    const promoId = await Promo.createSetting(p_key, p_value);
+    return res.json({
+      status: 200,
+      message: "Berhasil Menambahkan Data",
+      data: { p_idPromo: promoId, p_key, p_value },
+    });
+  } catch (error) {
+    return res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
+exports.updateSetting = async (req, res) => {
+  const { p_value } = req.body;
+  const { id } = req.params;
+  try {
+    if (!id || !p_value) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Data Tidak Lengkap" });
+    }
+    await Promo.updateSetting(id, p_value);
+    return res.json({
+      status: 200,
+      message: "Berhasil Update Data",
+    });
+  } catch (error) {
+    return res.status(500).json({ status: "error", message: error.message });
+  }
+};
+
 exports.getAllPromo_notFiltered = async (req, res) => {
   try {
     const promos = await Promo.getAllPromo_notFiltered();

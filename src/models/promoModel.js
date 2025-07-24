@@ -39,10 +39,58 @@ class Promo {
 
   static async getTax() {
     const [result] = await db.query(
-      "SELECT value FROM tb_settings WHERE `key` = ? LIMIT 1", 
+      "SELECT * FROM tb_settings WHERE key_settings = ? LIMIT 1", 
       ['tax']
     );
-    return result[0].value;
+    return result;
+  }
+
+  static async createSetting(p_key, p_value) {
+    const [result] = await db.query(
+      "INSERT INTO tb_settings (key_settings, value) VALUES (?, ?)",
+      [p_key, p_value]
+    );
+    return result.insertId;
+  }
+
+  static async updateSetting(p_idSettings, p_value) {
+    if (!p_idSettings || p_idSettings === 999) {
+      // Cek dulu, udah ada setting tax belum?
+      const [existing] = await db.query(
+        "SELECT * FROM tb_settings WHERE key_settings = 'tax' LIMIT 1"
+      );
+    
+      if (existing.length > 0) {
+        // Update aja langsung
+        await db.query(
+          "UPDATE tb_settings SET value = ? WHERE key_settings = 'tax'",
+          [p_value]
+        );
+      } else {
+        // Insert baru karena belum ada
+        await db.query(
+          "INSERT INTO tb_settings (key_settings, value) VALUES (?, ?)",
+          ['tax', p_value]
+        );
+      }
+      return;
+    }
+  
+    // Kalau id nya valid dan bukan 999, update by id
+    const [result] = await db.query(
+      "UPDATE tb_settings SET value = ? WHERE id_settings = ?",
+      [p_value, p_idSettings]
+    );
+  
+    console.log('-> Update result:', result);
+  
+    // Kalau ga keupdate (id ga valid?), fallback ke insert tax
+    if (result.affectedRows === 0) {
+      await db.query(
+        "INSERT INTO tb_settings (key_settings, value) VALUES (?, ?)",
+        ['tax', p_value]
+      );
+    }
   }
 
   static async createPromo(p_namaPromo, p_kodePromo, p_tipePromo, p_totalPromo, p_kuotaPromo, p_tanggalMulai, p_tanggalAkhir, p_minBelanja, p_statusPromo) {
@@ -57,21 +105,6 @@ class Promo {
     await db.query(
       "UPDATE tb_promo SET nama_promo = ?, kode_promo = ?, tipe_promo = ?, total_promo = ?, kuota_promo = ?, tanggal_mulai = ?, tanggal_akhir = ?, min_belanja = ?, status_promo = ? WHERE id_promo = ?",
       [p_namaPromo, p_kodePromo, p_tipePromo, p_totalPromo, p_kuotaPromo, p_tanggalMulai, p_tanggalAkhir, p_minBelanja, p_statusPromo, p_idPromo]
-    );
-  }
-
-  static async createSetting(p_key, p_value) {
-    const [result] = await db.query(
-      "INSERT INTO tb_settings (key, value) VALUES (?, ?)",
-      [p_key, p_value]
-    );
-    return result.insertId;
-  }
-
-  static async updateSetting(p_idSettings, p_value) {
-    await db.query(
-      "UPDATE tb_settings SET value = ? WHERE id_settings = ?",
-      [p_value, p_idSettings]
     );
   }
 
