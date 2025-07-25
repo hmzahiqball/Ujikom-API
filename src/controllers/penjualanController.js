@@ -19,6 +19,40 @@ exports.getAllPenjualan = async (req, res) => {
   }
 };
 
+exports.getPenjualanByKode = async (req, res) => {
+  try {
+    const { kode } = req.params;
+
+    if (!kode) {
+      return res.status(400).json({
+        status: 400,
+        message: "Kode penjualan wajib diisi",
+      });
+    }
+
+    const penjualan = await Penjualan.getPenjualanByKode(kode);
+
+    if (!penjualan) {
+      return res.status(404).json({
+        status: 404,
+        message: `Penjualan dengan kode '${kode}' tidak ditemukan`,
+      });
+    }
+
+    return res.json({
+      status: 200,
+      message: "Berhasil mendapatkan data penjualan",
+      data: penjualan,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: 500,
+      message: error.message,
+    });
+  }
+};
+
+
 exports.createPenjualan = async (req, res) => {
   const {
     p_idCustomers,
@@ -41,7 +75,7 @@ exports.createPenjualan = async (req, res) => {
       return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
     }
 
-    const { penjualanId, kodePenjualan } = await Penjualan.createPenjualan({
+    const { penjualanId, kodePenjualan, namaPromo, kodePromo } = await Penjualan.createPenjualan({
       idCustomers: p_idCustomers,
       idKaryawan: p_idKaryawan,
       idPromo: p_idPromo,
@@ -65,6 +99,8 @@ exports.createPenjualan = async (req, res) => {
         idCustomers: p_idCustomers,
         idKaryawan: p_idKaryawan,
         idPromo: p_idPromo,
+        namaPromo,
+        kodePromo,
         tanggal: p_tanggal,
         totalHarga: p_totalHarga,
         totalBayar: p_totalBayar,
