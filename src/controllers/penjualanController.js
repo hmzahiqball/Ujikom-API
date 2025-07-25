@@ -37,7 +37,7 @@ exports.createPenjualan = async (req, res) => {
 
   try {
     // Validasi wajib
-    if (!p_idCustomers || !p_idKaryawan || !p_idPromo || !p_pajak || !p_totalpajak || !p_tipePembayaran || !p_totalHarga || !p_totalBayar || !p_detailPenjualan || !p_tanggal) {
+    if (!p_idCustomers || !p_idKaryawan || !p_pajak || !p_totalpajak || !p_tipePembayaran || !p_totalHarga || !p_totalBayar || !p_detailPenjualan || !p_tanggal) {
       return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
     }
 
