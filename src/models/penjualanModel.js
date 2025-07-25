@@ -29,7 +29,7 @@ class Penjualan {
     // Susun query akhir
     const query = `
       SELECT 
-          p.id_penjualan, p.total_harga, p.total_bayar, p.total_kembalian, p.diskon_penjualan, p.status_pembayaran, p.kode_penjualan, p.tanggal_penjualan,
+          p.id_penjualan, prm.nama_promo, prm.kode_promo, p.persen_pajak, p.total_pajak, p.tipe_pembayaran, p.total_harga, p.total_bayar, p.total_kembalian, p.diskon_penjualan, p.status_pembayaran, p.kode_penjualan, p.tanggal_penjualan,
           p.created_at AS penjualan_created_at, p.updated_at AS penjualan_updated_at,
           s.id_customers, s.nama_customers, s.telp_customers, s.email_customers,
           kar.id_karyawan, u.nama_user, u.contact_user, kar.posisi_karyawan,
@@ -45,6 +45,7 @@ class Penjualan {
       LEFT JOIN tb_produk pr ON dp.id_produk = pr.id_produk
       LEFT JOIN tb_subkategori sk ON pr.id_kategori = sk.id_subkategori
       LEFT JOIN tb_kategori k ON sk.id_kategori = k.id_kategori
+      LEFT JOIN tb_promo prm ON p.id_promo = prm.id_promo
       ${whereClauses.length ? `WHERE ${whereClauses.join(" AND ")} AND ` : "WHERE "}p.is_deleted = 0
     `;
   
@@ -58,12 +59,17 @@ class Penjualan {
         penjualan[row.id_penjualan] = {
           id_penjualan: row.id_penjualan,
           kode_penjualan: row.kode_penjualan,
+          nama_promo: row.nama_promo === null ? "-" : row.nama_promo,
+          kode_promo: row.kode_promo === null ? "-" : row.kode_promo,
+          persen_pajak: row.persen_pajak,
+          total_pajak: row.total_pajak,
           total_harga: row.total_harga,
           total_bayar: row.total_bayar,
           total_kembalian: row.total_kembalian,
           diskon_penjualan: row.diskon_penjualan,
           total_kuantitas: 0,
           total_pendapatan: 0, // Pendapatan = total harga jual - total modal
+          tipe_pembayaran: row.tipe_pembayaran,
           status_pembayaran: row.status_pembayaran,
           tanggal_penjualan: formatWIB(row.tanggal_penjualan),
           created_at: formatWIB(row.penjualan_created_at),
