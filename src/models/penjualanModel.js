@@ -127,10 +127,14 @@ class Penjualan {
   static async createPenjualan({
       idCustomers,
       idKaryawan,
+      idPromo,
       totalHarga,
       totalBayar,
       totalKembalian,
       diskon,
+      persenPajak,
+      totalPajak,
+      tipePembayaran,
       detailPenjualan,
       tanggal
     }) {
@@ -161,9 +165,9 @@ class Penjualan {
       // Insert tb_penjualan
       const [penjualanResult] = await connection.query(
         `INSERT INTO tb_penjualan 
-          (id_customers, id_karyawan, kode_penjualan, total_harga, total_bayar, total_kembalian, diskon_penjualan, status_pembayaran, tanggal_penjualan)
-         VALUES (?, ?, ?, ?, ?, ?, ?, 'Success', ?)`,
-        [idCustomers, idKaryawan, kodePenjualan, totalHarga, totalBayar, totalKembalian, diskon, tanggal]
+          (id_customers, id_karyawan, id_promo, kode_penjualan, persen_pajak, total_pajak, total_harga, total_bayar, total_kembalian, diskon_penjualan, tipe_pembayaran, status_pembayaran, tanggal_penjualan)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Success', ?)`,
+        [idCustomers, idKaryawan, idPromo, kodePenjualan, persenPajak, totalPajak, totalHarga, totalBayar, totalKembalian, diskon, tipePembayaran, tanggal]
       );
       
       const penjualanId = penjualanResult.insertId;

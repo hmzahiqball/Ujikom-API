@@ -23,27 +23,35 @@ exports.createPenjualan = async (req, res) => {
   const {
     p_idCustomers,
     p_idKaryawan,
+    p_idPromo,
     p_totalHarga,
     p_totalBayar,
     p_totalKembalian,
     p_diskon,
+    p_pajak,
+    p_totalpajak,
+    p_tipePembayaran,
     p_detailPenjualan,
     p_tanggal
   } = req.body;
 
   try {
     // Validasi wajib
-    if (!p_idCustomers || !p_idKaryawan || !p_totalHarga || !p_totalBayar || !p_detailPenjualan || !p_tanggal) {
+    if (!p_idCustomers || !p_idKaryawan || !p_idPromo || !p_pajak || !p_totalpajak || !p_tipePembayaran || !p_totalHarga || !p_totalBayar || !p_detailPenjualan || !p_tanggal) {
       return res.status(400).json({ status: "error", message: "Data Tidak Lengkap" });
     }
 
     const { penjualanId, kodePenjualan } = await Penjualan.createPenjualan({
       idCustomers: p_idCustomers,
       idKaryawan: p_idKaryawan,
+      idPromo: p_idPromo,
       totalHarga: p_totalHarga,
       totalBayar: p_totalBayar,
       totalKembalian: p_totalKembalian || 0,
       diskon: p_diskon || 0,
+      persenPajak: p_pajak,
+      totalPajak: p_totalpajak,
+      tipePembayaran: p_tipePembayaran,
       detailPenjualan: p_detailPenjualan,
       tanggal: p_tanggal
     });
@@ -56,11 +64,15 @@ exports.createPenjualan = async (req, res) => {
         kode_penjualan: kodePenjualan,
         idCustomers: p_idCustomers,
         idKaryawan: p_idKaryawan,
+        idPromo: p_idPromo,
         tanggal: p_tanggal,
         totalHarga: p_totalHarga,
         totalBayar: p_totalBayar,
         totalKembalian: p_totalKembalian || 0,
         diskon: p_diskon || 0,
+        persenPajak: p_pajak,
+        totalPajak: p_totalpajak,
+        tipePembayaran: p_tipePembayaran,
         statusPembayaran: 'Success',
         detailPenjualan: p_detailPenjualan,
       },
